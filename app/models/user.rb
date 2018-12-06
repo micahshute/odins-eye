@@ -43,7 +43,41 @@ class User < ApplicationRecord
     has_many :tagged_topics, :through => :tags, source: :taggable, source_type: "Topic"
     has_many :tagged_classrooms, :through => :tags, source: :taggable, source_type: "Classroom"
     has_many :tag_types, through: :tags
-    
+    has_many :student_classrooms
+    has_many :enrolled_classes, class_name: "Classroom", through: :student_classrooms, source: :classroom
+
+    def most_liked_posts
+
+    end
+
+    def most_liked_topics
+
+    end
+
+    def most_replied_topics
+
+    end
+
+    def most_replied_posts
+
+    end
+
+    def most_viewed_topics
+
+    end
+
+    def most_viewed_posts
+
+    end
+
+    def most_popular_posts
+
+    end
+
+    def most_popular_topics
+
+    end
+
     def message(user, content)
         Message.create(sender: self, reciever: user, content: content)
     end

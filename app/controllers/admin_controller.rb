@@ -1,0 +1,4 @@
+def AdminController < ApplicationController
+
+
+end
