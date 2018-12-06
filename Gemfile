@@ -66,3 +66,4 @@ gem "figaro"
 group :development, :test do
   gem 'rspec-rails', '~> 3.8'
 end
+gem "bcrypt", "~> 3.1"

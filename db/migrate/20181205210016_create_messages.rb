@@ -4,7 +4,7 @@ class CreateMessages < ActiveRecord::Migration[5.2]
       t.integer :sender_id
       t.integer :reciever_id
       t.text :content
-      t.boolean :viewed
+      t.boolean :viewed, default: false
 
       t.timestamps
     end

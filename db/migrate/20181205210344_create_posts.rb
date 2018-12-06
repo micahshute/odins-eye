@@ -3,7 +3,7 @@ class CreatePosts < ActiveRecord::Migration[5.2]
     create_table :posts do |t|
       t.integer :user_id
       t.string :content
-      t.boolean :is_private
+      t.boolean :is_private, default: false
       t.references :postable, polymorphic: true, index: true
 
       t.timestamps
