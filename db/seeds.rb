@@ -15,6 +15,7 @@ micah = User.create(name: "Micah Shute", email: "test@test.com", password: "Pass
 taylor = User.create(name: "Taylor Swift", email:"taylor@swift.com", password: "Password1", password_confirmation: "Password1")
 first_topic = Topic.create(user: micah, content: "What is the Fourier Transform?") 
 first_reply = first_topic.posts.build(user: micah, content: "An equation mapping time domain to the frequency domain")
+first_topic.tags << Tag.new(tag_type: TagType.find_by(name: "Math"), user: micah)
 first_topic.save
 
 classroom = Classroom.new(name: "Math Class", professor: micah)
@@ -22,9 +23,11 @@ classroom = Classroom.new(name: "Math Class", professor: micah)
 classroom.save
 
 class_topic = classroom.topics.build(user: micah, content: "Math stuff?")
+class_topic.tags << Tag.new(tag_type: TagType.find_by(name: "Math"), user: micah)
 classroom.save
 
 classroom.students << taylor
+classroom.tags << Tag.new(tag_type: TagType.find_by(name: "Math"), user: micah)
 classroom.save
 taylor.following << micah
 micah.save
@@ -33,6 +36,10 @@ taylor.like(first_topic)
 taylor.dislike(first_reply)
 taylor.message(micah, "I love you")
 micah.message(taylor, "I know")
+taylor.message(micah, "You stuck-up, half-witted, scruffy-looking nerf herder!")
+micah.message(taylor, "Who's scruffy-lookin?")
+admin.message(micah, "There's nothing to see. I used to live here, you know")
+micah.message(admin, "You're going to die here, you know. Convenient.")
 taylor.posts << Post.create(postable: first_reply, content: "This is not clever")
 taylor.posts.last.posts << Post.create(user: micah, content: "whteva")
 taylor.save

@@ -46,6 +46,27 @@ class User < ApplicationRecord
     has_many :student_classrooms
     has_many :enrolled_classes, class_name: "Classroom", through: :student_classrooms, source: :classroom
 
+
+    def self.most_followed(num = 5)
+
+    end
+
+    def self.most_liked(num = 5)
+
+    end
+
+    def self.most_liked_by_tag(tag, num = 5)
+
+    end
+
+    def recieved_messages_by_sender
+        
+    end
+
+    def sent_messages_by_reciever
+
+    end
+
     def most_liked_posts
 
     end
