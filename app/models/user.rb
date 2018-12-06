@@ -1,5 +1,30 @@
 class User < ApplicationRecord
+
     has_secure_password
+
+    validates :name, presence: true
+    validates :bio, length: { maximum: 500 }
+    validates :email, presence: true, length: { minimum: 5 }
+    validates :email, uniqueness: { case_sensitive: false }
+    validates :password, length: { in: 8..20 }
+    validates :password_confirmation, presence: true
+    validate :email_must_be_valid
+    validate :password_requirements
+
+    #must have an @ 
+    def email_must_be_valid
+        errors.add(:email, "must be valid") unless email.include?(".") and email.include?("@")
+    end
+
+    #password must have at least 1 lower case, 1 upper case, and 1 symbol
+    def password_requirements
+        lowercase = /[a-z]/
+        uppercase = /[A-Z]/
+        symbol = /[!@#$%^&*]/
+        invalid = lowercase.match(password).nil? or uppercase.match(password).nil? or symbol.match(password).nil?
+        errors.add(:password, "must contain required symbols") if invalid
+    end
+
 
     has_many :posts
     has_many :topics

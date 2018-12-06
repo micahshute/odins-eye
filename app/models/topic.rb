@@ -1,4 +1,8 @@
 class Topic < ApplicationRecord
+
+    validates :content, presence: true, length: { maximum: 10000 }
+
+
     belongs_to :user
     belongs_to :classroom, optional: true
     has_many :posts, as: :postable

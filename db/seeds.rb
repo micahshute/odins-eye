@@ -10,14 +10,15 @@ tag_types = ["Math", "Computer Science", "Programming", "Algorithms"]
 reaction_types = ["like", "dislike", "genius", "report"]
 tag_types.map!{ |tag| TagType.create(name: tag) }
 reaction_types.map!{ |reaction| ReactionType.create(name: reaction)}
-admin = User.create(name: "Admin", email: "admin@odinseye.com", password: "adminpassword")
-micah = User.create(name: "Micah Shute", email: "test@test.com", password: "password")
-taylor = User.create(name: "Taylor Swift", email:"taylor@swift.com", password: "password")
+admin = User.create(name: "Admin", email: "admin@odinseye.com", password: "adminpassword123!@#", password_confirmation: "adminpassword123!@#")
+micah = User.create(name: "Micah Shute", email: "test@test.com", password: "Password1", password_confirmation: "Password1")
+taylor = User.create(name: "Taylor Swift", email:"taylor@swift.com", password: "Password1", password_confirmation: "Password1")
 first_topic = Topic.create(user: micah, content: "What is the Fourier Transform?") 
 first_reply = first_topic.posts.build(user: micah, content: "An equation mapping time domain to the frequency domain")
 first_topic.save
 
 classroom = Classroom.new(name: "Math Class", professor: micah)
+
 classroom.save
 
 class_topic = classroom.topics.build(user: micah, content: "Math stuff?")
