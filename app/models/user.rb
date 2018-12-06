@@ -10,14 +10,14 @@ class User < ApplicationRecord
     has_many :follower_users, class_name: "FollowingUser", foreign_key: "following_id"
     has_many :followers, class_name: "User", through: :follower_users, foreign_key: "follower_id"
     has_many :following, class_name: "User", through: :following_users, foreign_key: "following_id"
-    has_many :user_reactions
-    has_many :reacted_posts, :through => :user_reactions, :source => :reactable, source_type: 'Post'
-    has_many :reacted_topics, through: :user_reactions, source: :reactable, source_type: "Topic"
-    has_many :reactions, through: :user_reactions
-    has_many :taggable_tags
-    has_many :tagged_topics, :through => :taggable_tags, source: :taggable, source_type: "Topic"
-    has_many :tagged_classrooms, :through => :taggable_tags, source: :taggable, source_type: "Classroom"
-    has_many :tags, through: :taggable_tags
+    has_many :reactions
+    has_many :reacted_posts, :through => :reactions, :source => :reactable, source_type: 'Post'
+    has_many :reacted_topics, through: :reactions, source: :reactable, source_type: "Topic"
+    has_many :reaction_types, through: :reactions
+    has_many :tags
+    has_many :tagged_topics, :through => :tags, source: :taggable, source_type: "Topic"
+    has_many :tagged_classrooms, :through => :tags, source: :taggable, source_type: "Classroom"
+    has_many :tag_types, through: :tags
     
     def message(user, content)
         Message.create(sender: self, reciever: user, content: content)
@@ -42,9 +42,9 @@ class User < ApplicationRecord
     private
 
     def react(type, reactable)
-        reaction = Reaction.find_by!(name: type)
-        user_reaction = UserReaction.new(user: self, reaction: reaction)
-        reactable.user_reactions << user_reaction
+        reaction_type = ReactionType.find_by!(name: type)
+        reaction = Reaction.new(user: self, reaction_type: reaction_type)
+        reactable.reactions << reaction
         reactable.save
     end
 end

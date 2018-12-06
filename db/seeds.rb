@@ -6,10 +6,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-tags = ["Math", "Computer Science", "Programming", "Algorithms"]
-reactions = ["like", "dislike", "genius", "report"]
-tags.map!{ |tag| Tag.create(name: tag) }
-reactions.map!{ |reaction| Reaction.create(name: reaction)}
+tag_types = ["Math", "Computer Science", "Programming", "Algorithms"]
+reaction_types = ["like", "dislike", "genius", "report"]
+tag_types.map!{ |tag| TagType.create(name: tag) }
+reaction_types.map!{ |reaction| ReactionType.create(name: reaction)}
 admin = User.create(name: "Admin", email: "admin@odinseye.com", password: "adminpassword")
 micah = User.create(name: "Micah Shute", email: "test@test.com", password: "password")
 taylor = User.create(name: "Taylor Swift", email:"taylor@swift.com", password: "password")
@@ -36,5 +36,6 @@ taylor.posts << Post.create(postable: first_reply, content: "This is not clever"
 taylor.posts.last.posts << Post.create(user: micah, content: "whteva")
 taylor.save
 
-first_topic.taggable_tags << TaggableTag.create(tag: tags[0], user: micah)
+first_topic.tags << Tag.create(tag_type: tag_types[0], user: micah)
+
 first_topic.save
