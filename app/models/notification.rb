@@ -4,4 +4,9 @@ class Notification < ApplicationRecord
     belongs_to :user
     
 
+
+    def unseen_by(user)
+        Notification.where(user_id: user.id, viewed: false)
+    end
+
 end

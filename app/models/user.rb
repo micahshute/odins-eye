@@ -47,24 +47,16 @@ class User < ApplicationRecord
     has_many :enrolled_classes, class_name: "Classroom", through: :student_classrooms, source: :classroom
 
 
-    def self.most_followed(num = 5)
-
-    end
-
-    def self.most_liked(num = 5)
-
-    end
-
-    def self.most_liked_by_tag(tag, num = 5)
-
+    def self.most_followed_count(limit = 5)
+        User.joins(:following_users).group(:following_id).order('count(follower_id)').limit(limit).count
     end
 
     def recieved_messages_by_sender
-        
+        group_messages_by_sender(self.recieved_messages)
     end
 
     def sent_messages_by_reciever
-
+        group_messages_by_sender(self.sent_messages)
     end
 
     def most_liked_posts
@@ -99,8 +91,21 @@ class User < ApplicationRecord
 
     end
 
+    def follow(user)
+        self.following << user
+    end
+
+    def unfollow(user)
+        self.following.delete(user)
+    end
+
+    def unseen_notifications
+        Notification.unseen_by(self)
+    end
+
     def message(user, content)
-        Message.create(sender: self, reciever: user, content: content)
+        m = Message.create(sender: self, reciever: user, content: content)
+        Notification.create(user: user, content: link_to("#{self.name} messaged you", user_message_path(self, m)))
     end
 
     def like(reactable)
@@ -119,6 +124,54 @@ class User < ApplicationRecord
         react("genius", reactable)
     end
 
+    def most_liked_posts(limit=5)
+        Post.most_liked_by_user(self, limit)
+    end
+
+    def most_liked_posts_count(limit=5)
+        Post.most_liked_count_by_user(self, limit)
+    end
+
+    def most_disliked_posts(limit=5)
+        Post.most_disliked_by_user(self, limit)
+    end
+
+    def most_disliked_posts_count(limit=5)
+        Post.most_disliked_count_by_user(self, limit)
+    end
+
+    def most_reacted_posts(limit=5)
+       Post.most_reacted_by_user(self, limit)
+    end
+
+    def most_liked_topics(limit=5)
+        Topic.most_liked_by_user(self, limit)
+    end
+
+    def most_liked_topics_count(limit=5)
+        Topic.most_liked_count_by_user(self, limit)
+    end
+
+    def most_disliked_topics(limit=5)
+        Topic.most_disliked_by_user(self, limit)
+    end
+
+    def most_disliked_topics_count(limit=5)
+        Topic.most_disliked_count_by_user(self, limit)
+    end
+
+    def most_reacted_topics(limit=5)
+       Topic.most_reacted_by_user(self, limit)
+    end
+
+    def most_viewed_topics(limit=5)
+        Topic.most_viewed_by_user(self, limit)
+    end
+
+    def most_viewed_topics_count
+        Topic.most_viewed_count_by_user(self, limit)
+    end
+
     private
 
     def react(type, reactable)
@@ -127,4 +180,18 @@ class User < ApplicationRecord
         reactable.reactions << reaction
         reactable.save
     end
+
+    def group_messages_by_sender(messages)
+        messages_by_sender = {}
+        messages.each do |message|
+            if messages_by_sender[message.sender].nil?
+                messages_by_sender[message.sender] = [message]
+            else
+                messages_by_sender[message.sender] << messages
+            end
+        end
+        messages_by_sender
+    end
+
+
 end

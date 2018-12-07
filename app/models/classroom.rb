@@ -17,4 +17,5 @@ class Classroom < ApplicationRecord
     def students
         self.users
     end
+    
 end

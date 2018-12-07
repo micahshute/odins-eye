@@ -33,6 +33,7 @@ taylor.following << micah
 micah.save
 
 taylor.like(first_topic)
+admin.like(first_reply)
 taylor.dislike(first_reply)
 taylor.message(micah, "I love you")
 micah.message(taylor, "I know")
@@ -42,6 +43,10 @@ admin.message(micah, "There's nothing to see. I used to live here, you know")
 micah.message(admin, "You're going to die here, you know. Convenient.")
 taylor.posts << Post.create(postable: first_reply, content: "This is not clever")
 taylor.posts.last.posts << Post.create(user: micah, content: "whteva")
+taylor.like(micah.posts.last)
+micah.like(micah.posts.last)
+admin.like(micah.posts.last)
+micah.like(taylor.posts.last)
 taylor.save
 
 first_topic.tags << Tag.create(tag_type: tag_types[0], user: micah)
