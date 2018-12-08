@@ -1,11 +1,19 @@
 class UsersController < ApplicationController
 
     def new
-        
+        @user = User.new
     end
 
     def create
-
+        @user = User.new(all_user_params)
+        if @user.save
+            session[:user_id] = @user.id
+            alert[:success] = "Welcome #{@user.name}!"
+            redirect_to home_path
+        else
+            flash[:danger] = "Oops! There was trouble making your acount."
+            render 'new'
+        end
     end
 
     def show
@@ -25,4 +33,13 @@ class UsersController < ApplicationController
         @user = current_user
     end
 
+    private
+
+    def user_params(*args)
+        params.require(:user).permit(*args)
+    end
+
+    def all_user_params
+        params.require(:user).permit(:user, :email, :password)
+    end
 end

@@ -32,6 +32,10 @@
     background-color: #b6a19e;
 }
 
+.bg-light-gp{
+    background-color: #EBDFE0;
+}
+
 .border-aqua {
     border-color: #6BBAA7;
 }
@@ -54,6 +58,20 @@
     margin-top: 75px;
 }
 
+.width-three-quarters{
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.width-half{
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 /* FIELDS  */
-
+.field-with-errors input {
+    border: 1px solid red;
+  }

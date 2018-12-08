@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
     helper_method :logged_in?
     helper_method :current_user
-
+    helper_method :time_of_day
+    helper_method :time_from_now
+    helper_method :parse_date
 
     private
 
@@ -15,7 +17,7 @@ class ApplicationController < ActionController::Base
 
     def authorize(user=nil)
         if user.nil?
-            not_authorized("#{'<a href="/login">Login</a>'} to view this page!") unless logged_in?
+            not_authorized("#{'<a href="/login">Login</a>'} or #{'<a href="/signup">Signup</a>'} to view this page!") unless logged_in?
         else
             not_authorized unless user == current_user
         end
@@ -37,6 +39,42 @@ class ApplicationController < ActionController::Base
     def not_authorized(msg = "You are not authorized to view that page")
         flash[:danger] = msg
         render(:file => File.join(Rails.root, 'public/403.html.erb'), :status => 403, :layout => false)
+    end
+
+    def time_of_day
+        hour = Time.now.to_s.split(" ")[1].split(":")[0].to_i
+        if hour < 12
+            "Morning"
+        elsif hour < 17
+            "Afternoon"
+        else
+            "Evening"
+        end
+    end
+
+    def time_from_now(time)
+        seconds = Time.now - time
+        if seconds < 60
+            return "#{seconds.to_i} seconds ago"
+        elsif seconds < 3600
+            return "#{(seconds / 60.0).to_i} minutes ago"
+        elsif seconds < 86400
+            return "#{(seconds / 3600.0).to_i} hours ago"
+        elsif seconds < 604800
+            return "#{(seconds / 86400.0).to_i} days ago"
+        elsif seconds < 2419200
+            return "#{(seconds / 604800.0).to_i} weeks ago"
+        else
+            return "on #{time}"
+        end
+    end
+
+    def parse_date(date)
+        data = date.split('-')
+        year = data[0]
+        month = data[1]
+        day = data[2]
+        "#{month}/#{day}/#{year}"
     end
     
 end

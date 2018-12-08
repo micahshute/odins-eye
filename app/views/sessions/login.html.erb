@@ -1,6 +1,6 @@
 
 
-<%= form_tag(login_path, class: "form-signin") do %>
+<%= form_tag(login_path, class: "form-signin width-three-quarters") do %>
   <div class="text-center mb-4">
     <h1 class="h3 mb-3 font-weight-normal">Login to Odin's Eye</h1>
   </div>
@@ -13,5 +13,4 @@
     <%= label_tag :inputPassword, "Password"%>
   </div>
   <%= submit_tag 'Sign In', class: 'btn btn-lg btn-primary btn-block'%>
-  <p class="mt-5 mb-3 text-muted text-center">© 2018</p>
 <% end %>

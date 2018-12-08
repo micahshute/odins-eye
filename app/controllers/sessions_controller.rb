@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
         if @user = User.find_by(email: params[:user][:email])
             if @user.authenticate(params[:user][:password])
                 session[:user_id] = @user.id
+                flash[:success] = "Welcome back, #{@user.name}"
                 redirect_to home_path
             else
                 flash[:danger] = "Improper login information entered."
