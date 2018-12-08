@@ -11,6 +11,10 @@ Rails.application.routes.draw do
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#logout'
 
+  get 'auth/:provider/callback', to: 'sessoins#googleAuth'
+  get 'auth/failure' to: redirect_to root_path
+
+
   resources :users do 
     resources :topics
     resources :posts

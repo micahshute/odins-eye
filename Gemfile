@@ -69,3 +69,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.8'
 end
 
+
+gem "omniauth", "~> 1.8"
+
+gem "omniauth-google-oauth2", "~> 0.5.4"

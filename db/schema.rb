@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(version: 2018_12_06_032924) do
     t.string "name"
     t.string "email"
     t.string "google_uid"
+    t.string "google_refresh_token"
     t.string "password_digest"
     t.text "bio"
     t.boolean "admin", default: false
