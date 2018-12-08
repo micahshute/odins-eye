@@ -22,9 +22,9 @@ class User < ApplicationRecord
     def password_requirements
         lowercase = /[a-z]/
         uppercase = /[A-Z]/
-        symbols = /[!@#$%&*]/
-        invalid = lowercase.match(password).nil? or uppercase.match(password).nil? or symbols.match(password).nil?
-        errors.add(:password, "must contain required symbols") if invalid
+        symbols = /[!@#$]/
+        invalid = (lowercase.match(self.password).nil? or uppercase.match(self.password).nil? or symbols.match(self.password).nil?)
+        errors.add(:password, "must contain required symbols: at least 1 lowercase letter, 1 uppercase letter, and 1 symbol !\#$@") if invalid
     end
 
 

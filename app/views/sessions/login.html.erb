@@ -13,6 +13,8 @@
     <%= label_tag :inputPassword, "Password"%>
   </div>
   <%= submit_tag 'Sign In', class: 'btn btn-lg btn-primary btn-block'%>
-<% end %>
+  <div class="container top-space center">
+      <a href="/auth/google_oauth2" ><%= image_tag "logo_icons/btn_google_signin_light_normal_web.png", class: "img-responsive", style: "" %></a>
+  </div>
 
-<%= link_to "Login with Google", '/auth/google_oauth2' %>
+<% end %>

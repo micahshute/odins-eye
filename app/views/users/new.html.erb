@@ -16,7 +16,7 @@
     <div class="form-label-group">
         <%= f.password_field :password, class: 'form-control', placeholder: 'Password' %>
         <%= f.label :password%>
-        <small>8-20 characters, 1 capital letter, 1 lower case, and 1 symbol</small>
+        <small>8-20 characters</small>
         <%= error_msg_for(@user, :password).html_safe %>
     </div>
     <div class='form-label-group'>
