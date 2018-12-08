@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 2018_12_06_032924) do
   end
 
   create_table "topics", force: :cascade do |t|
+    t.string "title"
     t.integer "user_id"
     t.integer "classroom_id"
     t.text "content"

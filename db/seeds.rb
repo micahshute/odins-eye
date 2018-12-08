@@ -14,7 +14,7 @@ reaction_types.map!{ |reaction| ReactionType.create(name: reaction)}
 admin = User.create(name: "Admin", email: "admin@odinseye.com", password: "adminpassword123!@#", password_confirmation: "adminpassword123!@#")
 micah = User.create(name: "Micah Shute", email: "test@test.com", password: password, password_confirmation: password)
 taylor = User.create(name: "Taylor Swift", email:"taylor@swift.com", password: password, password_confirmation: password)
-first_topic = Topic.create(user: micah, content: "What is the Fourier Transform?") 
+first_topic = Topic.create(user: micah, title: "What is the Fourier Transform?") 
 first_reply = first_topic.posts.build(user: micah, content: "An equation mapping time domain to the frequency domain")
 first_topic.tags << Tag.new(tag_type: TagType.find_by(name: "Math"), user: micah)
 first_topic.save

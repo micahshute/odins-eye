@@ -132,7 +132,6 @@ class User < ApplicationRecord
 
     def message(user, content)
         m = Message.create(sender: self, reciever: user, content: content)
-        Notification.create(user: user, content: link_to("#{self.name} messaged you", user_message_path(self, m)))
     end
 
     def like(reactable)

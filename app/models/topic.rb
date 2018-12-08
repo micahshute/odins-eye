@@ -1,6 +1,7 @@
 class Topic < ApplicationRecord
 
-    validates :content, presence: true, length: { maximum: 10000 }
+    validates :title, presence: true, length: { maximum: 50 }
+    validates :content, length: { maximum: 10000 }
 
     belongs_to :user
     belongs_to :classroom, optional: true

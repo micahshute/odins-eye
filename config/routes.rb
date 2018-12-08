@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     resources :posts
     resources :messages
     resources :classrooms
+    resources :notifications, only: [:index]
   end
 
   resources :users, only: [:new, :create, :show]
