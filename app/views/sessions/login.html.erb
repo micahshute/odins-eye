@@ -1,0 +1,17 @@
+
+
+<%= form_tag(login_path, class: "form-signin") do %>
+  <div class="text-center mb-4">
+    <h1 class="h3 mb-3 font-weight-normal">Login to Odin's Eye</h1>
+  </div>
+  <div class="form-label-group">
+    <%= email_field_tag 'user[email]', nil, class: "form-control", placeholder: 'Email Address', required: true%>
+     <%= label_tag :user_email, "EmailAddress"%>
+  </div>
+  <div class="form-label-group">
+    <%= password_field_tag  'user[password]', nil, class: "form-control", placeholder: 'Password', id: 'inputPassword' %>
+    <%= label_tag :inputPassword, "Password"%>
+  </div>
+  <%= submit_tag 'Sign In', class: 'btn btn-lg btn-primary btn-block'%>
+  <p class="mt-5 mb-3 text-muted text-center">© 2018</p>
+<% end %>

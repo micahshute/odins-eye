@@ -1,3 +1,5 @@
+/*  COLORS   */
+
 .color-aqua {
     color: #6BBAA7;
 }
@@ -45,3 +47,13 @@
 .border-dusty-rose{
     border-color: #b6a19e;
 }
+
+/*  SPACING   */
+
+.after-navbar{
+    margin-top: 75px;
+}
+
+
+/* FIELDS  */
+

@@ -15,8 +15,9 @@
     </div>
     <div class="container">
         <% flash.each do |key, value| %>
-            <div class="alert alert-<%= key %>" role="alert"><%= value %></div>
+            <div class="alert alert-<%= key %>" role="alert"><%= sanitize value %></div>
         <% end %>
+        <% clear_flash %>
     </div>
     <%= image_tag "error_pages/lion.jpg", class: "img-responsive", style: "width: 100%" %>
     <p>Photo by Geran de Klerk on Unsplash</p>
