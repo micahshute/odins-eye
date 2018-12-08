@@ -41,6 +41,11 @@ class ApplicationController < ActionController::Base
         render(:file => File.join(Rails.root, 'public/403.html.erb'), :status => 403, :layout => false)
     end
 
+    def log_in(user)
+        raise ArgumentError.new("You man only log in a user, not a #{user.class}.") unless user.is_a? User
+        session[:user_id] = user.id
+    end
+
     def time_of_day
         hour = Time.now.to_s.split(" ")[1].split(":")[0].to_i
         if hour < 12
@@ -76,5 +81,6 @@ class ApplicationController < ActionController::Base
         day = data[2]
         "#{month}/#{day}/#{year}"
     end
-    
+
+  
 end

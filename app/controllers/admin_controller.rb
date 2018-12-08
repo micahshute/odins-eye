@@ -1,4 +1,3 @@
 def AdminController < ApplicationController
 
-
 end

@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     def create
         @user = User.new(all_user_params)
         if @user.save
-            session[:user_id] = @user.id
+            log_in(@user)
             flash[:success] = "Welcome #{@user.name}!"
             redirect_to home_path
         else

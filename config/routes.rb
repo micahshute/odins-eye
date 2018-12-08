@@ -11,8 +11,8 @@ Rails.application.routes.draw do
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#logout'
 
-  get 'auth/:provider/callback', to: 'sessoins#googleAuth'
-  get 'auth/failure' to: redirect_to root_path
+  get 'auth/google_oauth2/callback', to: 'sessions#googleAuth'
+  get 'auth/failure', to: redirect('/')
 
 
   resources :users do 

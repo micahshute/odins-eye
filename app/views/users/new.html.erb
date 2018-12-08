@@ -26,3 +26,6 @@
     </div>
     <%= f.submit 'Sign Up', class: 'btn btn-lg btn-primary btn-block'%>
 <% end %>
+
+<%= link_to "Signup with Google", '/auth/google_oauth2' %>
+<div class="g-signin2" data-onsuccess="onSignIn"></div>

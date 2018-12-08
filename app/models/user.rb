@@ -6,10 +6,12 @@ class User < ApplicationRecord
     validates :bio, length: { maximum: 500 }
     validates :email, presence: true, length: { minimum: 5 }
     validates :email, uniqueness: { case_sensitive: false }
-    validates :password, length: { in: 8..20 }
-    validates :password_confirmation, presence: true
+    validates :password, length: { in: 8..20 }, on: :create
+    validates :password_confirmation, presence: true, on: :create
     validate :email_must_be_valid
-    validate :password_requirements
+    validate :password_requirements, on: :create
+    validates :password, length: { in: 8..20 }, if: :setting_password?
+    validate :password_requirements, if: :setting_password?
 
     #must have an @ 
     def email_must_be_valid
@@ -20,11 +22,15 @@ class User < ApplicationRecord
     def password_requirements
         lowercase = /[a-z]/
         uppercase = /[A-Z]/
-        symbol = /[!@#$%^&*]/
+        symbol = /[!@#$%&*]/
         invalid = lowercase.match(password).nil? or uppercase.match(password).nil? or symbol.match(password).nil?
         errors.add(:password, "must contain required symbols") if invalid
     end
 
+
+    def setting_password?
+        password || password_confirmation
+    end
 
     has_many :posts
     has_many :topics
@@ -46,6 +52,27 @@ class User < ApplicationRecord
     has_many :student_classrooms
     has_many :enrolled_classes, class_name: "Classroom", through: :student_classrooms, source: :classroom
 
+
+    def self.from_google(auth)
+        refresh_token = auth.credentials.refresh_token
+        if (found_user = User.find_by(email: auth.info.email))
+            found_user.google_uid = auth.credentials.token
+            found_user.google_refresh_token = refresh_token if refresh_token.present?
+            return found_user
+        else
+            new_user = User.new do |u|
+                u.email = auth.info.email
+                u.name = auth.info.name
+                u.google_uid = auth.credentials.token
+                u.google_refresh_token = refresh_token if refresh_token.present?
+                rand_password = RandomPasswordStrategy.random_password
+                u.password = rand_password
+                u.password_confirmation = rand_password
+            end
+            return new_user
+        end
+        
+    end
 
     def self.most_followed_count(limit = 5)
         User.joins(:following_users).group(:following_id).order('count(follower_id)').limit(limit).count
