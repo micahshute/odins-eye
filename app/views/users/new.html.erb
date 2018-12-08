@@ -1,6 +1,6 @@
 <%= form_for(@user, html: {class: 'form-signin width-half'}) do |f| %>
     <div text-center mb-4>
-        <h1 class="h3 mb-2 font-weight-normal">Signup</h1>    
+        <h1 class="h3 mb-2 font-weight-normal">Create Account</h1>    
     </div>
 
     <div class="form-label-group">
@@ -25,7 +25,9 @@
         <%= error_msg_for(@user, :password_confirmation).html_safe %>
     </div>
     <%= f.submit 'Sign Up', class: 'btn btn-lg btn-primary btn-block'%>
+
+    <div class="container top-space center">
+        <a href="/auth/google_oauth2" ><%= image_tag "logo_icons/btn_google_signin_light_normal_web.png", class: "img-responsive", style: "" %></a>
+    </div>
 <% end %>
 
-<%= link_to "Signup with Google", '/auth/google_oauth2' %>
-<div class="g-signin2" data-onsuccess="onSignIn"></div>
