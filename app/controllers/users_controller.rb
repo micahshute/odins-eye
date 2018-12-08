@@ -8,7 +8,7 @@ class UsersController < ApplicationController
         @user = User.new(all_user_params)
         if @user.save
             session[:user_id] = @user.id
-            alert[:success] = "Welcome #{@user.name}!"
+            flash[:success] = "Welcome #{@user.name}!"
             redirect_to home_path
         else
             flash[:danger] = "Oops! There was trouble making your acount."
@@ -40,6 +40,6 @@ class UsersController < ApplicationController
     end
 
     def all_user_params
-        params.require(:user).permit(:user, :email, :password)
+        params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
 end

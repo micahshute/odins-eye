@@ -55,7 +55,7 @@
 /*  SPACING   */
 
 .after-navbar{
-    margin-top: 75px;
+    margin-top: 85px;
 }
 
 .width-three-quarters{
@@ -72,6 +72,6 @@
 
 
 /* FIELDS  */
-.field-with-errors input {
-    border: 1px solid red;
-  }
+.error-text{
+    color: red;
+}   
