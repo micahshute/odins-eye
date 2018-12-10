@@ -123,6 +123,8 @@ class User < ApplicationRecord
 
     end
 
+    # MARK: ACTIONS 
+
     def follow(user)
         self.following << user
     end
@@ -153,6 +155,38 @@ class User < ApplicationRecord
 
     def is_genius(reactable)
         react("genius", reactable)
+    end
+
+    def likes?(reactable)
+        has_reaction?(reactable, :like)
+    end
+
+    def dislikes?(reactable)
+        has_reaction?(reactable, :dislike)
+    end
+
+    def thinks_is_genius?(reactable)
+        has_reaction?(reactable, :genius)
+    end
+
+    def reported?(reactable)
+        has_reaction?(reactable, :report)
+    end
+
+    def likes_for(reactable)
+        reaction_for(reactable, :like)
+    end
+
+    def dislikes_for(reactable)
+        reaction_for(reactable, :dislike)
+    end
+
+    def genius_reaction_for(reatable)
+        reaction_for(reactable, :genius)
+    end
+
+    def reports_for(reactable)
+        reaction_for(reactable, :report)
     end
 
     def most_liked_posts(limit=5)
@@ -204,6 +238,16 @@ class User < ApplicationRecord
     end
 
     private
+
+    def has_reaction?(reactable, type)
+        type_id = ReactionType.find_by(name: type).id
+        Reaction.joins(:reaction_type).where(reaction_type_id: type_id, user_id: self.id, reactable_id: reactable.id, reactable_type: reactable.class.to_s).length > 0
+    end
+
+    def reaction_for(reactable, type)
+        type_id = ReactionType.find_by(name: type).id
+        Reaction.joins(:reaction_type).where(reaction_type_id: type_id, user_id: self.id, reactable_id: reactable.id, reactable_type: reactable.class.to_s)
+    end
 
     def react(type, reactable)
         reaction_type = ReactionType.find_by!(name: type)

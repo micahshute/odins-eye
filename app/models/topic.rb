@@ -138,6 +138,11 @@ class Topic < ApplicationRecord
         end
     end
 
+    def reactions_of_type(type)
+        type_id = ReactionType.find_by(name: type).id
+        Reaction.joins(:reaction_type).where(reaction_type_id: type_id, reactable_id: self.id, reactable_type: self.class.to_s)
+    end
+
     private
 
     def self.most_reacted_type(type, limit, count)
