@@ -17,7 +17,8 @@ class Topic < ApplicationRecord
     has_many :reaction_types, through: :reactions
     has_many :tags, as: :taggable
     has_many :tag_types, through: :tags
-
+    has_many :user_saved_topics
+    has_many :user_saved, through: :user_saved_topics, source: "user"
     before_save :format_content
 
 

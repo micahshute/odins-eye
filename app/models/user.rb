@@ -51,7 +51,8 @@ class User < ApplicationRecord
     has_many :tag_types, through: :tags
     has_many :student_classrooms
     has_many :enrolled_classes, class_name: "Classroom", through: :student_classrooms, source: :classroom
-
+    has_many :user_saved_topics
+    has_many :saved_topics, through: :user_saved_topics, source: "topic"
 
     def self.from_google(auth)
         refresh_token = auth.credentials.refresh_token
