@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
     helper_method :parse_date
     helper_method :display_date_short
     helper_method :display_date_long
+    helper_method :markdown
 
     private
 
@@ -90,6 +91,10 @@ class ApplicationController < ActionController::Base
 
     def display_date_long(date)
         date.strftime('%a %d %b %Y')
+    end
+
+    def markdown(markdown)
+        Kramdown::Document.new(markdown, parse_block_html: true, syntax_highlighter: :rouge, syntax_highlighter_opts: {line_numbers: false}).to_html
     end
 
   

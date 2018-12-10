@@ -19,7 +19,7 @@
     <div class="col-md-6 px-0">
         <h5 class="color-sunshine">Spotlight Topic: </h5>
         <h1 class="display-4 font-italic"><%= @spotlight.title %></h1>
-        <p class="preview-text lead my-3"><%= @spotlight.content.nil? ? "" : @spotlight.content.truncate_words(10)%></p>
+        <p class="preview-text lead my-3"><%= @spotlight.content.nil? ? "" : strip_tags(markdown(@spotlight.content.truncate_words(10))) %></p>
         <p class="lead mb-0"><a href="<%= topic_path(@spotlight) %>" class="text-white font-weight-bold">Continue reading...</a></p>
     </div>
     </div>
@@ -33,7 +33,7 @@
                 <a class="text-dark" href="<%= topic_path(@popular_posts_by_tag.values.first)%>"><%= @popular_posts_by_tag.values.first.title %></a>
                 </h3>
                 <div class="mb-1 text-muted preview-text"><%=parse_date(@popular_posts_by_tag.values.first.created_at)%></div>
-                <p class="card-text mb-auto preview-text"><%= @popular_posts_by_tag.values.first.content.truncate_words(25) %></p>
+                <p class="card-text mb-auto preview-text"><%= strip_tags(markdown(@popular_posts_by_tag.values.first.content.truncate_words(25))) %></p>
                 <a href="<%= topic_path(@popular_posts_by_tag.values.first)%>">Continue reading</a>
             </div>
             <div class="card-img-right flex-auto d-none d-lg-block bg-bluegray" style="width: 200px; height: 250px;"></div>
@@ -47,7 +47,7 @@
                 <a class="text-dark" href="<%= topic_path(@popular_posts_by_tag.values.last)%>"><%= @popular_posts_by_tag.values.last.title %></a>
                 </h3>
                 <div class="mb-1 text-muted preview-text"><%= parse_date(@popular_posts_by_tag.values.last.created_at) %></div>
-                <p class="card-text mb-auto preview-text"><%= @popular_posts_by_tag.values.first.content.truncate_words(25) %></p>
+                <p class="card-text mb-auto preview-text"><%= strip_tags(markdown(@popular_posts_by_tag.values.first.content.truncate_words(25))) %></p>
                 <a href="<%= topic_path(@popular_posts_by_tag.values.last)%>">Continue reading</a>
             </div>
             <div class="card-img-right flex-auto d-none d-lg-block bg-bluegray" style="width: 200px; height: 250px;"></div>
@@ -67,7 +67,7 @@
                 <h2 class="blog-post-title"><%= link_to topic.title, topic_path(topic), class: "text-dark text-bold" %></h2>
                 <p class="blog-post-meta"><small><%= display_date_long(topic.created_at) %> by </small><%= link_to topic.user.name, user_path(topic.user) %></p>
 
-                <p class="standard-text"><%= topic.content.truncate_words(50) %></p>
+                <p class="standard-text"><%= strip_tags(markdown(topic.content.truncate_words(50))) %></p>
                 
                 <div class="row">
                     <div class="col-sm-4">

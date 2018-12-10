@@ -3,7 +3,7 @@ class Topic < ApplicationRecord
     include Reactable
 
     validates :title, presence: true, length: { maximum: 50 }
-    validates :content, length: { maximum: 10000 }
+    validates :content, length: { maximum: 100000 }
     validate :validate_tag_number
 
     def validate_tag_number
@@ -17,6 +17,13 @@ class Topic < ApplicationRecord
     has_many :reaction_types, through: :reactions
     has_many :tags, as: :taggable
     has_many :tag_types, through: :tags
+
+    before_save :format_content
+
+
+    def format_content
+        self.content = self.content.gsub("```", "~~~~~")
+    end
 
     def self.trending_today
         Topic.joins(:reaction_types).where(reaction_types: {name: 'like'}, classroom_id: nil).where(reactions: { created_at: ((Time.now - 24 * 3600)..Time.now)}).group('id').order(Arel.sql('count(reaction_type_id) DESC')).limit(1)

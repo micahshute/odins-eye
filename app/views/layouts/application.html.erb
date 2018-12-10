@@ -5,16 +5,16 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= favicon_link_tag asset_path('OE.png'), :rel => 'icon', :type =>  'image/png' %>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= stylesheet_link_tag "custom.css" %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag "rouge.css" %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Abel|Cinzel|Titillium+Web|Oxygen" rel="stylesheet">
+     <%= stylesheet_link_tag "custom.css" %>
   </head>
 
-  <body class="bg-light-gp">
+  <body class="bg-light-gp full-body">
 
 
     <div class="container">

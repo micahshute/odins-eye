@@ -8,6 +8,7 @@ module ApplicationHelper
         end
     end
 
+
     def render_markdown(markdown)
         render 'components/content', markdown: Kramdown::Document.new(markdown, parse_block_html: true, syntax_highlighter: :rouge, syntax_highlighter_opts: {line_numbers: false}).to_html
     end
