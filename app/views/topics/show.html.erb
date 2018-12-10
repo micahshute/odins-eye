@@ -1,8 +1,24 @@
 <div class="row">
-    <div class="col-sm-1"></div>
+    <div class="col-sm-1 sticky-holder">
+        <div class="sticky-sidebar after-navbar">
+            <%=link_to(likes(@topic, 'whitesmoke', 'whitesmoke'), "/#", :'data-method' => "post") %>
+            <%=link_to(genius(@topic, 'whitesmoke', 'whitesmoke'), "/#", :'data-method' => "post") %>
+            <%=link_to(dislikes(@topic, 'whitesmoke', 'whitesmoke'), "/#", :'data-method' => "post") %>
+            <%=link_to("Report", "/#", class: "color-whitesmoke") %>
+        </div>
+    </div>
     <div class="col-sm-10 bg-offwhite markdown-holder">
-        <h3 class="center"><%= @topic.title %></h3>
+        <h1 class="center topic-title"><%= @topic.title %></h1>
+        <p class="author-time"><small></small><%= link_to @topic.user.name, user_path(@topic.user) %><small>, <%= display_date_long(@topic.created_at)%></small></p>
+        <div class="topic-tags">
+        <ul class="topic-tag-list d-flex justify-content-start">
+            <% @topic.tag_types.each do |t| %>
+                <li class="tag"><%= t.name %>  </li>
+            <% end %>
+        </ul>
+        </div>
         <hr>
+
         <%= render_markdown(@topic.content) %>
     </div>
     <div class="col-sm-1"></div>

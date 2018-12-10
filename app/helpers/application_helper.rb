@@ -13,16 +13,16 @@ module ApplicationHelper
         render 'components/content', markdown: Kramdown::Document.new(markdown, parse_block_html: true, syntax_highlighter: :rouge, syntax_highlighter_opts: {line_numbers: false}).to_html
     end
 
-    def likes(reactable, color='dusty-rose')
-        render 'components/likes', likes: reactable.likes, color: color
+    def likes(reactable, img_color='dusty-rose', text_color='charcoal')
+        render 'components/likes', likes: reactable.likes, img_color: img_color, text_color: text_color
     end
 
-    def dislikes(reactable, color='dusty-rose')
-        render 'components/dislikes', dislikes: reactable.dislikes, color: color
+    def dislikes(reactable, img_color='dusty-rose', text_color='charcoal')
+        render 'components/dislikes', dislikes: reactable.dislikes, img_color: img_color, text_color: text_color
     end
 
-    def genius(reactable, color='dusty-rose')
-        render 'components/geniuses', geniuses: reactable.geniuses, color: color
+    def genius(reactable, img_color='dusty-rose', text_color='charcoal')
+        render 'components/geniuses', geniuses: reactable.geniuses, img_color: img_color, text_color: text_color
     end
 
     def sanitize_markdown(content)

@@ -5,6 +5,7 @@
   background-color: #122b3b;
   border-radius: 5px;
   padding: 5px;
+  padding-bottom: 0px;
 }
 .highlight *{
   font-family: "Source Code Pro", "Courier New";
