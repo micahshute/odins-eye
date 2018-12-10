@@ -4,6 +4,9 @@
     color: #6BBAA7;
 }
 
+.color-bluegray{
+    color: rgb(51, 84, 113)
+}
 .color-sunshine{
     color: #fba100;
 }
@@ -36,10 +39,17 @@
     background-color: #b6a19e;
 }
 
+.bg-charcoal{
+    background-color: rgb(42, 42, 42);
+}
+
 .bg-light-gp{
     background-color: #EBDFE0;
 }
 
+.bg-bluegray{
+    background-color: rgb(51, 84, 113)
+}
 .border-aqua {
     border-color: #6BBAA7;
 }
