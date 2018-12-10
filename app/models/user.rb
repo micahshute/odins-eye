@@ -78,6 +78,10 @@ class User < ApplicationRecord
         User.joins(:following_users).group(:following_id).order('count(follower_id)').limit(limit).count
     end
 
+    def self.most_followed(limit=5)
+        most_followed_count(limit).map{ |user_id, count| User.find(user_id) }
+    end 
+
     def recieved_messages_by_sender
         group_messages_by_sender(self.recieved_messages)
     end

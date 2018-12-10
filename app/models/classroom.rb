@@ -14,6 +14,24 @@ class Classroom < ApplicationRecord
         Classroom.joins(tag_types: :tags).where(tag_types: {name: tag_name}).group('id')
     end
 
+    def self.all_public_by_tag_name(tag_name)
+        Classroom.joins(tag_types: :tags).where(tag_types: {name: tag_name}, private: false).group('id')
+    end
+
+    def self.most_popular(limit=5)
+        joins(:student_classrooms).group(:id).order(Arel.sql('count(student_classrooms.user_id) DESC')).limit(limit)
+    end
+
+    def self.all_private
+        where(private: true)
+    end
+
+    def self.all_public
+        where(private: false)
+    end
+
+    
+
     def students
         self.users
     end

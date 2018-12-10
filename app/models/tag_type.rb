@@ -1,8 +1,20 @@
 class TagType < ApplicationRecord
 
     validates :name, presence: true
-
+    validates :name, uniqueness: true
+    before_save :remove_spaces
+    before_save :downcase_fields
     has_many :tags
 
+    def downcase_fields
+        self.name = self.name.downcase
+    end
 
+    def remove_spaces
+        self.name = self.name.gsub(" ", "_")
+    end
+        
+    def self.find_or_create_by_name_ignore_case(name)
+        TagType.where('lower(name) = ?', name.downcase).first_or_create(name: name)
+    end
 end

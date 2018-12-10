@@ -1,5 +1,6 @@
 class Post < ApplicationRecord
-
+  include Reactable
+  
   validates :content, presence: true, length: { maximum: 10000 }
 
   belongs_to :postable, polymorphic: true

@@ -16,6 +16,10 @@
     color: #b6a19e;
 }
 
+.color-charcoal{
+    color: rgb(42, 42, 42);
+}
+
 .bg-aqua {
     background-color: #6BBAA7;
 }
@@ -79,8 +83,41 @@
     margin-right: auto;
 }
 
-/* FIELDS  */
+.inline{
+    display: inline;
+}
+
+/* FIELDS and COMPONENTS */
 .error-text{
     color: red;
 }   
 
+a {
+    color: #6BBAA7;
+    font-family: "Titillium Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.border-bottom{
+    border-bottom: 2px solid rgb(62, 58, 58);
+}
+
+.shadow{
+    text-shadow: 4px 4px 4px #aaa;
+}
+
+.title-text{
+    font-family: 'Cinzel', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 48px;
+}
+
+ .preview-text{
+    font-family: 'Abel', "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.standard-text{
+    font-family: "Titillium Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.text-bold{
+    font-weight: bold;
+}

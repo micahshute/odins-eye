@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
     helper_method :time_of_day
     helper_method :time_from_now
     helper_method :parse_date
+    helper_method :display_date_short
+    helper_method :display_date_long
 
     private
 
@@ -75,11 +77,19 @@ class ApplicationController < ActionController::Base
     end
 
     def parse_date(date)
-        data = date.split('-')
+        data = date.to_s.split('-')
         year = data[0]
         month = data[1]
-        day = data[2]
+        day = data[2].split(" ").first
         "#{month}/#{day}/#{year}"
+    end
+
+    def display_date_short(date)
+        date.to_s.split(" ").slice(1,3).join(" ")
+    end
+
+    def display_date_long(date)
+        date.strftime('%a %d %b %Y')
     end
 
   

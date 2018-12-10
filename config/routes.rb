@@ -23,11 +23,17 @@ Rails.application.routes.draw do
     resources :notifications, only: [:index]
   end
 
+  resources :tags do 
+    resources :topics, only: [:index, :show]
+    resources :topics, only: [:index, :show]
+  end
+
   resources :users, only: [:new, :create, :show]
 
   resources :topics do
     resources :posts
   end
+
 
   resources :classrooms
 

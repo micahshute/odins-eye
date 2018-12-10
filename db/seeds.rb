@@ -14,11 +14,14 @@ reaction_types.map!{ |reaction| ReactionType.create(name: reaction)}
 admin = User.create(name: "Admin", email: "admin@odinseye.com", password: "adminpassword123!@#", password_confirmation: "adminpassword123!@#")
 micah = User.create(name: "Micah Shute", email: "test@test.com", password: password, password_confirmation: password)
 taylor = User.create(name: "Taylor Swift", email:"taylor@swift.com", password: password, password_confirmation: password)
-first_topic = Topic.create(user: micah, title: "What is the Fourier Transform?") 
+first_topic = Topic.create(user: micah, title: "What is the Fourier Transform?", content: "No, I really don't know. Can anyone tell me?") 
 first_reply = first_topic.posts.build(user: micah, content: "An equation mapping time domain to the frequency domain")
 first_topic.tags << Tag.new(tag_type: TagType.find_by(name: "Math"), user: micah)
 first_topic.save
 
+cs_topic = Topic.create(user: micah, title: "Sorting algorithms", content: "Here's what you have to know about sorting algorithms. First of all, everyone talks about them but nobody uses them. Also, ")
+cs_topic.tag("Computer Science", "Programming", "Beginners")
+cs_topic.save
 classroom = Classroom.new(name: "Math Class", professor: micah)
 
 classroom.save
