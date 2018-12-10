@@ -56,3 +56,97 @@ taylor.save
 first_topic.tags << Tag.create(tag_type: tag_types[0], user: micah)
 
 first_topic.save
+
+
+blog_post = Topic.new(user: taylor, title: "How to program a queue", content:
+'# Programming a Queue.
+--------------------
+A queue is a limited version of an array. It is useful because it provides a simple abstraction for systems which require its specific functionality.
+
+As a wise man once said:
+
+> Queues are cool.
+
+Things that use a queue:
+
+* Searching through a trie (breadth-first-search)
+* First-in-line applications
+
+### So, how do you make a queue? 
+
+(Btw, $E=mc^2$)
+
+__You need 2 methods:__ `pop` and `push`. `pop` will remove the 0th element in the array and return it, and `push` will add an item to the end of the array.
+
+
+~~~ ruby
+def what?
+  42
+end
+~~~
+
+~~~ruby 
+class Queue
+
+    attr_reader :data
+
+    def initialize(arr)
+        @data = arr
+    end
+
+    def pop
+        r_val = @data[0]
+        @data = @data.slice(1, @data.length - 1)
+        return r_val
+    end
+
+    def push(val)
+        @data[@data.length] = val
+    end
+
+end
+~~~
+
+
+~~~
+    Also, you can put stuff in here that isn\'t a language
+~~~
+
+1. list 1 item 1
+    1. nested list item 1
+    2. nested list item 2
+10. list 1 item 2
+    1. nested list item 1
+
+
+| Header1 | Header2 | Header3 |
+|:--------|:-------:|--------:|
+| cell1   | cell2   | cell3   |
+| cell4   | cell5   | cell6   |
+|----
+| cell1   | cell2   | cell3   |
+| cell4   | cell5   | cell6   |
+|=====
+| Foot1   | Foot2   | Foot3
+{: rules="groups"}
+
+This is *emphasized*, _this_ too!
+
+A [link](http://kramdown.gettalong.org)
+to the kramdown homepage.
+
+This is a text with a
+footnote[^2].
+
+[^2]:
+    And here is the definition.
+
+    > With a quote!
+
+
+
+This is *red*{: style="color: red"}.
+'
+)
+
+blog_post.save

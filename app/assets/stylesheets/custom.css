@@ -131,3 +131,19 @@ a {
 .text-bold{
     font-weight: bold;
 }
+
+blockquote{
+    border-left: 2px solid rgb(62, 58, 58);
+    font-family: "Abel", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: rgb(218, 218, 218);
+    color: rgb(25, 25, 25);
+    font-weight: bold;
+    border-radius: 3px;
+    margin-left: 20px;
+}
+
+blockquote p{
+    margin-left: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

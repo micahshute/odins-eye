@@ -73,3 +73,7 @@ end
 gem "omniauth", "~> 1.8"
 
 gem "omniauth-google-oauth2", "~> 0.5.4"
+
+gem "kramdown", "~> 1.17"
+
+gem "rouge", "~> 3.3"

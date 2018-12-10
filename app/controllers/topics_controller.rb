@@ -18,7 +18,7 @@ class TopicsController < ApplicationController
     end
 
     def index
-
+        @topic = Topic.all.last
     end
 
     def update
