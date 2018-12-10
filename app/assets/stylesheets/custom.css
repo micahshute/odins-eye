@@ -59,6 +59,10 @@ html, body{
     background-color: #EBDFE0;
 }
 
+.bg-offwhite{
+    background-color: #FFFFF0;
+}
+
 .bg-bluegray{
     background-color: rgb(51, 84, 113)
 }
@@ -176,4 +180,23 @@ textarea#topic_content{
 .content-form-title{
     font-family: "Titillium Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
     margin-bottom: 30px;
+}
+
+
+
+/*          MARKDOWN HOLDER          */
+
+
+.markdown-holder div{
+    max-width: 100%;
+}
+
+.markdown-holder img{
+    max-width: 100%;
+}
+
+.markdown-holder{
+    padding: 3em;
+    border-radius: 5px;
+    margin-bottom: 40px;
 }

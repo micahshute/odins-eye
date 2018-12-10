@@ -3,6 +3,12 @@
 .highlight {
   color: #faf6e4;
   background-color: #122b3b;
+  border-radius: 5px;
+  padding: 5px;
+}
+.highlight *{
+  font-family: "Source Code Pro", "Courier New";
+  font-size: 0.95em;
 }
 .highlight .gl {
   color: #dee5e7;

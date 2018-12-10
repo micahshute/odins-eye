@@ -1,1 +1,9 @@
-<%= render_markdown(@topic.content) %>
+<div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10 bg-offwhite markdown-holder">
+        <h3 class="center"><%= @topic.title %></h3>
+        <hr>
+        <%= render_markdown(@topic.content) %>
+    </div>
+    <div class="col-sm-1"></div>
+</div>
