@@ -25,6 +25,7 @@ class TagType < ApplicationRecord
     # MARK Class Methods
 
     def self.find_or_create_by_name_ignore_case(name)
-        TagType.where('lower(name) = ?', name.downcase).first_or_create(name: name)
+        name = name.gsub(" ", "_").downcase
+        TagType.where('lower(name) = ?', name).first_or_create(name: name)
     end
 end

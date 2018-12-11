@@ -8,7 +8,7 @@ class Tag < ApplicationRecord
   # MARK Callbacks
 
   def check_if_last
-    if self.class.where(tag_type_id: self.tag_type_id).length == 0
+    if self.class.where(tag_type_id: self.tag_type_id).count == 0
       TagType.find(self.tag_type_id).destroy
     end
   end
