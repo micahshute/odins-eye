@@ -30,13 +30,12 @@ class Reaction < ApplicationRecord
     when "like"
       dislikes = reactions_to_reactable.select{ |reaction| reaction.reaction_type_id == type_ids[:dislike] }
       dislikes.each{ |d| d.destroy }
-      likes = reactions_to_reactable.select{ |reaction| reaction.reaction_type_id }
+      likes = reactions_to_reactable.select{ |reaction| reaction.reaction_type_id == type_ids[:like]}
       likes.each{ |l| l.destroy }
-
     when 'dislike'
       dislikes = reactions_to_reactable.select{ |reaction| reaction.reaction_type_id == type_ids[:dislike] }
       dislikes.each{ |d| d.destroy }
-      likes = reactions_to_reactable.select{ |reaction| reaction.reaction_type_id }
+      likes = reactions_to_reactable.select{ |reaction| reaction.reaction_type_id == type_ids[:like]}
       likes.each{ |l| l.destroy }
       geniuses = reactions_to_reactable.select{ |reaction| reaction.reaction_type_id == type_ids[:genius] } 
       geniuses.each{ |g| g.destroy }
@@ -46,7 +45,7 @@ class Reaction < ApplicationRecord
       geniuses = reactions_to_reactable.select{ |reaction| reaction.reaction_type_id == type_ids[:genius] } 
       geniuses.each{ |g| g.destroy }
     when 'report'
-      likes = reactions_to_reactable.select{ |reaction| reaction.reaction_type_id }
+      likes = reactions_to_reactable.select{ |reaction| reaction.reaction_type_id == type_ids[:like]}
       likes.each{ |l| l.destroy }
       geniuses = reactions_to_reactable.select{ |reaction| reaction.reaction_type_id == type_ids[:genius] } 
       geniuses.each{ |g| g.destroy }
@@ -60,7 +59,6 @@ class Reaction < ApplicationRecord
   end
 
   def self.user_reactable(user, reactable)
-    type_id = ReactionType.find_by(name: type).id
     where(user_id: user.id, reactable_id: reactable.id, reactable_type: reactable.class.to_s)
   end
 
