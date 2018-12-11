@@ -1,0 +1,17 @@
+<div class="markdown-holder bg-offwhite post-container">
+    <p><%= link_to post.user.name, user_path(post.user) %><small class="faded-text"> <%= time_from_now(post.created_at)%>   <%= "::  edited #{time_from_now(post.updated_at)}" if post.edited? %></small></p>
+    <hr>
+    <%= render_markdown(post.content) %>
+    <div class="row reaction-holder no-padding">
+        <div class="col-sm-4 no-padding">
+            <%= link_to genius(post, 'charcoal', 'charcoal', 'md-14'), "#", class: 'post-reaction' %>
+            <%= link_to likes(post, 'charcoal', 'charcoal', 'md-14'), "#", class: 'post-reaction' %>
+            <%= link_to dislikes(post, 'charcoal', 'charcoal', 'md-14'), "#", class: "post-reaction" %>
+        </div>
+        <div class="col-sm-7 no-padding">
+        </div>
+        <div class="col-sm-1 no-padding">
+            <%= reply(new_post_reply_path(post), 'aqua', 'aqua', 'md-14')%>
+        </div>
+    </div>
+</div>

@@ -49,6 +49,16 @@ class Post < ApplicationRecord
     Post.joins(:reaction_types).where(user_id: user.id).group('id').order(Arel.sql('count(reaction_type_id) DESC')).limit(limit).count
   end
 
+  #Mark Instance Methods
+
+  def topic
+    parent = self.postable
+    until postable.class.is_a?(Topic)
+      parent = parent.postable
+    end
+    parent
+  end
+
 
 
   private

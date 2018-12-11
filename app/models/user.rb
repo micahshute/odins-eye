@@ -59,6 +59,8 @@ class User < ApplicationRecord
     has_many :saved_topics, through: :user_saved_topics, source: "topic"
 
 
+    extend EagerLoading
+
     # MARK Class Methods
 
     def self.from_google(auth)

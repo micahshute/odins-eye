@@ -32,7 +32,7 @@ class TopicsController < ApplicationController
     end
 
     def show
-        @topic = Topic.find(params[:id])
+        @topic = Topic.where(id: params[:id]).includes(:user, :tags).includes(posts: {reactions: :reaction_type}).first
     end
 
     def edit

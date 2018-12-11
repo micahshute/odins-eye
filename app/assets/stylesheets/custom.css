@@ -426,3 +426,73 @@ textarea#topic_content{
     margin-bottom: 5px;
     margin-top: 10px;
 }
+
+
+/* POSTS */
+
+.post-container{
+    padding-left: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 25px;
+}
+
+
+.faded-text{
+    color: rgb(95, 95, 95);
+}
+
+.post-reaction{
+    color: black;
+}
+
+.post-reaction{
+    text-decoration: none;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.post-reaction:hover{
+    text-decoration: none;
+    border-radius: 50%;
+    background-color: rgba(218, 218, 218, 0.4);
+}
+
+.no-padding{
+    padding: 0px;
+}
+
+.reply-button{
+    margin-bottom: 0px;
+}
+
+.reply-button:hover{
+    text-decoration: none;
+    border-radius: 10px;
+    background-color: rgba(218, 218, 218, 0.2);
+}
+
+
+/* FOOTER */
+
+.footer{
+    background-color: rgb(48, 56, 57);
+}
+
+.footer a{
+    font-size: 0.8em;
+}
+
+.footer-text{
+    margin-bottom: 0px;
+    color: rgb(204, 204, 204);
+}
+
+
+ /* Rules for sizing the icon. */
+ .material-icons.md-12 { font-size: 12px; }
+ .material-icons.md-14 { font-size: 14px; }
+ .material-icons.md-18 { font-size: 18px; }
+ .material-icons.md-24 { font-size: 24px; }
+ .material-icons.md-36 { font-size: 36px; }
+ .material-icons.md-48 { font-size: 48px; }

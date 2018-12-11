@@ -17,6 +17,16 @@ Rails.application.routes.draw do
   post 'topics/:topic_id/save-for-later' => 'users#reading_list_create', as: "create_reading_list"
   get 'reading-list' => 'topics#reading_list', as: "reading_list"
 
+  get 'posts/:post_id/replies' => "posts#index", as: "post_replies"
+  get 'posts/:post_id/replies/new' => "posts#new", as: "new_post_reply"
+  get 'posts/:post_id/replies/:reply_id' => "posts#show", as: "post_reply"
+  get 'posts/:post_id/replies/:reply_id/edit' => "posts#edit", as: "edit_post_reply"
+  post 'posts/:post_id/replies' => "posts#create"
+  patch 'posts/:post_id/replies/:reply_id' => "posts#update"
+  delete 'posts/:post_id/replies/:reply_id' => "posts#delete", as: "delete_post"
+
+
+
   resources :users do 
     resources :topics
     resources :posts
@@ -29,13 +39,14 @@ Rails.application.routes.draw do
     resources :topics, only: [:index, :show]
     resources :topics, only: [:index, :show]
   end
+
   resources :users, only: [:new, :create, :show]
 
   resources :topics do
     resources :posts
   end
 
-  
+
   resources :classrooms
 
 end

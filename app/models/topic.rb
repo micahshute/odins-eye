@@ -1,6 +1,7 @@
 
 class Topic < ApplicationRecord
     include Reactable
+    extend EagerLoading
 
     # MARK Validations
 
@@ -133,6 +134,7 @@ class Topic < ApplicationRecord
     def self.most_viewed_count_by_user(user, limit=5)
         Topic.where(user_id: user.id).order(Arel.sql('count(views) DESC')).group('id').limit(limit).count
     end
+
 
     #MARK Instance Methods
 

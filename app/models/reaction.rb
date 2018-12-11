@@ -3,6 +3,8 @@ class Reaction < ApplicationRecord
   belongs_to :reaction_type
   belongs_to :reactable, polymorphic: true
 
+  validates :user_id, presence: true
+  validates :reaction_type_id, presence: true
   validate :no_incompatible_types
 
   before_save :replace_incompatible_types
