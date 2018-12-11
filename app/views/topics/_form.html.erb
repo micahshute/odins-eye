@@ -1,16 +1,18 @@
 <%= form_for(topic) do |f| %>
     <div class="form-group">
         <%= f.submit "Publish Topic", class: "btn btn-primary bg-lavender border-lavender" %>
+        <%= delete_text_button(topic_path(topic), "charcoal") if editing?(topic) %>
     </div>
+    
     <div class="form-group">
         <%= f.text_field :title, placeholder: "Title", class: "form-control" %>
         <%= error_msg_for(topic, :title).html_safe %>
     </div>
     <div class="form-row">
         <% for i in 1..4 do%>
-            
+            <% tag_name = topic.tag_types[i- 1].nil? ? nil : topic.tag_types[i - 1].name %>
             <div class="col-3 <%= "is-invalid" unless @error.nil? %>">
-                <%= text_field_tag :"topic_tags_#{i}", nil, class: 'form-control tag-boxes', placeholder: "Tag", list: 'tag-name' %>
+                <%= text_field_tag :"topic_tags_#{i}", tag_name , class: 'form-control tag-boxes', placeholder: "Tag", list: 'tag-name' %>
             </div>
             <datalist id="tag-name">
                 <% @tag_types.each do |tag_type| %>

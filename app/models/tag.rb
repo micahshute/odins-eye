@@ -3,7 +3,7 @@ class Tag < ApplicationRecord
   belongs_to :user
   belongs_to :tag_type
 
-  before_destroy :check_if_last
+  after_destroy :check_if_last
 
   # MARK Callbacks
 

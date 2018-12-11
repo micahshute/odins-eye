@@ -8,8 +8,9 @@
         </div>
     </div>
     <div class="col-sm-10 bg-offwhite markdown-holder">
+        
         <h1 class="center topic-title"><%= @topic.title %></h1>
-        <p class="author-time"><small></small><%= link_to @topic.user.name, user_path(@topic.user) %><small>, <%= display_date_long(@topic.created_at)%></small></p>
+        <p class="author-time"><small></small><%= link_to @topic.user.name, user_path(@topic.user) %><small>, <%= display_date_long(@topic.created_at)%></small> </p>
         <div class="topic-tags">
         <ul class="topic-tag-list d-flex justify-content-start">
             <% @topic.tag_types.each do |t| %>
@@ -17,6 +18,7 @@
             <% end %>
         </ul>
         </div>
+        <%= edit_text_button(edit_topic_path(@topic), "aqua") if @topic.user == current_user %>
         <hr>
 
         <%= render_markdown(@topic.content) %>

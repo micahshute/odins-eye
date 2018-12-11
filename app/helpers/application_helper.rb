@@ -29,6 +29,22 @@ module ApplicationHelper
         render 'components/save_topic', topic: topic, saved_color: saved_color, img_color: img_color
     end
 
+    def edit_button(edit_path, img_color="charcoal")
+        render 'components/edit', edit_path: edit_path, img_color: img_color
+    end
+
+    def edit_text_button(edit_path, color="aqua")
+        render 'components/edit_text', edit_path: edit_path, color: color
+    end
+
+    def delete_text_button(delete_path, color="aqua")
+        render 'components/delete_text', delete_path: delete_path, color: color
+    end
+
+    def delete_button(delete_path, img_color="charcoal")
+        render 'components/delete', delete_path: delete_path, img_color: img_color
+    end
+
     def sanitize_markdown(content)
         sanitize(content, tags:  Loofah::HTML5::WhiteList::ALLOWED_ELEMENTS_WITH_LIBXML2.to_a + %w(table th td tr span), attibutes: Loofah::HTML5::WhiteList::ALLOWED_ATTRIBUTES + %w( style ))
     end

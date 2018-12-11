@@ -36,7 +36,10 @@ class TopicsController < ApplicationController
     end
 
     def edit
-        authorize(Topic.find(params[:id]).user)
+        @topic = Topic.find(params[:id])
+        authorize(@topic.user)
+        @tag_types = Tag.most_popular(10)
+
     end
 
     def index
@@ -44,11 +47,37 @@ class TopicsController < ApplicationController
     end
 
     def update
-        authorize(Topic.find(params[:id]).user)
+        @topic = Topic.find(params[:id])
+        authorize(@topic.user)
+        @topic.update(topic_params)
+        @topic.tags.destroy_all
+        if @topic.validate
+            tags = []
+            for i in 1..4 do 
+                tags << params["topic_tags_#{i}"] unless params["topic_tags_#{i}"] == ""
+            end
+            tag_result = @topic.tag(tags)
+            if tag_result == true
+                flash[:success] = "Congratulations, your topic was updated"
+                redirect_to user_topic_path(current_user, @topic)
+            else
+                @error = tag_result
+                flash[:danger] = "#{@topic.user.name}, there was a problem updating your topic"
+                @tag_types = Tag.most_popular(10)
+                render 'edit'
+            end
+        else
+            flash[:danger] = "Oops! There was a problem updating your post"
+            render 'edit'
+        end
     end
 
     def destroy
-        authorize(Topic.find(params[:id]).user)
+        @topic = Topic.find(params[:id])
+        authorize(@topic.user)
+        @topic.destroy
+        flash[:success] = "You successfully deleted your topic"
+        redirect_to root_path
     end
 
     def reading_list

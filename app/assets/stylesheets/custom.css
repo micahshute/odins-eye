@@ -421,3 +421,8 @@ textarea#topic_content{
 .tag-buttons{
     display: inline;
 }
+
+.edit-text-button{
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
