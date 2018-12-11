@@ -25,6 +25,10 @@ module ApplicationHelper
         render 'components/geniuses', geniuses: reactable.geniuses, img_color: img_color, text_color: text_color
     end
 
+    def save_topic_button(topic, saved_color="aqua", img_color='charcoal')
+        render 'components/save_topic', topic: topic, saved_color: saved_color, img_color: img_color
+    end
+
     def sanitize_markdown(content)
         sanitize(content, tags:  Loofah::HTML5::WhiteList::ALLOWED_ELEMENTS_WITH_LIBXML2.to_a + %w(table th td tr span), attibutes: Loofah::HTML5::WhiteList::ALLOWED_ATTRIBUTES + %w( style ))
     end

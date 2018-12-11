@@ -17,6 +17,7 @@
 
     <div class="p-3 p-md-5 text-white rounded bg-lavender">
     <div class="col-md-6 px-0">
+        <%= save_topic_button(@spotlight, "sunshine") if logged_in?%>
         <h5 class="color-sunshine">Spotlight Topic: </h5>
         <h1 class="display-4 font-italic"><%= @spotlight.title %></h1>
         <p class="preview-text lead my-3"><%= @spotlight.content.nil? ? "" : strip_tags(markdown(@spotlight.content.truncate_words(10))) %></p>
@@ -34,6 +35,7 @@
                 </h3>
                 <div class="mb-1 text-muted preview-text"><%=parse_date(@popular_posts_by_tag.values.first.created_at)%></div>
                 <p class="card-text mb-auto preview-text"><%= strip_tags(markdown(@popular_posts_by_tag.values.first.content.truncate_words(15))) %></p>
+                <%= save_topic_button(@popular_posts_by_tag.values.first) if logged_in?%>
                 <a href="<%= topic_path(@popular_posts_by_tag.values.first)%>">Continue reading</a>
             </div>
             <div class="card-img-right flex-auto d-none d-lg-block bg-bluegray" style="width: 200px; height: 250px;"></div>
@@ -48,6 +50,7 @@
                 </h3>
                 <div class="mb-1 text-muted preview-text"><%= parse_date(@popular_posts_by_tag.values.last.created_at) %></div>
                 <p class="card-text mb-auto preview-text"><%= strip_tags(markdown(@popular_posts_by_tag.values.first.content.truncate_words(15))) %></p>
+                <%= save_topic_button(@popular_posts_by_tag.values.last) if logged_in?%>
                 <a href="<%= topic_path(@popular_posts_by_tag.values.last)%>">Continue reading</a>
             </div>
             <div class="card-img-right flex-auto d-none d-lg-block bg-bluegray" style="width: 200px; height: 250px;"></div>
@@ -68,18 +71,34 @@
                 <p class="blog-post-meta"><small><%= display_date_long(topic.created_at) %> by </small><%= link_to topic.user.name, user_path(topic.user) %></p>
 
                 <p class="standard-text"><%= strip_tags(markdown(topic.content.truncate_words(50))) %></p>
-                
-                <div class="row">
-                    <div class="col-sm-4">
-                        <p class="inline"><%= likes(topic) %></p>
+                <% if logged_in? %>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="inline"><%= likes(topic) %></p>
+                        </div>
+                        <div class="col-sm-3">
+                        <p class="inline"><%= genius(topic) %></p>
+                        </div>
+                        <div class="col-sm-3">
+                            <p class="inline"><%= dislikes(topic) %></p>
+                        </div>
+                        <div class="col-sm-3">
+                            <p class="inline"><%= save_topic_button(topic) %></p>
+                        </div>
                     </div>
-                    <div class="col-sm-4">
-                    <p class="inline"><%= genius(topic) %></p>
+                <% else %>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p class="inline"><%= likes(topic) %></p>
+                        </div>
+                        <div class="col-sm-4">
+                        <p class="inline"><%= genius(topic) %></p>
+                        </div>
+                        <div class="col-sm-4">
+                            <p class="inline"><%= dislikes(topic) %></p>
+                        </div>
                     </div>
-                    <div class="col-sm-4">
-                        <p class="inline"><%= dislikes(topic) %></p>
-                    </div>
-                </div>
+                <% end %>
             </div><!-- /.blog-post -->
             <hr>
         <% end%>

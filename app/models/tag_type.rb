@@ -3,7 +3,6 @@ class TagType < ApplicationRecord
     validates :name, presence: true
     validates :name, uniqueness: true
 
-
     before_save :remove_spaces
     before_save :downcase_fields
    

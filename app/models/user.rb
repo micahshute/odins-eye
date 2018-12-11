@@ -182,6 +182,15 @@ class User < ApplicationRecord
         has_reaction?(reactable, :report)
     end
 
+    def topic_saved?(topic)
+        self.saved_topics.include?(topic)
+    end
+
+    def save_topic(topic)
+        self.saved_topics << topic
+        self.save
+    end
+
     def likes_for(reactable)
         reaction_for(reactable, :like)
     end

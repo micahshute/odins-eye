@@ -38,6 +38,11 @@ class TopicsController < ApplicationController
         authorize(Topic.find(params[:id]).user)
     end
 
+    def reading_list
+        authorize
+        @topics = current_user.saved_topics
+    end
+
     private
 
     def topic_params

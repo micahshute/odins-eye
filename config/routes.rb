@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get 'auth/google_oauth2/callback', to: 'sessions#googleAuth'
   get 'auth/failure', to: redirect('/')
 
+  post 'topics/:topic_id/save-for-later' => 'users#reading_list_create', as: "create_reading_list"
+  get 'reading-list' => 'topics#reading_list', as: "reading_list"
 
   resources :users do 
     resources :topics
@@ -34,7 +36,7 @@ Rails.application.routes.draw do
     resources :posts
   end
 
-
+  
   resources :classrooms
 
 end
