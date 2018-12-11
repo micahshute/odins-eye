@@ -13,6 +13,16 @@ class Tag < ApplicationRecord
     end
   end
 
+  #MARK Validations
+
+  validate :no_duplicates
+
+  def no_duplicates
+    if !self.taggable_id.nil?
+      duplicates = Tag.where(user_id: self.user.id, taggable_id: self.taggable_id, taggable_type: self.taggable_type, tag_type_id: self.tag_type_id)
+      errors.add(:taggable_id, "You cannot have duplicate tags") if duplicates.length > 1
+    end
+  end
 
   # MARK Class Methods
 

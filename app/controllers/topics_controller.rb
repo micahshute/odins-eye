@@ -4,14 +4,27 @@ class TopicsController < ApplicationController
 
     def new
         @topic = Topic.new
+        @tag_types = Tag.most_popular(10)
     end
 
     def create
         @topic = Topic.new(topic_params)
         @topic.user = current_user
-        if @topic.save
-            flash[:success] = "Congratulations, your topic was published"
-            redirect_to user_topic_path(current_user, @topic)
+        if @topic.validate
+            tags = []
+            for i in 1..4 do 
+                tags << params["topic_tags_#{i}"] unless params["topic_tags_#{i}"] == ""
+            end
+            tag_result = @topic.tag(tags)
+            if tag_result == true
+                flash[:success] = "Congratulations, your topic was published"
+                redirect_to user_topic_path(current_user, @topic)
+            else
+                @error = tag_result
+                flash[:danger] = "#{@topic.user.name}, there was a problem publishing your topic"
+                @tag_types = Tag.most_popular(10)
+                render 'new'
+            end
         else
             flash[:danger] = "Oops! There was a problem publishing your post"
             render 'new'

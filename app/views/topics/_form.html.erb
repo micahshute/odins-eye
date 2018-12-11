@@ -6,6 +6,20 @@
         <%= f.text_field :title, placeholder: "Title", class: "form-control" %>
         <%= error_msg_for(topic, :title).html_safe %>
     </div>
+    <div class="form-row">
+        <% for i in 1..4 do%>
+            
+            <div class="col-3 <%= "is-invalid" unless @error.nil? %>">
+                <%= text_field_tag :"topic_tags_#{i}", nil, class: 'form-control tag-boxes', placeholder: "Tag", list: 'tag-name' %>
+            </div>
+            <datalist id="tag-name">
+                <% @tag_types.each do |tag_type| %>
+                    <option value="<%= tag_type.name %>"></option>
+                <% end %>
+            </datalist>
+        <% end %>
+        <%= error_msg_for(@error, :name).html_safe unless @error.nil? %>
+    </div>
     <div class="form-group topic-content-wrapper">
         <%= f.text_area :content, class: "form-control topic-content", placeholder: "Content" %>
         <%= error_msg_for(topic, :content).html_safe %>

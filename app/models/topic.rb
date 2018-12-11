@@ -11,7 +11,7 @@ class Topic < ApplicationRecord
     # MARK Validation Methods
 
     def validate_tag_number
-        errors.add(:tags, "you can only have 3 tags") if tags.size > 3
+        errors.add(:tags, "you can only have 4 tags") if tags.size > 4
     end
 
     #MARK Activerecord Relations
@@ -141,12 +141,22 @@ class Topic < ApplicationRecord
     end
 
     def tag(*tags)
-        tag_types = *tags.map do |tag_name|
-            TagType.find_or_create_by_name_ignore_case(tag_name.to_s)
+        tags = *tags.flatten
+        tag_types = tags.map do |tag_name|   
+            tag_type = TagType.find_or_create_by_name_ignore_case(tag_name.to_s)
+            return tag_type if tag_type.errors.any?
+            tag_type
         end
+        
         tag_types.each do |tag_type|
-            self.tags << Tag.new(user: self.user, tag_type: tag_type)
+            if self.new_record?
+                Tag.create(user: self.user, tag_type: tag_type, taggable: self) unless ((self.tag_types.length > 0) and self.tag_types.inlcude?(tag_type))
+            else
+                self.tags.build(user: self.user, tag_type: tag_type) unless self.tag_types.include?(tag_type)
+            end
         end
+        return self unless self.save
+        return true
     end
 
     def reactions_of_type(type)

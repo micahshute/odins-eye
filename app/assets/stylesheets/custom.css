@@ -178,6 +178,7 @@ blockquote p{
 }
 
 .topic-content-wrapper{
+    margin-top: 15px;
     height: 2000px;
 }
 
@@ -417,6 +418,6 @@ textarea#topic_content{
 
 
 
-.save-button:hover{
-
+.tag-buttons{
+    display: inline;
 }
