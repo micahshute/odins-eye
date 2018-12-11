@@ -23,7 +23,7 @@ class Topic < ApplicationRecord
 
 
     def format_content
-        self.content = self.content.gsub("```", "~~~~~")
+        self.content = self.content.gsub("```", "\n~~~~~")
     end
 
     def self.trending_today

@@ -33,7 +33,7 @@
                 <a class="text-dark" href="<%= topic_path(@popular_posts_by_tag.values.first)%>"><%= @popular_posts_by_tag.values.first.title %></a>
                 </h3>
                 <div class="mb-1 text-muted preview-text"><%=parse_date(@popular_posts_by_tag.values.first.created_at)%></div>
-                <p class="card-text mb-auto preview-text"><%= strip_tags(markdown(@popular_posts_by_tag.values.first.content.truncate_words(25))) %></p>
+                <p class="card-text mb-auto preview-text"><%= strip_tags(markdown(@popular_posts_by_tag.values.first.content.truncate_words(15))) %></p>
                 <a href="<%= topic_path(@popular_posts_by_tag.values.first)%>">Continue reading</a>
             </div>
             <div class="card-img-right flex-auto d-none d-lg-block bg-bluegray" style="width: 200px; height: 250px;"></div>
@@ -47,7 +47,7 @@
                 <a class="text-dark" href="<%= topic_path(@popular_posts_by_tag.values.last)%>"><%= @popular_posts_by_tag.values.last.title %></a>
                 </h3>
                 <div class="mb-1 text-muted preview-text"><%= parse_date(@popular_posts_by_tag.values.last.created_at) %></div>
-                <p class="card-text mb-auto preview-text"><%= strip_tags(markdown(@popular_posts_by_tag.values.first.content.truncate_words(25))) %></p>
+                <p class="card-text mb-auto preview-text"><%= strip_tags(markdown(@popular_posts_by_tag.values.first.content.truncate_words(15))) %></p>
                 <a href="<%= topic_path(@popular_posts_by_tag.values.last)%>">Continue reading</a>
             </div>
             <div class="card-img-right flex-auto d-none d-lg-block bg-bluegray" style="width: 200px; height: 250px;"></div>
