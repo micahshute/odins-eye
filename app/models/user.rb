@@ -2,6 +2,8 @@ class User < ApplicationRecord
 
     has_secure_password
 
+    #MARK Validations
+
     validates :name, presence: true
     validates :bio, length: { maximum: 500 }
     validates :email, presence: true, length: { minimum: 5 }
@@ -32,6 +34,8 @@ class User < ApplicationRecord
         password || password_confirmation
     end
 
+    #MARK ActiveRecord Relations
+
     has_many :posts, dependent: :destroy
     has_many :topics, dependent: :destroy
     has_many :classrooms, dependent: :destroy
@@ -53,6 +57,9 @@ class User < ApplicationRecord
     has_many :enrolled_classes, class_name: "Classroom", through: :student_classrooms, source: :classroom
     has_many :user_saved_topics, dependent: :destroy
     has_many :saved_topics, through: :user_saved_topics, source: "topic"
+
+
+    # MARK Class Methods
 
     def self.from_google(auth)
         refresh_token = auth.credentials.refresh_token
@@ -82,6 +89,8 @@ class User < ApplicationRecord
     def self.most_followed(limit=5)
         most_followed_count(limit).map{ |user_id, count| User.find(user_id) }
     end 
+
+    # MARK Instance Methods
 
     def recieved_messages_by_sender
         group_messages_by_sender(self.recieved_messages)

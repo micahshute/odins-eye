@@ -2,13 +2,19 @@
 class Topic < ApplicationRecord
     include Reactable
 
+    # MARK Validations
+
     validates :title, presence: true, length: { maximum: 50 }
     validates :content, length: { maximum: 100000 }
     validate :validate_tag_number
 
+    # MARK Validation Methods
+
     def validate_tag_number
         errors.add(:tags, "you can only have 3 tags") if tags.size > 3
     end
+
+    #MARK Activerecord Relations
 
     belongs_to :user
     belongs_to :classroom, optional: true
@@ -19,12 +25,17 @@ class Topic < ApplicationRecord
     has_many :tag_types, through: :tags
     has_many :user_saved_topics, dependent: :destroy
     has_many :user_saved, through: :user_saved_topics, source: "user"
+
+
     before_save :format_content
 
+    #MARK Callback Methods
 
     def format_content
         self.content = self.content.gsub("```", "\n~~~~~")
     end
+
+    #MARK Class Methods
 
     def self.trending_today
         Topic.joins(:reaction_types).where(reaction_types: {name: 'like'}, classroom_id: nil).where(reactions: { created_at: ((Time.now - 24 * 3600)..Time.now)}).group('id').order(Arel.sql('count(reaction_type_id) DESC')).limit(1)
