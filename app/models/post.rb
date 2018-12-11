@@ -5,9 +5,9 @@ class Post < ApplicationRecord
 
   belongs_to :postable, polymorphic: true
   belongs_to :user
-  has_many :reactions, as: :reactable
+  has_many :reactions, as: :reactable, dependent: :destroy
   has_many :reaction_types, through: :reactions
-  has_many :posts, as: :postable
+  has_many :posts, as: :postable, dependent: :destroy
 
   def self.most_liked_count(limit = 5)
     most_reacted_type('like', limit, true)

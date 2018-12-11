@@ -4,7 +4,7 @@ class TagType < ApplicationRecord
     validates :name, uniqueness: true
     before_save :remove_spaces
     before_save :downcase_fields
-    has_many :tags
+    has_many :tags, dependent: :destroy
 
     def downcase_fields
         self.name = self.name.downcase

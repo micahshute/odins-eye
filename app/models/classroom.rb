@@ -4,9 +4,9 @@ class Classroom < ApplicationRecord
     validates :name, presence: true
     
     belongs_to :professor, class_name: "User", foreign_key: "user_id"
-    has_many :student_classrooms
+    has_many :student_classrooms, dependent: :destroy
     has_many :topics
-    has_many :tags, as: :taggable
+    has_many :tags, as: :taggable, dependent: :destroy
     has_many :users, through: :student_classrooms
     has_many :tag_types, through: :tags
 

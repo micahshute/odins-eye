@@ -32,26 +32,26 @@ class User < ApplicationRecord
         password || password_confirmation
     end
 
-    has_many :posts
-    has_many :topics
-    has_many :classrooms
-    has_many :sent_messages, :class_name => "Message", :foreign_key => "sender_id"
-    has_many :recieved_messages, :class_name => "Message", :foreign_key => "reciever_id"
+    has_many :posts, dependent: :destroy
+    has_many :topics, dependent: :destroy
+    has_many :classrooms, dependent: :destroy
+    has_many :sent_messages, :class_name => "Message", :foreign_key => "sender_id", dependent: :destroy
+    has_many :recieved_messages, :class_name => "Message", :foreign_key => "reciever_id", dependent: :destroy
     has_many :following_users, foreign_key: "follower_id"
     has_many :follower_users, class_name: "FollowingUser", foreign_key: "following_id"
     has_many :followers, class_name: "User", through: :follower_users, foreign_key: "follower_id"
     has_many :following, class_name: "User", through: :following_users, foreign_key: "following_id"
-    has_many :reactions
+    has_many :reactions, dependent: :destroy
     has_many :reacted_posts, :through => :reactions, :source => :reactable, source_type: 'Post'
     has_many :reacted_topics, through: :reactions, source: :reactable, source_type: "Topic"
     has_many :reaction_types, through: :reactions
-    has_many :tags
+    has_many :tags, dependent: :destroy
     has_many :tagged_topics, :through => :tags, source: :taggable, source_type: "Topic"
     has_many :tagged_classrooms, :through => :tags, source: :taggable, source_type: "Classroom"
     has_many :tag_types, through: :tags
-    has_many :student_classrooms
+    has_many :student_classrooms, dependent: :destroy
     has_many :enrolled_classes, class_name: "Classroom", through: :student_classrooms, source: :classroom
-    has_many :user_saved_topics
+    has_many :user_saved_topics, dependent: :destroy
     has_many :saved_topics, through: :user_saved_topics, source: "topic"
 
     def self.from_google(auth)
