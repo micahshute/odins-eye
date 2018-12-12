@@ -30,6 +30,24 @@ class Topic < ApplicationRecord
 
     before_save :format_content
 
+    # accepts_nested_attributes_for :tags, reject_if: ->(tags_attributes){tags_attributes["tag_type_name"].blank? }
+
+    def tags_attributes=(tags_attributes)
+        tags_attributes = tags_attributes.values
+        tags_attributes.each do |tag_attributes|
+            unless invlaid_attribute?(tag_attributes)
+                tag = Tag.create(user: self.user)
+                tag.tag_type_name = tag_attributes[:tag_type_name]
+                self.tags << tag
+            end
+        end
+    end
+
+    def invlaid_attribute?(attributes)
+        attributes[:tag_type_name].blank? 
+    end
+
+
     #MARK Callback Methods
 
     def format_content

@@ -174,12 +174,12 @@ blockquote p{
 }
 
 .new_topic{
-    height: 2000px;
+    height: 100%;
 }
 
 .topic-content-wrapper{
     margin-top: 15px;
-    height: 2000px;
+    height: 100%;
 }
 
 textarea#topic_content{

@@ -34,5 +34,14 @@ class Tag < ApplicationRecord
     self.most_popular_count(limit).map{|id, count| TagType.find(id) }
   end
 
+  # MARK Instance Methods
+
+  def tag_type_name
+    self.tag_type.nil? ? nil : self.tag_type.name
+  end
+
+  def tag_type_name=(name)
+    self.tag_type = TagType.find_or_create_by_name_ignore_case(name)
+  end
 
 end

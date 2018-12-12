@@ -4,29 +4,23 @@ class TopicsController < ApplicationController
 
     def new
         @topic = Topic.new
+        4.times do 
+            @topic.tags.build
+        end
         @tag_types = Tag.most_popular(10)
     end
 
     def create
         @topic = Topic.new(topic_params)
         @topic.user = current_user
-        if @topic.validate
-            tags = []
-            for i in 1..4 do 
-                tags << params["topic_tags_#{i}"] unless params["topic_tags_#{i}"] == ""
-            end
-            tag_result = @topic.tag(tags)
-            if tag_result == true
-                flash[:success] = "Congratulations, your topic was published"
-                redirect_to user_topic_path(current_user, @topic)
-            else
-                @error = tag_result
-                flash[:danger] = "#{@topic.user.name}, there was a problem publishing your topic"
-                @tag_types = Tag.most_popular(10)
-                render 'new'
-            end
+        @topic.tags.each { |tag| tag.user = @topic.user }
+        if @topic.save
+            flash[:success] = "Congratulations, your topic was published"
+            redirect_to user_topic_path(current_user, @topic)
         else
-            flash[:danger] = "Oops! There was a problem publishing your post"
+            @tag_types = Tag.most_popular(10)
+            raise @topic.errors.inspect
+            flash[:danger] = "#{@topic.user.name}, there was a problem publishing your topic"
             render 'new'
         end
     end
@@ -38,6 +32,10 @@ class TopicsController < ApplicationController
     def edit
         @topic = Topic.find(params[:id])
         authorize(@topic.user)
+        needed_tags = 4 - @topic.tags.length
+        needed_tags.times do 
+            @topic.tags.build
+        end
         @tag_types = Tag.most_popular(10)
 
     end
@@ -49,25 +47,13 @@ class TopicsController < ApplicationController
     def update
         @topic = Topic.find(params[:id])
         authorize(@topic.user)
-        @topic.update(topic_params)
         @topic.tags.destroy_all
+        @topic.update(topic_params)
         if @topic.validate
-            tags = []
-            for i in 1..4 do 
-                tags << params["topic_tags_#{i}"] unless params["topic_tags_#{i}"] == ""
-            end
-            tag_result = @topic.tag(tags)
-            if tag_result == true
-                flash[:success] = "Congratulations, your topic was updated"
-                redirect_to user_topic_path(current_user, @topic)
-            else
-                @error = tag_result
-                flash[:danger] = "#{@topic.user.name}, there was a problem updating your topic"
-                @tag_types = Tag.most_popular(10)
-                render 'edit'
-            end
+            flash[:success] = "Congratulations, your topic was updated"
+            redirect_to user_topic_path(current_user, @topic)
         else
-            flash[:danger] = "Oops! There was a problem updating your post"
+            flash[:danger] = "#{@topic.user.name}, there was a problem updating your topict"
             render 'edit'
         end
     end
@@ -88,7 +74,13 @@ class TopicsController < ApplicationController
     private
 
     def topic_params
-        params.require(:topic).permit([:title, :content])
+        params.require(:topic).permit(
+            [:title, :content,
+                tags_attributes: [
+                    :tag_type_name
+                ]
+            ]
+        )
     end
     
 end

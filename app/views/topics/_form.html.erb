@@ -9,10 +9,9 @@
         <%= error_msg_for(topic, :title).html_safe %>
     </div>
     <div class="form-row">
-        <% for i in 1..4 do%>
-            <% tag_name = topic.tag_types[i- 1].nil? ? nil : topic.tag_types[i - 1].name %>
-            <div class="col-3 <%= "is-invalid" unless @error.nil? %>">
-                <%= text_field_tag :"topic_tags_#{i}", tag_name , class: 'form-control tag-boxes', placeholder: "Tag", list: 'tag-name' %>
+        <%= f.fields_for :tags do |t| %>       
+            <div class="col-3">
+                <%= t.text_field :tag_type_name, class: 'form-control tag-boxes', placeholder: "Tag", list: 'tag-name' %>
             </div>
             <datalist id="tag-name">
                 <% @tag_types.each do |tag_type| %>
@@ -20,6 +19,7 @@
                 <% end %>
             </datalist>
         <% end %>
+
         <%= error_msg_for(@error, :name).html_safe unless @error.nil? %>
     </div>
     <div class="form-group topic-content-wrapper">
