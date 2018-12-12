@@ -16,7 +16,7 @@ micah = User.create(name: "Micah Shute", email: "test@test.com", password: passw
 taylor = User.create(name: "Taylor Swift", email:"taylor@swift.com", password: password, password_confirmation: password)
 first_topic = Topic.create(user: micah, title: "What is the Fourier Transform?", content: "No, I really don't know. Can anyone tell me?") 
 first_reply = first_topic.posts.build(user: micah, content: "An equation mapping time domain to the frequency domain")
-first_topic.tags << Tag.new(tag_type: TagType.find_by(name: "Math"), user: micah)
+first_topic.tags << Tag.new(tag_type: TagType.find_by(name: "math"))
 first_topic.save
 
 cs_topic = Topic.create(user: micah, title: "Sorting algorithms", content: "Here's what you have to know about sorting algorithms. First of all, everyone talks about them but nobody uses them. Also, ")
@@ -27,11 +27,11 @@ classroom = Classroom.new(name: "Math Class", professor: micah)
 classroom.save
 
 class_topic = classroom.topics.build(user: micah, content: "Math stuff?")
-class_topic.tags << Tag.new(tag_type: TagType.find_by(name: "Math"), user: micah)
+class_topic.tags << Tag.new(tag_type: TagType.find_by(name: "math"))
 classroom.save
 
 classroom.students << taylor
-classroom.tags << Tag.new(tag_type: TagType.find_by(name: "Math"), user: micah)
+classroom.tags << Tag.new(tag_type: TagType.find_by(name: "math"))
 classroom.save
 taylor.following << micah
 micah.save
@@ -53,7 +53,7 @@ admin.like(micah.posts.last)
 micah.like(taylor.posts.last)
 taylor.save
 
-first_topic.tags << Tag.create(tag_type: tag_types[0], user: micah)
+first_topic.tags << Tag.create(tag_type: tag_types[0])
 
 first_topic.save
 

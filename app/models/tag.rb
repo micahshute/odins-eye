@@ -1,6 +1,6 @@
+
 class Tag < ApplicationRecord
   belongs_to :taggable, polymorphic: true
-  belongs_to :user
   belongs_to :tag_type
 
   after_destroy :check_if_last
@@ -16,11 +16,18 @@ class Tag < ApplicationRecord
   #MARK Validations
 
   validate :no_duplicates
+  after_save :remove_duplicates
+
+  def remove_duplicates
+    duplicates = Tag.where(taggable_id: self.taggable_id, taggable_type: self.taggable_type, tag_type_id: self.tag_type_id)
+    self.destroy if duplicates.length > 1
+  end
 
   def no_duplicates
     if !self.taggable_id.nil?
-      duplicates = Tag.where(user_id: self.user.id, taggable_id: self.taggable_id, taggable_type: self.taggable_type, tag_type_id: self.tag_type_id)
-      errors.add(:taggable_id, "You cannot have duplicate tags") if duplicates.length > 1
+      duplicates = Tag.where(taggable_id: self.taggable_id, taggable_type: self.taggable_type, tag_type_id: self.tag_type_id)
+      errors.add(:tag_type_id, "You cannot have duplicate tags") if duplicates.length > 0
+      # byebug
     end
   end
 

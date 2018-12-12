@@ -30,18 +30,18 @@ class Topic < ApplicationRecord
 
     before_save :format_content
 
-    # accepts_nested_attributes_for :tags, reject_if: ->(tags_attributes){tags_attributes["tag_type_name"].blank? }
+    accepts_nested_attributes_for :tags, reject_if: ->(tags_attributes){tags_attributes["tag_type_name"].blank? }
 
-    def tags_attributes=(tags_attributes)
-        tags_attributes = tags_attributes.values
-        tags_attributes.each do |tag_attributes|
-            unless invlaid_attribute?(tag_attributes)
-                tag = Tag.create(user: self.user)
-                tag.tag_type_name = tag_attributes[:tag_type_name]
-                self.tags << tag
-            end
-        end
-    end
+    # def tags_attributes=(tags_attributes)
+    #     tags_attributes = tags_attributes.values
+    #     tags_attributes.each do |tag_attributes|
+    #         unless invlaid_attribute?(tag_attributes)
+    #             tag = Tag.create(user: self.user)
+    #             tag.tag_type_name = tag_attributes[:tag_type_name]
+    #             self.tags << tag
+    #         end
+    #     end
+    # end
 
     def invlaid_attribute?(attributes)
         attributes[:tag_type_name].blank? 
@@ -170,9 +170,9 @@ class Topic < ApplicationRecord
         
         tag_types.each do |tag_type|
             if self.new_record?
-                Tag.create(user: self.user, tag_type: tag_type, taggable: self) unless ((self.tag_types.length > 0) and self.tag_types.inlcude?(tag_type))
+                Tag.create(tag_type: tag_type, taggable: self) unless ((self.tag_types.length > 0) and self.tag_types.inlcude?(tag_type))
             else
-                self.tags.build(user: self.user, tag_type: tag_type) unless self.tag_types.include?(tag_type)
+                self.tags.build(tag_type: tag_type) unless self.tag_types.include?(tag_type)
             end
         end
         return self unless self.save

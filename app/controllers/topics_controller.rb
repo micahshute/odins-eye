@@ -13,7 +13,6 @@ class TopicsController < ApplicationController
     def create
         @topic = Topic.new(topic_params)
         @topic.user = current_user
-        @topic.tags.each { |tag| tag.user = @topic.user }
         if @topic.save
             flash[:success] = "Congratulations, your topic was published"
             redirect_to user_topic_path(current_user, @topic)

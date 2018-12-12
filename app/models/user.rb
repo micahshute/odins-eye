@@ -49,10 +49,8 @@ class User < ApplicationRecord
     has_many :reacted_posts, :through => :reactions, :source => :reactable, source_type: 'Post'
     has_many :reacted_topics, through: :reactions, source: :reactable, source_type: "Topic"
     has_many :reaction_types, through: :reactions
-    has_many :tags, dependent: :destroy
     has_many :tagged_topics, :through => :tags, source: :taggable, source_type: "Topic"
     has_many :tagged_classrooms, :through => :tags, source: :taggable, source_type: "Classroom"
-    has_many :tag_types, through: :tags
     has_many :student_classrooms, dependent: :destroy
     has_many :enrolled_classes, class_name: "Classroom", through: :student_classrooms, source: :classroom
     has_many :user_saved_topics, dependent: :destroy
