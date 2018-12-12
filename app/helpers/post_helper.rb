@@ -32,4 +32,26 @@ module PostHelper
             nil
         end
     end
+
+    def dropdown_options(post)
+        options = []
+        if post.user == current_user 
+            edit_path = post.postable.is_a?(Topic) ? edit_topic_post_path(post.postable, post) : edit_post_reply_path(post.postable, post)
+            delete_path = post.postable.is_a?(Topic) ? topic_post_path(post.postable, post) : delete_post_reply_path(post.postable, post)
+            options << OpenStruct.new(action: "Edit", path: edit_path, data_method: "get")
+            options << OpenStruct.new(action: "Delete", path: delete_path, data_method: "delete")
+        end
+        options << OpenStruct.new(action: "Report this post",  path: create_post_reaction_path(post, ReactionType::ID[:report]), data_method: "post")
+        render 'posts/dropdown_options', options: options
+    end
+
+    def post_form_path(post)
+        if post.new_record?
+            return post.postable.is_a?(Topic) ? topic_posts_path(post.postable) : post_replies_path(post.postable)
+        else
+            return post.postable.is_a?(Topic) ? topic_post_path(post.postable, post) : post_reply_path(post.postable, post)
+        end
+    end
+
+    
 end

@@ -2,7 +2,7 @@
 <div class="bottom-space-md">
     <div class="row post-form-container">
         <div class="col-sm-11 post-form-container">
-            <%= render 'posts/form', post: Post.new, topic: topic %>
+            <%= render 'posts/form', post: post , path: post_form_path(post) %>
         </div>
         <div class="col-sm-1"></div>
     </div>

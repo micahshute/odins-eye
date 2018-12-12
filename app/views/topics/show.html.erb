@@ -26,7 +26,7 @@
         <div class="row bottom-padding-md">
             <div class="col-sm-12">
                 <%= render('topics/reply_button', topic: @topic) if (logged_in? and @post.nil?) %>
-                <%= render('topics/add_post', topic: @topic) if (logged_in? and !@post.nil? )%>
+                <%= render('topics/add_post', post: @post) if (logged_in? and !@post.nil? )%>
             </div>
         </div>
 

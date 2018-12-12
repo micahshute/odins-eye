@@ -5,7 +5,7 @@
             </a>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" data-method="post" href="<%= create_post_reaction_path(post, ReactionType::ID[:report]) %>">Report this post</a>
+                <%= dropdown_options post %>
             </div>
         </div>
     </div>

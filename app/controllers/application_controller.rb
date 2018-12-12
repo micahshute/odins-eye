@@ -10,6 +10,8 @@ class ApplicationController < ActionController::Base
 
     private
 
+    ## MARK: Authorization Methods
+
     def current_user
         User.find_by(id: session[:user_id])
     end
@@ -36,6 +38,11 @@ class ApplicationController < ActionController::Base
         authorize_classroom_entry(topic.classroom)
     end
 
+    def authorize_post(post)
+        authorize
+        not_authorized("You do not own this post") unless current_user == post.user
+    end
+
     def current_user_is?(user)
         user == current_user
     end
@@ -54,6 +61,8 @@ class ApplicationController < ActionController::Base
         raise ArgumentError.new("You man only log in a user, not a #{user.class}.") unless user.is_a? User
         session[:user_id] = user.id
     end
+
+    # MARK: MISC Helpers
 
     def time_of_day
         hour = Time.now.to_s.split(" ")[1].split(":")[0].to_i

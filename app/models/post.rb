@@ -53,7 +53,7 @@ class Post < ApplicationRecord
 
   def topic
     parent = self.postable
-    until postable.class.is_a?(Topic)
+    until parent.is_a?(Topic)
       parent = parent.postable
     end
     parent
