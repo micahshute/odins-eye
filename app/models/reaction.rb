@@ -7,7 +7,7 @@ class Reaction < ApplicationRecord
   validates :reaction_type_id, presence: true
   validate :no_incompatible_types
 
-  before_save :replace_incompatible_types
+  before_validation :replace_incompatible_types
 
   def no_incompatible_types
     if self.reaction_type.name == 'dislike'
@@ -31,26 +31,26 @@ class Reaction < ApplicationRecord
     case self.reaction_type.name
     when "like"
       dislikes = reactions_to_reactable.select{ |reaction| reaction.reaction_type_id == type_ids[:dislike] }
-      dislikes.each{ |d| d.destroy }
       likes = reactions_to_reactable.select{ |reaction| reaction.reaction_type_id == type_ids[:like]}
-      likes.each{ |l| l.destroy }
+      dislikes.each(&:destroy)
+      likes.each(&:destroy)
     when 'dislike'
       dislikes = reactions_to_reactable.select{ |reaction| reaction.reaction_type_id == type_ids[:dislike] }
-      dislikes.each{ |d| d.destroy }
       likes = reactions_to_reactable.select{ |reaction| reaction.reaction_type_id == type_ids[:like]}
-      likes.each{ |l| l.destroy }
       geniuses = reactions_to_reactable.select{ |reaction| reaction.reaction_type_id == type_ids[:genius] } 
-      geniuses.each{ |g| g.destroy }
+      geniuses.each(&:destroy)
+      dislikes.each(&:destroy)
+      likes.each(&:destroy)
     when 'genius'
       dislikes = reactions_to_reactable.select{ |reaction| reaction.reaction_type_id == type_ids[:dislike] }
-      dislikes.each{ |d| d.destroy }
       geniuses = reactions_to_reactable.select{ |reaction| reaction.reaction_type_id == type_ids[:genius] } 
-      geniuses.each{ |g| g.destroy }
+      dislikes.each(&:destroy)
+      geniuses.each(&:destroy)
     when 'report'
       likes = reactions_to_reactable.select{ |reaction| reaction.reaction_type_id == type_ids[:like]}
-      likes.each{ |l| l.destroy }
       geniuses = reactions_to_reactable.select{ |reaction| reaction.reaction_type_id == type_ids[:genius] } 
-      geniuses.each{ |g| g.destroy }
+      likes.each(&:destroy)
+      geniuses.each(&:destroy)
     end
   end
 

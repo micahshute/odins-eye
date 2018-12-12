@@ -25,7 +25,11 @@ Rails.application.routes.draw do
   patch 'posts/:post_id/replies/:reply_id' => "posts#update"
   delete 'posts/:post_id/replies/:reply_id' => "posts#delete", as: "delete_post"
 
+  post 'topics/:topic_id/reactions/:reaction_type_id' => "reactions#create", as: "create_topic_reaction"
+  post 'posts/:post_id/reactions/:reaction_type_id' => 'reactions#create', as: "create_post_reaction"
 
+
+  resources :topics
 
   resources :users do 
     resources :topics
@@ -41,11 +45,6 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [:new, :create, :show]
-
-  resources :topics do
-    resources :posts
-  end
-
 
   resources :classrooms
 

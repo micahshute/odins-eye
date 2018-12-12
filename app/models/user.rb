@@ -199,7 +199,7 @@ class User < ApplicationRecord
         reaction_for(reactable, :dislike)
     end
 
-    def genius_reaction_for(reatable)
+    def genius_reaction_for(reactable)
         reaction_for(reactable, :genius)
     end
 

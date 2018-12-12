@@ -97,5 +97,14 @@ class ApplicationController < ActionController::Base
         Kramdown::Document.new(markdown, parse_block_html: true, syntax_highlighter: :rouge, syntax_highlighter_opts: {line_numbers: false}).to_html
     end
 
+    def not_found(msg = nil)
+        flash[:danger] = msg unless msg.nil?
+        raise ActionController::RoutingError.new('Not Found')
+    end
+
+    def last_page
+        request.referer
+    end
+
   
 end

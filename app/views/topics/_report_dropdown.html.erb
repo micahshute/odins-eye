@@ -1,0 +1,10 @@
+<div class="topic-report-box">
+    <div class="dropdown show inline">
+        <a class="btn btn-secondary btn-sm dropdown-toggle post-report-dropdown" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Report
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" data-method="post" href="<%= create_topic_reaction_path(topic, ReactionType::ID[:report])%>"><%= text %></a>
+        </div>
+    </div>
+</div>

@@ -26,6 +26,7 @@ class TopicsController < ApplicationController
 
     def show
         @topic = Topic.where(id: params[:id]).includes(:user, :tags).includes(posts: {reactions: :reaction_type}).first
+        @user = current_user
     end
 
     def edit

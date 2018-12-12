@@ -1,0 +1,10 @@
+<div class="col-sm-1 sticky-holder">
+        <div class="sticky-sidebar after-navbar">    
+               
+            <%=link_to(genius(topic, 'whitesmoke', 'whitesmoke'), create_topic_reaction_path(topic, ReactionType::ID[:genius]), :'data-method' => "post", class: ("topic-option-selected" if genius_selected)) %>
+            <%=link_to(likes(topic, 'whitesmoke', 'whitesmoke'), create_topic_reaction_path(topic, ReactionType::ID[:like]), :'data-method' => "post", class: ("topic-option-selected" if like_selected)) %>
+            <%=link_to(dislikes(topic, 'whitesmoke', 'whitesmoke'), create_topic_reaction_path(@topic, ReactionType::ID[:dislike]), :'data-method' => "post", class: ("topic-option-selected" if dislike_selected)) %>
+            <%= save_topic_button(topic, "whitesmoke", "whitesmoke", "#{'topic-option-selected' if saved}") %>
+
+        </div>
+    </div>

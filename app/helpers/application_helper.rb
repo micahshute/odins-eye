@@ -49,6 +49,7 @@ module ApplicationHelper
         render 'components/delete', delete_path: delete_path, img_color: img_color, size_class: size_class
     end
 
+
     def sanitize_markdown(content)
         sanitize(content, tags:  Loofah::HTML5::WhiteList::ALLOWED_ELEMENTS_WITH_LIBXML2.to_a + %w(table th td tr span), attibutes: Loofah::HTML5::WhiteList::ALLOWED_ATTRIBUTES + %w( style ))
     end

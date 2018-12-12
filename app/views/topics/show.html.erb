@@ -1,14 +1,11 @@
 <div class="row">
-    <div class="col-sm-1 sticky-holder">
-        <div class="sticky-sidebar after-navbar">
-            <%=link_to(likes(@topic, 'whitesmoke', 'whitesmoke'), "/#", :'data-method' => "post") %>
-            <%=link_to(genius(@topic, 'whitesmoke', 'whitesmoke'), "/#", :'data-method' => "post") %>
-            <%=link_to(dislikes(@topic, 'whitesmoke', 'whitesmoke'), "/#", :'data-method' => "post") %>
-            <%=link_to("Report", "/#", class: "color-whitesmoke") %>
-        </div>
-    </div>
+    <%= topic_options(@topic) %>
+
     <div class="col-sm-10 ">
         <div class="markdown-holder bg-offwhite">
+
+            <%= topic_report_dropdown(@topic) %>
+
             <h1 class="center topic-title"><%= @topic.title %></h1>
             <p class="author-time"><small></small><%= link_to @topic.user.name, user_path(@topic.user) %><small>, <%= display_date_long(@topic.created_at)%></small> </p>
             <div class="topic-tags">

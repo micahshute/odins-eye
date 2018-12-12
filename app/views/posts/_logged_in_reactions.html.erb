@@ -1,0 +1,17 @@
+<div class="row reaction-holder no-padding">
+    <div class="col-sm-4 no-padding">
+
+        <%= link_to(genius(post, genius_color, 'charcoal', 'md-14'), create_post_reaction_path(post, ReactionType::ID[:genius]), method: :post, class: 'post-reaction') %>
+        <%= link_to(likes(post, like_color, 'charcoal', 'md-14'), create_post_reaction_path(post, ReactionType::ID[:like]), method: :post, class: 'post-reaction')%>
+        <%= link_to(dislikes(post, dislike_color, 'charcoal', 'md-14'), create_post_reaction_path(post, ReactionType::ID[:dislike]), method: :post, class: 'post-reaction')%>
+    
+    </div>
+
+    <%= post_report_dropdown(post) %>
+
+    <div class="col-sm-1 no-padding">
+        <%= reply(new_post_reply_path(post), 'aqua', 'aqua', 'md-14')%>   
+    </div>
+</div>
+
+
