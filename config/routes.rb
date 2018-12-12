@@ -29,7 +29,9 @@ Rails.application.routes.draw do
   post 'posts/:post_id/reactions/:reaction_type_id' => 'reactions#create', as: "create_post_reaction"
 
 
-  resources :topics
+  resources :topics do
+    resources :posts, only: [:new, :create, :index]
+  end
 
   resources :users do 
     resources :topics

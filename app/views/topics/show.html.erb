@@ -9,36 +9,44 @@
             <h1 class="center topic-title"><%= @topic.title %></h1>
             <p class="author-time"><small></small><%= link_to @topic.user.name, user_path(@topic.user) %><small>, <%= display_date_long(@topic.created_at)%></small> </p>
             <div class="topic-tags">
-            <ul class="topic-tag-list d-flex justify-content-start">
-                <% @topic.tag_types.each do |t| %>
-                    <li class="tag"><%= t.name %>  </li>
-                <% end %>
-            </ul>
+                <ul class="topic-tag-list d-flex justify-content-start">
+                    <% @topic.tag_types.each do |t| %>
+                        <li class="tag"><%= t.name %>  </li>
+                    <% end %>
+                </ul>
             </div>
             <%= edit_text_button(edit_topic_path(@topic), "aqua") if @topic.user == current_user %>
             <hr>
-
+            
             <%= render_markdown(@topic.content) %>
         </div>
 
         
-            <% @topic.posts.each do |post| %>
+        
+        <div class="row bottom-padding-md">
+            <div class="col-sm-12">
+                <%= render('topics/reply_button', topic: @topic) if (logged_in? and @post.nil?) %>
+                <%= render('topics/add_post', topic: @topic) if (logged_in? and !@post.nil? )%>
+            </div>
+        </div>
+
+        <% @topic.posts.each do |post| %>
+            <div class="row">
+                <div class="col-sm-11"> 
+                    <%= render 'posts/post', post: post %>
+                </div>
+                <div class="col-sm-1"></div>
+            </div>
+            <% retrieve_replies(post).each do |inner_post|%>
                 <div class="row">
-                    <div class="col-sm-11"> 
-                        <%= render 'posts/post', post: post %>
-                    </div>
-                    <div class="col-sm-1"></div>
+                <div class="col-sm-1"></div>
+                <div class="col-sm-11"> 
+                    <%= render 'posts/post', post: inner_post, inner?: true %>
                 </div>
-                <% retrieve_replies(post).each do |inner_post|%>
-                    <div class="row">
-                    <div class="col-sm-1"></div>
-                    <div class="col-sm-11"> 
-                        <%= render 'posts/post', post: inner_post, inner?: true %>
-                    </div>
-                </div>
-                <% end %>
+            </div>
             <% end %>
-            
+        <% end %>
+        
     </div>
     <div class="col-sm-1"></div>
 </div>

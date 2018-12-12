@@ -113,6 +113,15 @@ html, body{
     margin-top: 20px;
 }
 
+.bottom-space-md{
+    margin-bottom: 30px;
+}
+
+.bottom-padding-md{
+    padding-bottom: 40px;
+}
+
+
 .center{
     margin-left: auto;
     margin-right: auto;
@@ -182,6 +191,13 @@ blockquote p{
     height: 100%;
 }
 
+.topic-reply{
+    padding: 3px;
+    padding-right: 7px;
+    border-radius: 5px;
+    border: solid 1px #6BBAA7;
+}
+
 textarea#topic_content{
     height: 2000px;
 }
@@ -213,7 +229,7 @@ textarea#topic_content{
 /* TOPIC SIDEBAR  */
 
 .sticky-holder{
-    
+  
 }
 
 .sticky-sidebar{
@@ -440,6 +456,22 @@ a.topic-option-selected{
     border-radius: 25px;
 }
 
+/*    NEW POST    */
+
+.post-field-container{
+    height: 450px;
+}
+
+div.form-content-text{
+    height: 500px;
+}
+
+textarea#post_content{
+    height: 450px;
+}
+
+
+/*  END NEW POST    */
 
 .faded-text{
     color: rgb(95, 95, 95);
@@ -558,3 +590,5 @@ div.post-actions-container div.post-report-container a.btn-secondary{
     background-color: rgba(150,150,150);
     border-color: rgba(150,150,150);
 }
+
+
