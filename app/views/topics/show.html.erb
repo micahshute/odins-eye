@@ -7,7 +7,7 @@
             <%= topic_report_dropdown(@topic) %>
 
             <h1 class="center topic-title"><%= @topic.title %></h1>
-            <p class="author-time"><small></small><%= link_to @topic.user.name, user_path(@topic.user) %><small>, <%= display_date_long(@topic.created_at)%></small> </p>
+            <p class="author-time"><small><%= render( 'users/follow_user_button', user: @topic.user, bg_color: current_user.following?(@topic.user) ? "bg-aqua" : "bg-offwhite border", small: true) if logged_in?%></small><%= link_to @topic.user.name, user_path(@topic.user) %><small>, <%= display_date_long(@topic.created_at)%></small> </p>
             <div class="topic-tags">
                 <ul class="topic-tag-list d-flex justify-content-start">
                     <% @topic.tag_types.each do |t| %>

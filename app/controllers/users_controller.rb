@@ -33,11 +33,13 @@ class UsersController < ApplicationController
     end
 
     def following
-        @user = User.all.first
+        @user = authorize 
+        @following = @user.following
     end
 
     def followers
-        @user = User.all.first
+        @user = authorize
+        @followers = @user.followers
     end
 
     def follow

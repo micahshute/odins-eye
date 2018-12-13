@@ -1,0 +1,16 @@
+<h1 class="bottom-space-md">Following</h1>
+    
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+                <% @following.each do |following_user|%>
+                    <div class="bottom-space-md">
+                        <%= render 'users/summary', user: following_user %>
+                    </div>
+                <% end %>  
+        </div>
+        <div class="col-sm-1"></div>
+    
+    </div>
+
+

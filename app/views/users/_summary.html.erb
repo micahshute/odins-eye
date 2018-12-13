@@ -13,7 +13,7 @@
     </div>
     <div class="col-1">
         <% if logged_in? %>
-            <%= render 'users/follow_user_button', user: user, bg_color: current_user.following?(user) ? "bg-aqua" : "bg-dusty-rose" %>
+            <%= render 'users/follow_user_button', small: false, user: user, bg_color: current_user.following?(user) ? "bg-aqua" : "bg-dusty-rose" %>
         <% else %>
             <%= render 'users/logged_out_follow_user_button', user: user, bg_color: "bg-dusty-rose" %>
         <% end %>

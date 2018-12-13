@@ -1,5 +1,5 @@
-<div class="">
+<div class="inline">
     <a class="rounded-circle <%= bg_color %> padded-sm follow" data-method="post" href="<%= follow_user_path(user) %>">
-        <i class="material-icons follow color-charcoal" >person_add</i>
+        <i class="material-icons <%= "small-" if small %>follow color-charcoal" >person_add</i>
     </a>
 </div>
