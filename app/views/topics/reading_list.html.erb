@@ -1,3 +1,14 @@
 <% @topics.each do |topic| %>
-    <p><%= topic.title %></p>
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+            <div class= "bg-offwhite topic-summary">
+                <%= render 'topics/summary_view', topic: topic%>
+            </div>
+            
+        </div>
+        <div class="col-sm-1"></div>
+    </div>
+    
+
 <% end %>

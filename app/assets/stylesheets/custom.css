@@ -207,6 +207,12 @@ textarea#topic_content{
     margin-bottom: 30px;
 }
 
+.topic-summary{
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
 
 
 /*          MARKDOWN HOLDER          */

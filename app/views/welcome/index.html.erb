@@ -65,40 +65,7 @@
         Newest Contributions
         </h3>
         <% @recent_topics.each do |topic| %>
-            <div class="blog-post">
-                <h2 class="blog-post-title"><%= link_to topic.title, topic_path(topic), class: "text-dark text-bold" %></h2>
-                <p class="blog-post-meta"><small><%= display_date_long(topic.created_at) %> by </small><%= link_to topic.user.name, user_path(topic.user) %></p>
-
-                <p class="standard-text"><%= strip_tags(markdown(topic.content.truncate_words(50))) %></p>
-                <% if logged_in? %>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="inline"><%= genius(topic) %></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p class="inline"><%= likes(topic) %></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p class="inline"><%= dislikes(topic) %></p>
-                        </div>
-                        <div class="col-sm-3">
-                            <p class="inline"><%= save_topic_button(topic) %></p>
-                        </div>
-                    </div>
-                <% else %>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <p class="inline"><%= likes(topic) %></p>
-                        </div>
-                        <div class="col-sm-4">
-                        <p class="inline"><%= genius(topic) %></p>
-                        </div>
-                        <div class="col-sm-4">
-                            <p class="inline"><%= dislikes(topic) %></p>
-                        </div>
-                    </div>
-                <% end %>
-            </div><!-- /.blog-post -->
+            <%= render 'topics/summary_view', topic: topic%>
             <hr>
         <% end%>
 
@@ -153,22 +120,3 @@
     <a href="#">Back to top</a>
     </p>
 </footer>
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-<script src="../../assets/js/vendor/popper.min.js"></script>
-<script src="../../dist/js/bootstrap.min.js"></script>
-<script src="../../assets/js/vendor/holder.min.js"></script>
-<script>
-    Holder.addTheme('thumb', {
-    bg: '#55595c',
-    fg: '#eceeef',
-    text: 'Thumbnail'
-    });
-</script>
-
-
-<svg xmlns="http://www.w3.org/2000/svg" width="200" height="250" viewBox="0 0 200 250" preserveAspectRatio="none" style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;"><defs><style type="text/css"></style></defs><text x="0" y="13" style="font-weight:bold;font-size:13pt;font-family:Arial, Helvetica, Open Sans, sans-serif">Thumbnail</text></svg></body>
