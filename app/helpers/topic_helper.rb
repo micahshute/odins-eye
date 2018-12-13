@@ -13,7 +13,7 @@ module TopicHelper
             saved = user.topic_saved?(topic)
             render 'topics/logged_in_options', topic: topic, like_selected: like_selected, genius_selected: genius_selected, dislike_selected: dislike_selected, saved: saved
         else
-            render 'toopics/logged_out_options', topic: topic
+            render 'topics/logged_out_options', topic: topic
         end
     end
 
