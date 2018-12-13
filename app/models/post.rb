@@ -59,7 +59,9 @@ class Post < ApplicationRecord
     parent
   end
 
-
+  def first_level_reply?
+    self.postable.is_a?(Topic)
+  end
 
   private
 

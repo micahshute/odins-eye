@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   get 'posts/:post_id/replies/:id/edit' => "posts#edit", as: "edit_post_reply"
   post 'posts/:post_id/replies' => "posts#create"
   patch 'posts/:post_id/replies/:id' => "posts#update"
-  delete 'posts/:post_id/replies/:id' => "posts#delete", as: "delete_post_reply"
+  delete 'posts/:post_id/replies/:id' => "posts#destroy", as: "delete_post_reply"
 
   post 'topics/:topic_id/reactions/:reaction_type_id' => "reactions#create", as: "create_topic_reaction"
   post 'posts/:post_id/reactions/:reaction_type_id' => 'reactions#create', as: "create_post_reaction"
