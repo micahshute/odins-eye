@@ -134,6 +134,14 @@ class User < ApplicationRecord
 
     # MARK: ACTIONS 
 
+    def following?(user)
+        self.following.include?(user)
+    end
+
+    def followed_by?(user)
+        self.followers.include?(user)
+    end
+
     def follow(user)
         self.following << user
     end

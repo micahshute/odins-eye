@@ -132,6 +132,10 @@ html, body{
     padding: 10px;
 }
 
+.padded-sm{
+    padding: 5px;
+}
+
 .rounded{
     border-radius: 5px;
 }
@@ -180,6 +184,18 @@ html, body{
 
 .small-text{
     font-size: 0.8em;
+}
+
+.xsmall-text{
+    font-size: 0.7em;
+}
+
+.link-no-underline:hover{
+    text-decoration: none;
+}
+
+.link-hover-lavender:hover{
+    color: #6c6488;
 }
 
 a {
@@ -724,4 +740,22 @@ div.post-actions-container div.post-report-container a.btn-secondary{
     border-color: rgba(150,150,150);
 }
 
+.follow{
+    display: inline-flex;
+    vertical-align: middle;
 
+}
+
+a.follow:hover{
+    text-decoration: none;
+    background-color:#6c6488;
+}
+
+.summary-avatar{
+    height: 2.5em;
+
+}
+
+.avatar-container{
+
+}

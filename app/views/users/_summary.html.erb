@@ -1,0 +1,21 @@
+
+
+<div class="user-container shadow-sm rounded bg-offwhite row padded">
+    <div class="col-2">
+        <a href="<%= user_path(user)%>"><%= render 'users/avatar', user: user%></a>
+    </div>
+    <div class="col-4">
+        <h4 class="color-aqua"><%= link_to user.name, user_path(user), class: "link-no-underline link-hover-lavender" %></h4>
+    </div>
+    <div class="col-3 xsmall-text ">
+        <p class="no-margin"><%= pluralize user.topics.length, "published topic" %></p>
+        <p class="no-margin"><%= pluralize user.followers.length, "follower"%></p>
+    </div>
+    <div class="col-1">
+        <% if logged_in? %>
+            <%= render 'users/follow_user_button', user: user, bg_color: current_user.following?(user) ? "bg-aqua" : "bg-dusty-rose" %>
+        <% else %>
+            <%= render 'users/logged_out_follow_user_button', user: user, bg_color: "bg-dusty-rose" %>
+        <% end %>
+    </div>
+</div>
