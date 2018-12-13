@@ -34,7 +34,8 @@ class Tag < ApplicationRecord
   # MARK Class Methods
 
   def self.most_popular_count(limit=5)
-    Tag.joins(:tag_type).group(:tag_type_id).limit(limit).count
+    # Tag.joins(:tag_type).group(:tag_type_id).limit(limit).count
+    Tag.joins(:tag_type).group(:tag_type_id).order(Arel.sql('count(tags.id) DESC')).limit(limit).count
   end
 
   def self.most_popular(limit=5)
