@@ -1,0 +1,11 @@
+<div class="row bottom-space-md">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+        <% @tags.each do |tag| %>
+            <div class="bg-charcoal bottom-space-md shadow-sm rounded border large-font padded text-center d-flex justify-content-center align-items-center">
+                <h3><span class="tag-lg text-center shadow-md"><%= link_to tag.name, tag_topics_path(tag), class: "tag-link color-charcoal" %></span> <strong></strong></h3>
+            </div>
+        <% end %>
+    </div>
+    <div class="col-sm-2"></div>
+</div>

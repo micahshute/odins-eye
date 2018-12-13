@@ -1,0 +1,4 @@
+<div>
+    <p class="no-margin">Reply to <%= link_to post.topic.title, topic_path(post.topic) %> by <%= link_to post.topic.user.name, user_path(post.topic.user) %></p>
+    <p class="faded-text"><small><%=post.content.truncate(50)%></small></p>
+</div>

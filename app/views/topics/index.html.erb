@@ -1,1 +1,15 @@
-<%= render_markdown(@topic.content) %>
+<%= topic_list_header(@group_by) %>
+
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <% @topics.each do |topic| %>
+            <div class= "bg-offwhite topic-summary border shadow-sm">
+                <%= render 'topics/summary_view', topic: topic%>
+            </div>  
+        <% end %>
+    </div>
+    <div class="col-md-3">
+        <%= card_for(@group_by, @topics) %>
+    </div>
+</div>

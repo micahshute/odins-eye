@@ -1,0 +1,11 @@
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">Also check out</h5>
+        <p class="card-text">Authors that write about this tag</p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <% tag_users.each do |user| %>
+            <%= link_to user.name, user_topics_path(user), class: "list-group-item"%>
+        <% end %>
+    </ul>
+</div>

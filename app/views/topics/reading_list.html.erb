@@ -1,14 +1,16 @@
+<h1>Reading List</h1>
+<hr>
 <% @topics.each do |topic| %>
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
-            <div class= "bg-offwhite topic-summary">
+            <div class= "bg-offwhite topic-summary border shadow-sm">
                 <%= render 'topics/summary_view', topic: topic%>
             </div>
             
         </div>
         <div class="col-sm-1"></div>
     </div>
-    
+ 
 
 <% end %>

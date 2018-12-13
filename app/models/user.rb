@@ -49,8 +49,8 @@ class User < ApplicationRecord
     has_many :reacted_posts, :through => :reactions, :source => :reactable, source_type: 'Post'
     has_many :reacted_topics, through: :reactions, source: :reactable, source_type: "Topic"
     has_many :reaction_types, through: :reactions
-    has_many :tagged_topics, :through => :tags, source: :taggable, source_type: "Topic"
-    has_many :tagged_classrooms, :through => :tags, source: :taggable, source_type: "Classroom"
+    # has_many :tagged_topics, :through => :tags, source: :taggable, source_type: "Topic"
+    # has_many :tagged_classrooms, :through => :tags, source: :taggable, source_type: "Classroom"
     has_many :student_classrooms, dependent: :destroy
     has_many :enrolled_classes, class_name: "Classroom", through: :student_classrooms, source: :classroom
     has_many :user_saved_topics, dependent: :destroy
@@ -83,12 +83,16 @@ class User < ApplicationRecord
     end
 
     def self.most_followed_count(limit = 5)
-        User.joins(:following_users).group(:following_id).order('count(follower_id)').limit(limit).count
+        User.joins(:following_users).group(:following_id).order(Arel.sql('count(follower_id)')).limit(limit).count
     end
 
     def self.most_followed(limit=5)
         most_followed_count(limit).map{ |user_id, count| User.find(user_id) }
     end 
+
+    def self.most_with_tag(tag, limit=5)
+        joins(:topics => :tags).where(tags: { tag_type_id: tag.id }).group(:id).order(Arel.sql('count(tags.tag_type_id)')).limit(limit)
+    end
 
     # MARK Instance Methods
 
@@ -206,6 +210,16 @@ class User < ApplicationRecord
 
     #MARK Statistics
 
+    def tag_types
+        topic_tags = self.topics.map(&:tags).flatten.map{ |tag| tag.tag_type.name }.uniq
+        classroom_tags = self.classrooms.map(&:tags).flatten.map{ |tag| tag.tag_type.name }.uniq
+        topic_tags + classroom_tags
+    end
+
+    def most_common_tag_types(limit=5)
+        
+    end
+
     def most_liked_posts(limit=5)
         Post.most_liked_by_user(self, limit)
     end
@@ -224,6 +238,14 @@ class User < ApplicationRecord
 
     def most_reacted_posts(limit=5)
        Post.most_reacted_by_user(self, limit)
+    end
+
+    def most_recent_posts(limit=5)
+        self.posts.order(updated_at: :desc).limit(limit)
+    end
+
+    def most_recent_topics(limit=5)
+        self.topics.order(created_at: :desc).limit(limit)
     end
 
     def most_liked_topics(limit=5)

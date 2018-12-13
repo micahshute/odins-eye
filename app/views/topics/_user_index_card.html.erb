@@ -1,0 +1,16 @@
+<div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <% if topics.length == 0%>
+                    <h5 class="card-title">This user hasn't written anything yet</h5>
+                <% else %>
+                    <h5 class="card-title">Also check out</h5>
+                    <p class="card-text">some other tags this author has written about</p>
+                <% end%>
+            </div>
+            <ul class="list-group list-group-flush">
+                <% user_tag_types.each do |tag|%>
+                    <%= link_to tag.name, tag_topics_path(tag), class: "list-group-item"%>
+                <% end %>
+            </ul>
+
+        </div>

@@ -42,7 +42,17 @@ class TopicsController < ApplicationController
     end
 
     def index
-        @topic = Topic.all.last
+        
+        if (@tag_type = TagType.find_by(id: params[:tag_id]))
+            @group_by = @tag_type
+            @topics = @tag_type.topics
+        elsif (@user = User.find_by(id: params[:user_id]))
+            @group_by = @user
+            @topics = @user.topics
+        else
+            not_found
+        end
+       
     end
 
     def update

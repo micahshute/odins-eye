@@ -57,7 +57,7 @@ class Topic < ApplicationRecord
     #MARK Class Methods
 
     def self.trending_today
-        Topic.joins(:reaction_types).where(reaction_types: {name: 'like'}, classroom_id: nil).where(reactions: { created_at: ((Time.now - 24 * 3600)..Time.now)}).group('id').order(Arel.sql('count(reaction_type_id) DESC')).limit(1)
+        Topic.joins(:reaction_types).where(reaction_types: {name: ['like', 'genius']}, classroom_id: nil).where(reactions: { created_at: ((Time.now - 24 * 3600)..Time.now)}).group('id').order(Arel.sql('count(reaction_type_id) DESC')).limit(1)
     end
 
     def self.all_by_tag_name(tag_name)
@@ -81,6 +81,18 @@ class Topic < ApplicationRecord
 
     def self.newest_public(limit, offset=0)
         Topic.where(classroom: nil).order(created_at: :desc).limit(limit).offset(offset)
+    end
+
+    def self.most_popular
+       
+    end
+
+    def self.most_geniuses(limit=5)
+        most_reacted_type('genius', limit, false)
+    end
+
+    def self.most_geniuses_count(limit=5)
+        most_reacted_type('genius', limit, true)
     end
 
     def self.most_likes(limit = 5)

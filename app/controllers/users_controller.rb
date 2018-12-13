@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     end
 
     def show
-
+        @user = User.find(params[:id])
     end
 
     def edit
@@ -33,10 +33,14 @@ class UsersController < ApplicationController
         @user = current_user
     end
 
-    def home
-        authorize
-        @user = current_user
+    def following
+
     end
+
+    def followers
+
+    end
+
 
     def reading_list_create
         authorize

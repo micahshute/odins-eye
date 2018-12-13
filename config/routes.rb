@@ -29,9 +29,21 @@ Rails.application.routes.draw do
 
   get 'dashboard' => "users#dashboard", as: "dashboard"
 
+  get 'dashboard/followers' => "users#followers", as: "followers"
+  get 'dashboard/following' => "users#following", as: "following"
+  get 'users/:user_id/topics' => "topics#index", as: "user_topics"
+
   resources :topics do
     resources :posts, only: [:new, :create, :edit, :update, :index, :destroy]
   end
+
+  resources :tag_types, only: [:index]
+
+  resources :tags do 
+    resources :topics, only: [:index, :show]
+    resources :classrooms, only: [:index, :show]
+  end
+ 
 
   resources :users do 
     resources :topics
@@ -41,10 +53,7 @@ Rails.application.routes.draw do
     resources :notifications, only: [:index]
   end
 
-  resources :tags do 
-    resources :topics, only: [:index, :show]
-    resources :topics, only: [:index, :show]
-  end
+  
 
   resources :users, only: [:new, :create, :show]
 

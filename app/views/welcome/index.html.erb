@@ -10,7 +10,7 @@
         <% Tag.most_popular(10).each do |tag| %>
             <a class="p-2 text-muted" href="<%= tag_topics_path(tag)%>"><%= tag.name.gsub("_", " ").capitalize %></a>
         <% end %>
-         <%= link_to "Browse all tags", tags_path, class: "p-2 text-muted" %>
+         <%= link_to "Browse all tags", tag_types_path, class: "p-2 text-muted" %>
     </nav>
     </div>
 

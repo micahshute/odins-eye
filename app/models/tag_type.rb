@@ -8,7 +8,8 @@ class TagType < ApplicationRecord
    
 
     has_many :tags, dependent: :destroy
-
+    has_many :topics, through: :tags, source: :taggable, source_type: :Topic
+    has_many :classrooms, through: :tags, source: :taggable, source_type: :Classroom
 
     # MARK Callbacks
 
