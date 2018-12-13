@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
             if @user.authenticate(params[:user][:password])
                 log_in(@user)
                 flash[:success] = "Welcome back, #{@user.name}"
-                redirect_to home_path
+                redirect_to dashboard_path
             else
                 flash[:danger] = "Improper login information entered."
                 redirect_to login_path
@@ -26,7 +26,7 @@ class SessionsController < ApplicationController
         if user.save
             flash[:success] = "Welcome, #{user.name}"
             log_in(user)
-            redirect_to home_path
+            redirect_to dashboard_path
         else
             flash[:danger] = "There was a problem logging you in"
             raise user.errors.inspect

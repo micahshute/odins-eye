@@ -9,7 +9,7 @@ class UsersController < ApplicationController
         if @user.save
             log_in(@user)
             flash[:success] = "Welcome #{@user.name}!"
-            redirect_to home_path
+            redirect_to dashboard_path
         else
             flash[:danger] = "Oops! There was trouble making your acount."
             render 'new'
@@ -26,6 +26,11 @@ class UsersController < ApplicationController
 
     def update
 
+    end
+
+    def dashboard
+        authorize
+        @user = current_user
     end
 
     def home

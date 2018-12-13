@@ -35,8 +35,16 @@ html, body{
     color: rgb(42, 42, 42);
 }
 
+.color-offwhite{
+    color: #FFFFF0;
+}
+
 .color-whitesmoke{
     color: whitesmoke;
+}
+
+.color-light-gp{
+   color: #EBDFE0;
 }
 
 .bg-aqua {
@@ -88,6 +96,13 @@ html, body{
 
 /*  SPACING   */
 
+.truncate {
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
 .after-navbar{
     margin-top: 85px;
     
@@ -113,6 +128,14 @@ html, body{
     margin-top: 20px;
 }
 
+.padded{
+    padding: 10px;
+}
+
+.rounded{
+    border-radius: 5px;
+}
+
 .bottom-space-md{
     margin-bottom: 30px;
 }
@@ -135,6 +158,10 @@ html, body{
 .error-text{
     color: red;
 }   
+
+.small-text{
+    font-size: 0.8em;
+}
 
 a {
     color: #6BBAA7;
@@ -208,7 +235,7 @@ textarea#topic_content{
 }
 
 .topic-summary{
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 10px;
     margin-bottom: 10px;
 }

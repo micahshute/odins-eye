@@ -120,10 +120,6 @@ class User < ApplicationRecord
 
     end
 
-    def most_viewed_posts
-
-    end
-
     def most_popular_posts
 
     end
@@ -207,6 +203,9 @@ class User < ApplicationRecord
         reaction_for(reactable, :report)
     end
 
+
+    #MARK Statistics
+
     def most_liked_posts(limit=5)
         Post.most_liked_by_user(self, limit)
     end
@@ -253,6 +252,19 @@ class User < ApplicationRecord
 
     def most_viewed_topics_count
         Topic.most_viewed_count_by_user(self, limit)
+    end
+
+    def total_views
+        self.topics.map(&:views).sum
+    end
+
+    def total_topic_reactions
+        self.topics.map{ |topic| topic.reactions.length }.sum
+    end
+
+    def total_post_reactions
+        posts = self.posts.length
+        total_reactions = most_reacted_posts.values.sum
     end
 
     private

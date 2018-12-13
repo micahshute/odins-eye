@@ -27,6 +27,7 @@ class TopicsController < ApplicationController
     def show
         @topic = Topic.where(id: params[:id]).includes(:user, :tags).includes(posts: {reactions: :reaction_type}).first
         @user = current_user
+        @topic.update_views unless current_user == @topic.user
     end
 
     def edit

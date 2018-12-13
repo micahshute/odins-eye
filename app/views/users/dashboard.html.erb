@@ -1,0 +1,28 @@
+<h6>Good <%= time_of_day%>, <%= @user.name %></h6>
+<div class="row">
+    <div class="col-md-3">
+        <div class="bg-offwhite padding rounded small-text">
+            <h5>Info</h5>
+            <p>Email: <%= @user.email%></p>
+            <p><%= "Bio:" unless @user.bio.blank? %></p>
+            <p><%= @user.bio  %></p>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="bg-charcoal color-light-gp padded rounded d-flex justify-content-around align-items-center">
+            <h2 class="">Your Stats</h2>
+            <div class="stats-container">
+                <p><%= pluralize @user.topics.length, "Published topic" %></p>
+                <p><%= pluralize @user.posts.length, "Total post" %></p>
+                <p><%= pluralize @user.total_views, "Total view" %></p>
+                <p><%= pluralize @user.total_topic_reactions, "Reaction" %> to your topics</p>
+                <p><%= pluralize @user.total_post_reactions, "Reaction" %> to your posts</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="bg-offwhite">
+        
+        </div>
+    </div>
+</div>

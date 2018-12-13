@@ -156,6 +156,10 @@ class Topic < ApplicationRecord
 
     #MARK Instance Methods
 
+    def update_views
+        update(views: self.views + 1)
+    end
+
     def public?
         self.classroom.nil?
     end
