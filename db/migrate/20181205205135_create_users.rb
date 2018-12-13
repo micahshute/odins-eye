@@ -6,6 +6,10 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :google_uid
       t.string :google_refresh_token
       t.string :password_digest
+      t.string :image_path
+      t.string :github_url
+      t.string :facebook_url
+      t.string :linkedin_url
       t.text :bio
       t.boolean :admin, default: false
 
