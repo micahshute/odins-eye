@@ -119,7 +119,12 @@ ActiveRecord::Schema.define(version: 2018_12_10_203915) do
     t.string "google_uid"
     t.string "google_refresh_token"
     t.string "password_digest"
+    t.string "image_path"
+    t.string "github_url"
+    t.string "facebook_url"
+    t.string "linkedin_url"
     t.text "bio"
+    t.boolean "display_email"
     t.boolean "admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

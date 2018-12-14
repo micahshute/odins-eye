@@ -48,8 +48,7 @@ class UsersController < ApplicationController
         if auth_user == user_to_follow
             flash[:danger] = "You cannot follow yourself"
             redirect_to last_page
-        end
-        if auth_user.following?(user_to_follow)
+        elsif auth_user.following?(user_to_follow)
             user_to_follow.followers.delete(auth_user)
             redirect_to last_page
         else

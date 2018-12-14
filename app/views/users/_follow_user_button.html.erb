@@ -1,5 +1,7 @@
-<div class="inline">
-    <a class="rounded-circle <%= bg_color %> padded-sm follow" data-method="post" href="<%= follow_user_path(user) %>">
-        <i class="material-icons <%= "small-" if small %>follow color-charcoal" >person_add</i>
-    </a>
-</div>
+<% if logged_in? %>
+    <div class="inline">
+        <a class="rounded-circle <%= followed ? following_color : not_following_color %> padded-sm follow link-bluegray-bg-hover link-plain-hover" data-method="post" href="<%= follow_user_path(user) %>">
+            <i class="material-icons <%= "small-" if small %>follow color-charcoal" >person_add</i>
+        </a>
+    </div>
+<% end %>

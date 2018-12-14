@@ -76,7 +76,7 @@ html, body{
 }
 
 .bg-bluegray{
-    background-color: rgb(51, 84, 113)
+    background-color: rgb(51, 84, 113);
 }
 .border-aqua {
     border-color: #6BBAA7;
@@ -156,6 +156,7 @@ html, body{
 }
 
 
+
 .center{
     margin-left: auto;
     margin-right: auto;
@@ -165,11 +166,15 @@ html, body{
     display: inline;
 }
 
+.block{
+    display: block;
+}
+
 .full-height{
     min-height: 100%;
 }
 
-.fill{
+.fillup{
     position: absolute;
     top: 0; right: 0; bottom: 0; left: 0;
     border: 1px solid black;
@@ -190,6 +195,14 @@ html, body{
     font-size: 0.7em;
 }
 
+.md-text{
+    font-size: 1em;
+}
+
+.lg-text{
+    font-size: 1.25em;
+}
+
 .link-no-underline:hover{
     text-decoration: none;
 }
@@ -203,14 +216,25 @@ a {
     font-family: "Titillium Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+.primary-text{
+    font-family: "Titillium Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.thin-text{
+    font-family: "Abel", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 .border-bottom{
     border-bottom: 2px solid rgb(62, 58, 58);
 }
-
+/* 
 .shadow{
     text-shadow: 4px 4px 4px #aaa;
-}
+} */
 
+.bold{
+    font-weight: bold;
+}
 .title-text{
     font-family: 'Cinzel', "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 48px;
@@ -224,9 +248,6 @@ a {
     font-family: "Titillium Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.text-bold{
-    font-weight: bold;
-}
 
 blockquote{
     border-left: 2px solid rgb(62, 58, 58);
@@ -746,21 +767,52 @@ div.post-actions-container div.post-report-container a.btn-secondary{
 
 }
 
-a.follow:hover{
+/* a.follow:hover{
     text-decoration: none;
     background-color:#6c6488;
-}
+} */
 
 .summary-avatar{
     height: 2.5em;
 
 }
 
-.avatar-container{
+a.link-plain-hover:hover{
+    text-decoration: none;
+}
 
+a.link-bluegray-bg-hover:hover{
+    background-color: rgb(51, 84, 113);
+}
+
+a.link-bluegray-hover:hover{
+    color: rgb(51, 84, 113);
+}
+
+.profile-avatar{
+    width: 100%;
+    height: 100%;
+    border: solid 3px rgb(51, 84, 113);
 }
 
 .small-follow{
     font-size: 0.95em;
 
+}
+
+.fill{
+    height: 100%;
+    width: 100%;
+}
+
+
+/*   Flex */
+
+
+.flex-direction-col{
+    flex-direction: column;
+}
+
+.flex-direction-row{
+    flex-direction: row;
 }

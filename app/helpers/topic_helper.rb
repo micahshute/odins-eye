@@ -30,7 +30,11 @@ module TopicHelper
         if grouped_by.is_a?(TagType)
             render 'topics/tag_topics_header', tag_type: grouped_by
         elsif grouped_by.is_a?(User)
-            render 'topics/user_topics_header', user: grouped_by
+            if grouped_by == current_user
+                render 'users/dashboard_nav_buttons', user: @user, selected: :topics 
+            else
+                render 'topics/user_topics_header', user: grouped_by
+            end
         else
             not_found
         end

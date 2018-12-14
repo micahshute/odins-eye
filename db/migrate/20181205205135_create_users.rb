@@ -11,6 +11,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :facebook_url
       t.string :linkedin_url
       t.text :bio
+      t.boolean :display_email
       t.boolean :admin, default: false
 
       t.timestamps
