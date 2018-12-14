@@ -67,6 +67,7 @@ gem 'jquery-rails'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.8'
+  gem "pry", "~> 0.12.2"
 end
 
 
@@ -77,3 +78,5 @@ gem "omniauth-google-oauth2", "~> 0.5.4"
 gem "kramdown", "~> 1.17"
 
 gem "rouge", "~> 3.3"
+
+

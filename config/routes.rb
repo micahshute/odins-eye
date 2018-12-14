@@ -35,8 +35,8 @@ Rails.application.routes.draw do
 
   post 'users/:id/follow' => 'users#follow', as: "follow_user"
   get 'users/:id/followers' => 'users#followers', as: "users_following"
-
   post 'users/:id/following' => 'users#following', as: "following_users"
+
 
   resources :topics do
     resources :posts, only: [:new, :create, :edit, :update, :index, :destroy]

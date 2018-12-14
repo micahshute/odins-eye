@@ -1,4 +1,7 @@
 <div class="blog-post">
+    <% if logged_in? and (topic.user == current_user) %>
+        <p class="small-text thin-text"><strong><%= topic.views %></strong> Views</p>
+    <% end %>
     <h2 class="blog-post-title"><%= link_to topic.title, topic_path(topic), class: "text-dark text-bold" %></h2>
     <p class="blog-post-meta"><small><%= display_date_long(topic.created_at) %> by </small><%= link_to topic.user.name, user_path(topic.user) %></p>
     <p class="standard-text"><%= strip_tags(markdown(topic.content.truncate_words(50))) %></p>

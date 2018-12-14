@@ -48,7 +48,7 @@
                 <a class="text-dark" href="<%= topic_path(@popular_posts_by_tag.values.last)%>"><%= @popular_posts_by_tag.values.last.title %></a>
                 </h3>
                 <div class="mb-1 text-muted preview-text"><%= parse_date(@popular_posts_by_tag.values.last.created_at) %></div>
-                <p class="card-text mb-auto preview-text"><%= strip_tags(markdown(@popular_posts_by_tag.values.first.content.truncate_words(15))) %></p>
+                <p class="card-text mb-auto preview-text"><%= strip_tags(markdown(@popular_posts_by_tag.values.last.content.truncate_words(15))) %></p>
                 <%= save_topic_button(@popular_posts_by_tag.values.last) if logged_in?%>
                 <a href="<%= topic_path(@popular_posts_by_tag.values.last)%>">Continue reading</a>
             </div>

@@ -25,6 +25,7 @@ class TopicsController < ApplicationController
     end
 
     def show
+        @logged_in = logged_in?
         @topic = Topic.where(id: params[:id]).includes(:user, :tags).includes(posts: {reactions: :reaction_type}).first
         @user = current_user
         @topic.update_views unless current_user == @topic.user
@@ -42,7 +43,7 @@ class TopicsController < ApplicationController
     end
 
     def index
-        
+        @logged_in = logged_in?
         if (@tag_type = TagType.find_by(id: params[:tag_id]))
             @group_by = @tag_type
             @topics = @tag_type.topics
@@ -78,8 +79,9 @@ class TopicsController < ApplicationController
     end
 
     def reading_list
-        authorize
-        @topics = current_user.saved_topics
+        if authorize
+            @topics = current_user.saved_topics
+        end
     end
 
     private

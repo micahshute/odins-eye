@@ -1,0 +1,9 @@
+<% if tag_types.length > 0 %>
+
+    <div class="d-flex justify-content-around padded-sm">
+        <h6>Recent Tags</h6>
+        <% tag_types.reverse.take(5).each do |tag_type| %>
+            <span class="tag text-center"><%= tag_type %></span> <strong></strong>
+        <% end %>
+    </div>
+<% end %>

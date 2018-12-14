@@ -104,19 +104,12 @@ class User < ApplicationRecord
         group_messages_by_sender(self.sent_messages)
     end
 
-    def most_liked_posts
-
-    end
 
     def most_liked_topics
 
     end
 
     def most_replied_topics
-
-    end
-
-    def most_replied_posts
 
     end
 
@@ -224,9 +217,6 @@ class User < ApplicationRecord
         topic_tags + classroom_tags
     end
 
-    def most_common_tag_types(limit=5)
-        
-    end
 
     def most_liked_posts(limit=5)
         Post.most_liked_by_user(self, limit)

@@ -18,6 +18,7 @@ class UsersController < ApplicationController
 
     def show
         @user = User.find(params[:id])
+        @logged_in = logged_in?
     end
 
     def edit
@@ -29,50 +30,60 @@ class UsersController < ApplicationController
     end
 
     def dashboard
-        @user = authorize
+        if authorize
+            @user = current_user
+        end
     end
 
     def following
-        @user = authorize 
-        @following = @user.following
+        if authorize
+            @user = current_user
+            @following = @user.following
+        end
     end
 
     def followers
-        @user = authorize
-        @followers = @user.followers
+        if authorize
+            @user = current_user
+            @followers = @user.followers
+        end
     end
 
     def follow
-        auth_user = authorize
-        user_to_follow = User.find(params[:id])
-        if auth_user == user_to_follow
-            flash[:danger] = "You cannot follow yourself"
-            redirect_to last_page
-        elsif auth_user.following?(user_to_follow)
-            user_to_follow.followers.delete(auth_user)
-            redirect_to last_page
-        else
-            auth_user.follow(user_to_follow)
-            redirect_to last_page
+        if authorize
+            auth_user = current_user
+            user_to_follow = User.find(params[:id])
+            if auth_user == user_to_follow
+                flash[:danger] = "You cannot follow yourself"
+                redirect_to last_page
+            elsif auth_user.following?(user_to_follow)
+                user_to_follow.followers.delete(auth_user)
+                redirect_to last_page
+            else
+                auth_user.follow(user_to_follow)
+                redirect_to last_page
+            end
         end
     end
 
 
     def reading_list_create
-        authorize
-        user = current_user
-        if(topic = Topic.find(params[:topic_id]))
-            if user.topic_saved?(topic)
-                user.saved_topics.delete(topic)
+        if authorize
+            user = current_user
+            if(topic = Topic.find(params[:topic_id]))
+                if user.topic_saved?(topic)
+                    user.saved_topics.delete(topic)
+                else
+                    user.save_topic(topic)
+                end
+                redirect_to request.referer
             else
-                user.save_topic(topic)
+                flash[:danger] = "There was a problem saving this post, please contact a system Admin"
+                redirect_to request.referer
             end
-            redirect_to request.referer
-        else
-            flash[:danger] = "There was a problem saving this post, please contact a system Admin"
-            redirect_to request.referer
         end
     end
+
 
     private
 

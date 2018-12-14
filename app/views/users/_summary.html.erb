@@ -12,6 +12,6 @@
         <p class="no-margin"><%= pluralize user.followers.length, "follower"%></p>
     </div>
     <div class="col-1">
-        <%= render 'users/follow_user_button', small: false, user: user, following_color: "bg-aqua", not_following_color: "bg-offwhite border", followed: current_user.following? %>
+        <%= render 'users/follow_user_button', small: false, user: user, following_color: "bg-aqua", not_following_color: "bg-offwhite border", followed: current_user.following?(user) %>
     </div>
 </div>

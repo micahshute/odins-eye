@@ -4,7 +4,7 @@
         </div>
     </div>
     <div class="col-sm-10">
-        <div class="row border bg-offwhite shadow-sm">
+        <div class="row border bg-offwhite shadow-sm padded">
             <div class="col-md-3">
 
                 <div class="fill d-flex image-flex align-items-center justify-content-middle flex-direction-col">
@@ -34,11 +34,44 @@
                 </div>            
             </div> 
             <div class="col-md-1">
-                <div class="fill d-flex align-center justify-content-center flex-direction-col">
-                    <%= render 'users/follow_user_button', small: false, user: @user, following_color: "bg-aqua", not_following_color: "bg-offwhite border", followed: current_user.following?(@user) %>
+
+                <div class="fill d-flex align-center justify-content-around flex-direction-col">
+                    <%= render('users/follow_user_button', small: false, user: @user, following_color: "bg-aqua", not_following_color: "bg-offwhite border", followed: current_user.following?(@user)) if @logged_in %>
+                    <%= render('components/message_button', small: false, user: @user) if @logged_in %>
                 </div>
             </div>   
         </div>
+        
+        <%= render_unless_nil 'components/row_decorator', title: nil, shadow: true, path: 'users/profile_tags', args: {tag_types: @user.tag_types} %>
+        <%= render 'components/row_decorator', title: nil, bg_color: '', shadow: false, path: 'users/profile_stats', args: { user: @user } %>
+        <%= render_unless_nil 'components/row_decorator', title: "Most reacted post", path: 'topics/summary_view', args: {topic: @user.most_reacted_topics(3).first} %>
+        <% if @user.topics.length > 0 %>
+            <div class="bottom-space-md">
+                <h6>Recently Authored</h6>
+                <% @user.topics.take(5).each do |topic| %>
+                    <%= render_unless_nil 'components/row_decorator', title: nil, path: 'topics/summary_view', args: { topic: topic } %>
+                <% end %>
+                <a class="btn btn-outline-info btn-block" href="<%= user_topics_path(@user) %>" role="button"><%= "All Published Topics (#{@user.topics.length})" %></a>
+            </div>
+        <% end %>
+
+        
+        <% if @user.posts.length > 0 %>
+            <div class="color-aqua bg-offwhite border shadow-sm padded bottom-space-md">
+            
+                <h5>Recent Comments</h5>
+            
+                <div class="color-charcoal">
+                    <% @user.most_recent_posts.each do |post| %>
+                        <div class="bottom-space-sm">
+                            <%= render 'posts/summary', post: post%>
+                        </div>
+                    <% end %>
+                </div>
+            
+            </div>
+        <% end %>
+
     </div>
     <div class="col-sm-1">
         <div class="">

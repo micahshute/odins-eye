@@ -1,0 +1,7 @@
+<% if logged_in? %>
+    <div class="inline">
+        <a class="rounded-circle border padded-sm follow link-bluegray-bg-hover link-plain-hover" href="<%= new_user_message_path(user) %>">
+            <i class="material-icons <%= "small-" if small %>message color-charcoal" >message</i>
+        </a>
+    </div>
+<% end %>

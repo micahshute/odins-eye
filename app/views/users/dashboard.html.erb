@@ -15,7 +15,7 @@
                     <h2 class="">Your Stats</h2>
                     <div class="stats-container">
                         <p><%= pluralize @user.topics.length, "Published topic" %></p>
-                        <p><%= pluralize @user.posts.length, "Total post" %></p>
+                        <p><%= pluralize @user.posts.length, "Written post" %></p>
                         <p><%= pluralize @user.total_views, "Total view" %></p>
                         <p><%= pluralize @user.total_topic_reactions, "Reaction" %> to your topics</p>
                         <p><%= pluralize @user.total_post_reactions, "Reaction" %> to your posts</p>
@@ -26,7 +26,7 @@
         <div class="col-lg-3">
             <div class="bottom-space-md d-flex justify-content-center">
                 <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="https://i.imgur.com/JkzJkzM.png" alt="Card image cap">
+                <img class="card-img-top" src="<%= @user.image_path%>" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title"><%= @user.name%></h5>
                     <p class="card-text">
@@ -39,9 +39,15 @@
 
 
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Social Media 1<a href="#" class="btn btn-sm btn-primary">Social Media 1</a></li>
-                        <li class="list-group-item">Social Media 2<a href="#" class="btn btn-sm btn-primary">Social Media 2</a></li>
-                        <li class="list-group-item">Social Media 3<a href="#" class="btn btn-sm btn-primary">Social Media 3</a></li>
+                        <% if @user.facebook_url %>
+                            <li class="list-group-item"><%= render 'users/social_media', type: :facebook, url: @user.facebook_url %></li>
+                        <% end %>
+                        <% if @user.github_url %>
+                            <li class="list-group-item"><%= render 'users/social_media', type: :github, url: @user.github_url %></li>
+                        <% end %>
+                        <% if @user.linkedin_url %>
+                            <li class="list-group-item"><%= render 'users/social_media', type: :linkedin, url: @user.linkedin_url  %></li>
+                        <% end %>
                     </ul>
                 </div>
                 </div>
@@ -82,23 +88,26 @@
         </div>
 
         <div class="col-md-10">
-            <%= stat_object("Most Recently Published", @user.most_recent_topics(1).first) %>
+            <%= stat_object("Most Recently Published Topic", @user.most_recent_topics(1).first) %>
             <%= stat_object("Most Liked Topic", @user.most_liked_topics(1).first) %>
             <%= stat_object("Most Viewed Topic", @user.most_viewed_topics(1).first, :views) %>
             <%= stat_object("Most Liked Post", @user.most_liked_posts(1).first) %>
             <%= render('users/spec_title', title: "You don't have any posts yet!") if @user.posts.length == 0%>
-            <div class="color-aqua bg-offwhite border shadow-sm padded">
-                <% if @user.posts.length > 0 %>
+            <% if @user.posts.length > 0 %>
+                <div class="color-aqua bg-offwhite border shadow-sm padded">
+                
                     <h5>Recent Comments</h5>
-                <% end %>
-                <div class="color-charcoal">
-                    <% @user.most_recent_posts.each do |post| %>
-                        <div class="bottom-space-sm">
-                            <%= render 'posts/summary', post: post%>
-                        </div>
-                    <% end %>
+                
+                    <div class="color-charcoal">
+                        <% @user.most_recent_posts.each do |post| %>
+                            <div class="bottom-space-sm">
+                                <%= render 'posts/summary', post: post%>
+                            </div>
+                        <% end %>
+                    </div>
+                
                 </div>
-            </div>
+            <% end %>
         </div>
 
         <div class="col-md-1">

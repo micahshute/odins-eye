@@ -1,0 +1,11 @@
+ <% bg = local_assigns[:bg_color].nil? ? 'offwhite' : bg_color  %>
+ <% shadow_bool = local_assigns[:shadow].nil? ? true : shadow %>
+ <% shadow = !!shadow_bool ? 'shadow-sm' : '' %>
+ <div class="row top-space-sm bottom-space-sm">
+    <div class="col-12">
+        <h6><%= title unless title.nil? %></h6>
+        <div class="bg-<%= bg %> rounded border padded-sm <%= shadow %>">
+            <%= render path, args %>
+        </div>
+    </div>
+</div>

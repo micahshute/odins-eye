@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
     def authorize(user=nil)
         if user.nil?
             not_authorized("#{'<a href="/login">Login</a>'} or #{'<a href="/signup">Signup</a>'} to view this page!") unless logged_in?
-            current_user
+            !!current_user
         else
             not_authorized unless user == current_user
         end

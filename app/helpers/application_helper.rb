@@ -53,5 +53,12 @@ module ApplicationHelper
     def sanitize_markdown(content)
         sanitize(content, tags:  Loofah::HTML5::WhiteList::ALLOWED_ELEMENTS_WITH_LIBXML2.to_a + %w(table th td tr span), attibutes: Loofah::HTML5::WhiteList::ALLOWED_ATTRIBUTES + %w( style ))
     end
+
+    def render_unless_nil(partial_path, args)    
+        if args[:args].values.none?(nil) and args[:args].values.none?{ |val| val.respond_to?(:blank?) and val.blank? }
+            render_params = args.merge(args[:args])
+            render(partial_path, render_params)
+        end
+    end
     
 end
