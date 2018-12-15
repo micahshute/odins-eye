@@ -1,3 +1,6 @@
+<% if @new_notifications.length == 0 and @old_notifications.length == 0 %>
+    <h2>You have no notifications</h2>
+<% end %>
 <% @new_notifications.each do |n| %>
     <div class="row bottom-space-sm">
         <div class="col-sm-2"></div>

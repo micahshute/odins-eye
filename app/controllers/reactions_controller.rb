@@ -6,8 +6,10 @@ class ReactionsController < ApplicationController
         reactable = nil
         if (topic_id = params[:topic_id])
             reactable = Topic.find topic_id
+            authorize_topic(reactable)
         elsif (post_id = params[:post_id])
             reactable = Post.find post_id
+            authorize_topic(reactable.topic)
         end
 
         if (reaction_type_id = params[:reaction_type_id].to_i)
