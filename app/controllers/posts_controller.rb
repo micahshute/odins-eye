@@ -24,7 +24,6 @@ class PostsController < ApplicationController
     end
 
     def create
-
         authorize
         if !!params[:topic_id]
             @topic = Topic.find(params[:topic_id])
@@ -33,6 +32,7 @@ class PostsController < ApplicationController
             @post.postable = @topic
             @post.user = current_user
             if @post.save
+                Notification.create(user: @topic.user, content: "<a href='#{user_path(@post.user)}'>#{@post.user.name}</a> responded to <a href='#{topic_path(@topic)}'>#{@topic.title}</a>")
                 redirect_to topic_path(@topic)
             else
                 flash[:danger] = "#{post.user.name}, your post was too long"
@@ -45,6 +45,7 @@ class PostsController < ApplicationController
             @reply.postable = @post
             @reply.user = current_user
             if @reply.save
+                Notification.create(user: @post.user, content: "<a href='#{user_path(@reply.user)}'>#{@reply.user.name}</a> responded to <a href='#{topic_path(@post.topic)}'>your post</a>")
                 redirect_to topic_path(@post.topic)
             else
                 flash[:danger] = "#{post.user.name}, your post was too long"

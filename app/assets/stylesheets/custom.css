@@ -234,6 +234,9 @@ html, body{
 .link-no-underline:hover{
     text-decoration: none;
 }
+.link-no-underline a:hover{
+    text-decoration: none;
+}
 
 .link-no-color-change, .link-no-color-change:hover{
     color: #6BBAA7;
@@ -247,6 +250,14 @@ a {
     color: #6BBAA7;
     font-family: "Titillium Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
+.hover-white a:hover{
+    color: #fffff0
+}
+
+/* .hover-white:hover{
+    color: #fffff0
+} */
 
 .primary-text{
     font-family: "Titillium Web", "Helvetica Neue", Helvetica, Arial, sans-serif;

@@ -55,7 +55,7 @@ class User < ApplicationRecord
     has_many :enrolled_classes, class_name: "Classroom", through: :student_classrooms, source: :classroom
     has_many :user_saved_topics, dependent: :destroy
     has_many :saved_topics, through: :user_saved_topics, source: "topic"
-
+    has_many :notifications
 
     extend EagerLoading
 
@@ -122,6 +122,13 @@ class User < ApplicationRecord
         self.recieved_messages.select{ |msg| !msg.viewed }
     end
 
+    def new_notifications
+        self.notifications.select{ |n| !n.viewed }.sort{ |a,b| a.created_at <=> b.created_at }
+    end
+
+    def sorted_notifications
+        self.notifications.sort{ |a,b| a.created_at <=> b.created_at }
+    end
 
     def most_liked_topics
 

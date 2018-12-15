@@ -1,0 +1,21 @@
+<% @new_notifications.each do |n| %>
+    <div class="row bottom-space-sm">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <%= render 'notifications/notification', notification: n, color: 'offwhite', bg_color: 'charcoal' %>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+    
+<% end %>
+
+<% @old_notifications.each do |n| %>
+    <div class="row bottom-space-sm">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <%= render 'notifications/notification', notification: n, color: 'charcoal', bg_color: 'offwhite' %>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+    
+<% end %>

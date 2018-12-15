@@ -10,4 +10,10 @@ class ReactionType < ApplicationRecord
         genius: 3,
         report: 4
     }
+
+    ICON = {
+        like: 'thumb_up',
+        dislike: 'thumb_down',
+        genius: 'whatshot'
+    }
 end
