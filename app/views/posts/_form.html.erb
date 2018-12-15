@@ -1,6 +1,7 @@
 <%= form_for(post, url: path) do |f| %>
     <div class="form-group post-field-container">
         <%= f.text_area :content, placeholder: "Add your comments here...", class: "form-control form-content-text" %>
+        <%= error_msg_for(post, :content).html_safe%>
     </div>
     <div class="form-group">
         <%= f.submit class: "btn btn-primary bg-lavender border-lavender btn-sm" %>

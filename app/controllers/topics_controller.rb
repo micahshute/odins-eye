@@ -15,11 +15,12 @@ class TopicsController < ApplicationController
             @topic = Topic.new(topic_params)
             @topic.user = current_user
             if @topic.save
+                binding.pry
                 flash[:success] = "Congratulations, your topic was published"
                 redirect_to user_topic_path(current_user, @topic)
             else
                 @tag_types = Tag.most_popular(10)
-                raise @topic.errors.inspect
+                
                 flash[:danger] = "#{@topic.user.name}, there was a problem publishing your topic"
                 render 'new'
             end

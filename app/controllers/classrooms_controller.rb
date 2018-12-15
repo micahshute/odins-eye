@@ -2,7 +2,10 @@ class ClassroomsController < ApplicationController
 
 
     def new
-        
+        if authorize
+            @user = current_user
+            @classroom = Classroom.new
+        end
     end
 
     def create
