@@ -37,6 +37,10 @@ Rails.application.routes.draw do
   get 'users/:id/followers' => 'users#followers', as: "users_following"
   post 'users/:id/following' => 'users#following', as: "following_users"
 
+  get 'messages/inbox' => 'messages#inbox', as: "inbox"
+  get 'messages/threads/users/:id' => 'messages#thread', as: 'messages_from_user'
+  post 'messages/users/:id/new' => 'messages#new', as: "new_message_for_reciever"
+
 
   resources :topics do
     resources :posts, only: [:new, :create, :edit, :update, :index, :destroy]

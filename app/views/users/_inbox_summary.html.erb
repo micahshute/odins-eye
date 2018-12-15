@@ -1,0 +1,11 @@
+
+<% bg_color = (unviewed > 0) ? 'sunshine' : 'offwhite' %>
+<div  class="user-container shadow-sm rounded bg-<%= bg_color %> fill padded block">
+    <a href="<%= path %>" class="fill d-flex justify-content-between align-items-center link-no-underline link-no-color-change"> 
+        <%= render 'users/avatar', user: user %>
+
+        <h4 class="color-aqua inline color-bluegray"><%= user.name %></h4>
+
+        <h6 class="inline color-bluegray">(<%= unviewed %>) New Messages</h6>
+    </a>
+</div>

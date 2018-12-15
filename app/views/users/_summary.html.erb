@@ -7,11 +7,18 @@
     <div class="col-5">
         <h4 class="color-aqua"><%= link_to user.name, user_path(user), class: "link-no-underline link-hover-lavender" %></h4>
     </div>
-    <div class="col-4 xsmall-text ">
+    <div class="col-3 xsmall-text ">
         <p class="no-margin"><%= pluralize user.topics.length, "published topic" %></p>
         <p class="no-margin"><%= pluralize user.followers.length, "follower"%></p>
+    </div>  
+    <div class="col-1">
+        <% if logged_in? %>
+            <%= render 'components/message_button', user: user, small: false%>
+        <% end %>
     </div>
     <div class="col-1">
-        <%= render 'users/follow_user_button', small: false, user: user, following_color: "bg-aqua", not_following_color: "bg-offwhite border", followed: current_user.following?(user) %>
+        <% if logged_in? %>
+            <%= render 'users/follow_user_button', small: false, user: user, following_color: "bg-aqua", not_following_color: "bg-offwhite border", followed: current_user.following?(user) %>
+        <% end %>
     </div>
 </div>

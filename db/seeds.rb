@@ -11,7 +11,7 @@ tag_types = ["Math", "Computer Science", "Programming", "Algorithms"]
 reaction_types = ["like", "dislike", "genius", "report"]
 tag_types.map!{ |tag| TagType.create(name: tag) }
 reaction_types.map!{ |reaction| ReactionType.create(name: reaction)}
-admin = User.create(name: "Admin", email: "admin@odinseye.com", password: "adminpassword123!@#", password_confirmation: "adminpassword123!@#")
+admin = User.create(name: "Admin", email: "admin@odinseye.com", password: "Adminpassword123!@#", password_confirmation: "Adminpassword123!@#")
 micah = User.create(name: "Micah Shute", email: "test@test.com", password: password, password_confirmation: password)
 taylor = User.create(name: "Taylor Swift", email:"taylor@swift.com", password: password, password_confirmation: password)
 first_topic = Topic.create(user: micah, title: "What is the Fourier Transform?", content: "No, I really don't know. Can anyone tell me?") 

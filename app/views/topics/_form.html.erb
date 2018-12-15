@@ -1,4 +1,4 @@
-<%= form_for(topic) do |f| %>
+<%= form_for([user, topic]) do |f| %>
     <div class="form-group">
         <%= f.submit "Publish Topic", class: "btn btn-primary bg-lavender border-lavender" %>
         <%= delete_text_button(topic_path(topic), "charcoal") if editing?(topic) %>

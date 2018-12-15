@@ -16,6 +16,8 @@ html, body{
     color: #6BBAA7;
 }
 
+
+
 .color-bluegray{
     color: rgb(51, 84, 113)
 }
@@ -78,12 +80,25 @@ html, body{
 .bg-bluegray{
     background-color: rgb(51, 84, 113);
 }
+
+.bg-ivory{
+    background-color: #fffff0;
+}
+
+.color-ivory{
+    color: #fffff0;
+}
+
+.color-bg{
+    color: #fffff0;
+}
+
 .border-aqua {
     border-color: #6BBAA7;
 }
 
 .border-sunshine{
-    border-color: #fba100;
+    border: solid 1px #fba100;
 }
 
 .border-lavender{
@@ -218,6 +233,10 @@ html, body{
 
 .link-no-underline:hover{
     text-decoration: none;
+}
+
+.link-no-color-change, .link-no-color-change:hover{
+    color: #6BBAA7;
 }
 
 .link-hover-lavender:hover{
@@ -828,4 +847,10 @@ a.link-bluegray-hover:hover{
 
 .flex-direction-row{
     flex-direction: row;
+}
+
+/* MESSAGE */
+
+textarea.message-form-text-field{
+    height: 100%;
 }

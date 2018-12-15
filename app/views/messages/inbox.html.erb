@@ -1,0 +1,14 @@
+
+<% @messages.each do |sender, message_group| %>
+    <div class="bottom-space-md">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-8">
+                <%= render 'users/inbox_summary', path: messages_from_user_path(sender) , user: sender, unviewed: message_group.select{ |m| !m.viewed }.length  %> 
+            </div>
+            <div class="col-sm-1"></div>
+        
+        </div>
+         
+    </div>
+<% end %>

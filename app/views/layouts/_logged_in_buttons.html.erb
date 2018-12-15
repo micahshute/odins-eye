@@ -4,7 +4,11 @@
             <a class="nav-link" href="<%= dashboard_path %>">Dashboard<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="<%= user_messages_path(current_user) %>">Messages</a>
+            <% if (new_messages = current_user.new_messages.length) > 0 %>
+                <a class="nav-link border-sunshine rounded" href="<%= inbox_path %>">Messages (<%= new_messages %>)</a>
+            <% else %>
+                <a class="nav-link" href="<%= inbox_path %>">Messages</a>
+            <% end %>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="<%= user_notifications_path(current_user) %>">Notifications</a>
@@ -15,7 +19,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="<%= user_path(current_user)%>">Public Profile</a>
-                <a class="dropdown-item" href="<%= new_topic_path %>">Write a Topic</a>
+                <a class="dropdown-item" href="<%= new_user_topic_path(current_user) %>">Write a Topic</a>
                 <a class="dropdown-item" href="<%= edit_user_path(current_user) %>">Settings</a>
             <div class="dropdown-divider"></div>
                 <a class="dropdown-item" data-method="delete" href="<%= logout_path%>">Logout</a>

@@ -97,11 +97,15 @@ class User < ApplicationRecord
     # MARK Instance Methods
 
     def recieved_messages_by_sender
-        group_messages_by_sender(self.recieved_messages)
+        group_messages_by_sender(self.sorted_recieved_messages)
     end
 
     def sent_messages_by_reciever
-        group_messages_by_sender(self.sent_messages)
+        group_messages_by_sender(self.sorted_sent_messages)
+    end
+
+    def new_messages
+        self.recieved_messages.select{ |msg| !msg.viewed }
     end
 
 
@@ -148,7 +152,7 @@ class User < ApplicationRecord
     end
 
     def message(user, content)
-        m = Message.create(sender: self, reciever: user, content: content)
+        Message.create(sender: self, reciever: user, content: content)
     end
 
     def like(reactable)
@@ -287,6 +291,20 @@ class User < ApplicationRecord
         total_reactions = most_reacted_posts.values.sum
     end
 
+    def sorted_recieved_messages
+        self.recieved_messages.sort do |a, b|
+            a.created_at <=> b.created_at
+        end
+    end
+
+    def sorted_sent_messages
+        self.recieved_messages.sort do |a, b|
+            a.created_at <=> b.created_at
+        end
+    end
+
+    
+
     private
 
     def has_reaction?(reactable, type)
@@ -308,15 +326,16 @@ class User < ApplicationRecord
 
     def group_messages_by_sender(messages)
         messages_by_sender = {}
-        messages.each do |message|
+        messages.reverse.each do |message|
             if messages_by_sender[message.sender].nil?
                 messages_by_sender[message.sender] = [message]
             else
-                messages_by_sender[message.sender] << messages
+                messages_by_sender[message.sender] << message
             end
         end
         messages_by_sender
     end
+
 
 
 end
