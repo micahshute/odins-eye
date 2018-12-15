@@ -1,0 +1,5 @@
+<%= link_to "Write to #{@sender.name}", new_user_message_path(@sender), class: "btn btn-primary bg-lavender border-lavender bottom-space-sm", role: "button" %>
+
+<% @messages.each do |msg| %>
+    <%= render 'messages/message', message: msg %>
+<% end %>

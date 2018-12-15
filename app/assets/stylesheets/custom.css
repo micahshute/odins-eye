@@ -854,3 +854,11 @@ a.link-bluegray-hover:hover{
 textarea.message-form-text-field{
     height: 100%;
 }
+
+.img-rounded{
+    border-radius: 5px;
+}
+
+.img-circle{
+    border-radius: 50%;
+}

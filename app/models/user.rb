@@ -101,7 +101,21 @@ class User < ApplicationRecord
     end
 
     def sent_messages_by_reciever
-        group_messages_by_sender(self.sorted_sent_messages)
+        group_messages_by_reciever(self.sorted_sent_messages)
+    end
+
+    def group_all_messages
+        messages_by_user = {}
+        messages = (self.recieved_messages + self.sent_messages).sort{ |a,b| b.created_at <=> a.created_at }
+        messages.each do |msg|
+            user_to_group = msg.reciever == self ? msg.sender : msg.reciever
+            if messages_by_user[user_to_group]
+                messages_by_user[user_to_group] << msg
+            else
+                messages_by_user[user_to_group] = [msg]
+            end
+        end
+        messages_by_user
     end
 
     def new_messages
@@ -298,7 +312,7 @@ class User < ApplicationRecord
     end
 
     def sorted_sent_messages
-        self.recieved_messages.sort do |a, b|
+        self.sent_messages.sort do |a, b|
             a.created_at <=> b.created_at
         end
     end
@@ -334,6 +348,18 @@ class User < ApplicationRecord
             end
         end
         messages_by_sender
+    end
+
+    def group_messages_by_reciever(messages)
+        messages_by_reciever = {}
+        messages.reverse.each do |message|
+            if messages_by_reciever[message.reciever].nil?
+                messages_by_reciever[message.reciever] = [message]
+            else
+                messages_by_reciever[message.reciever] << message
+            end
+        end
+        messages_by_reciever
     end
 
 

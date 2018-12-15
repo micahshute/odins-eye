@@ -1,0 +1,15 @@
+<%= form_tag(message_finder_path) do%>
+    <div class="form-row">
+        <%= text_field_tag :user, nil, class: "form-control", list: "user-name"%>
+        <datalist id="user-name">
+            <% users.each do |user| %>
+                <option value="<%= user.name %> :: <%= user.email %>" class="thin-text">
+                </option>
+            <% end %>
+        </datalist>
+    </div>
+    <div class="form-row top-space-sm">
+        <%= submit_tag "Write Message", class: "btn btn-primary bg-lavender border-lavender"%>
+    </div>
+    
+<% end %>

@@ -1,0 +1,31 @@
+<% name, my_message = message.sender == current_user ?  ["Me", true] : [message.sender.name, false] %>
+
+<div class="row primary-text">
+    <% if my_message %>
+        <div class="col-1"></div>
+    <% end %>
+
+    <div class="<%= my_message ? "col-11" : "col-12" %>">
+        <div class="row bg-offwhite bottom-space-sm rounded border shadow-sm padded">
+            <div class="col-2">
+                <%= image_tag message.sender.image_path, class: "fill img-circle" %>
+            </div>
+
+            <div class="col-10">
+                <div class="padded">
+                    
+                    <p class="inline"><%= link_to name, user_path(message.sender) %><small class="faded-text"> <%= time_from_now(message.created_at) %> </small></p>
+                    <% if my_message %> 
+                        <p class="thin-text small-text no-margin no-padding inline">(<%= "not " unless message.viewed %>viewed)</p>
+                    <% end %>
+                    <hr>
+                    <p ><%= message.content %></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+

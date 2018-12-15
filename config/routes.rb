@@ -39,8 +39,8 @@ Rails.application.routes.draw do
 
   get 'messages/inbox' => 'messages#inbox', as: "inbox"
   get 'messages/threads/users/:id' => 'messages#thread', as: 'messages_from_user'
-  post 'messages/users/:id/new' => 'messages#new', as: "new_message_for_reciever"
-
+  # get 'messages/users/:user_id/new' => 'messages#new', as: "new_message_for_reciever"
+  post 'messages/new/find_reciever' => 'messages#find_reciever', as: 'message_finder'
 
   resources :topics do
     resources :posts, only: [:new, :create, :edit, :update, :index, :destroy]
@@ -57,7 +57,7 @@ Rails.application.routes.draw do
   resources :users do 
     resources :topics
     resources :posts
-    resources :messages
+    resources :messages, only: [:new, :create]
     resources :classrooms
     resources :notifications, only: [:index]
   end
