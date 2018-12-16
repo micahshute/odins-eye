@@ -14,13 +14,25 @@ class TopicsController < ApplicationController
         if authorize
             @topic = Topic.new(topic_params)
             @topic.user = current_user
-            if @topic.save
-                binding.pry
-                flash[:success] = "Congratulations, your topic was published"
-                redirect_to user_topic_path(current_user, @topic)
+            if @topic.tags.all?{ |t| t.tag_type.validate }
+                if @topic.save
+                    flash[:success] = "Congratulations, your topic was published"
+                    redirect_to user_topic_path(current_user, @topic)
+                else
+                    @tag_types = Tag.most_popular(10)
+                    needed_tags = 4 - @topic.tags.length
+                    needed_tags.times do 
+                        @topic.tags.build
+                    end
+                    flash[:danger] = "#{@topic.user.name}, there was a problem publishing your topic"
+                    render 'new'
+                end
             else
                 @tag_types = Tag.most_popular(10)
-                
+                needed_tags = 4 - @topic.tags.length
+                needed_tags.times do 
+                    @topic.tags.build
+                end
                 flash[:danger] = "#{@topic.user.name}, there was a problem publishing your topic"
                 render 'new'
             end

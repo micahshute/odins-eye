@@ -9,18 +9,22 @@
         <%= error_msg_for(topic, :title).html_safe %>
     </div>
     <div class="form-row">
-        <%= f.fields_for :tags do |t| %>       
-            <div class="col-3">
-                <%= t.text_field :tag_type_name, class: 'form-control tag-boxes', placeholder: "Tag", list: 'tag-name' %>
-            </div>
-            <datalist id="tag-name">
-                <% @tag_types.each do |tag_type| %>
-                    <option value="<%= tag_type.name %>"></option>
-                <% end %>
-            </datalist>
-        <% end %>
+        <%= f.fields_for :tags do |t| %>
 
-        <%= error_msg_for(@error, :name).html_safe unless @error.nil? %>
+            <div class="col-3 ">
+                <%= t.text_field :tag_type_name, class: 'form-control tag-boxes', placeholder: "Tag", list: 'tag-name' %>
+                
+                <datalist id="tag-name">
+                    <% @tag_types.each do |tag_type| %>
+                        <option value="<%= tag_type.name %>"></option>
+                    <% end %>
+                </datalist>
+                <%= error_msg_for(t.object.tag_type, :name).html_safe if t.object.tag_type %>
+            </div>
+            <% end %>
+        
+
+       
     </div>
     <div class="form-group topic-content-wrapper">
         <%= f.text_area :content, class: "form-control topic-content", placeholder: "Content" %>

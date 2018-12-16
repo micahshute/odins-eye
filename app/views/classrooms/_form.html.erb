@@ -5,7 +5,7 @@
         <%= error_msg_for(classroom, :name).html_safe %>
     </div>
 
-    
+
     <div class="form-row">
         <%= f.fields_for :tags do |t| %>       
             <div class="col-3">
@@ -18,7 +18,7 @@
             </datalist>
         <% end %>
 
-        <%= error_msg_for(@error, :name).html_safe unless @error.nil? %>
+        <%= error_msg_for(t, :name).html_safe  %>
     </div>
 
 
