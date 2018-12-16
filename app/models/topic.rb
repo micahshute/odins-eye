@@ -8,11 +8,18 @@ class Topic < ApplicationRecord
     validates :title, presence: true, length: { maximum: 50 }
     validates :content, length: { maximum: 100000 }
     validate :validate_tag_number
+    validate :classroom_topic_by_professor
 
     # MARK Validation Methods
 
     def validate_tag_number
         errors.add(:tags, "you can only have 4 tags") if tags.size > 4
+    end
+
+    def classroom_topic_by_professor
+        if !!classroom_id
+            errors.add(:tags, "Only the classroom professor can write posts") if self.classroom.professor != self.user
+        end
     end
 
     #MARK Activerecord Relations
@@ -51,7 +58,7 @@ class Topic < ApplicationRecord
     #MARK Callback Methods
 
     def format_content
-        self.content = self.content.gsub("```", "\n~~~~~")
+        self.content = self.content.nil? ? "" : self.content.gsub("```", "\n~~~~~")
     end
 
     #MARK Class Methods

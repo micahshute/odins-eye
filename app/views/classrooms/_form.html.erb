@@ -1,27 +1,26 @@
 <%= form_for([user, classroom]) do |f| %>
+
     <div class="form-group">
         <%= f.text_field :name, class: "form-control" %>
         <%= f.label :name %>
         <%= error_msg_for(classroom, :name).html_safe %>
     </div>
 
-
     <div class="form-row">
-        <%= f.fields_for :tags do |t| %>       
-            <div class="col-3">
+        <%= f.fields_for :tags do |t| %>
+
+            <div class="col-3 ">
                 <%= t.text_field :tag_type_name, class: 'form-control tag-boxes', placeholder: "Tag", list: 'tag-name' %>
-            </div>
-            <datalist id="tag-name">
-                <% @tag_types.each do |tag_type| %>
+                
+                <datalist id="tag-name">
+                <% tag_types.each do |tag_type| %>
                     <option value="<%= tag_type.name %>"></option>
                 <% end %>
-            </datalist>
+                </datalist>
+                <%= error_msg_for(t.object.tag_type, :name).html_safe if t.object.tag_type %>
+            </div>
         <% end %>
-
-        <%= error_msg_for(t, :name).html_safe  %>
     </div>
-
-
     <div class="form-check bottom-space-sm">
         <%= f.check_box :private, class: "form-check-input" %>
         <%= f.label :private, class: 'form-check-label', value: "This is a private classroom"%>

@@ -3,7 +3,12 @@
         <p class="small-text thin-text"><strong><%= topic.views %></strong> Views</p>
     <% end %>
     <h2 class="blog-post-title"><%= link_to topic.title, topic_path(topic), class: "text-dark text-bold" %></h2>
-    <p class="blog-post-meta"><small><%= display_date_long(topic.created_at) %> by </small><%= link_to topic.user.name, user_path(topic.user) %></p>
-    <p class="standard-text"><%= strip_tags(markdown(topic.content.truncate_words(50))) %></p>
+    <p class="blog-post-meta no-bottom-margin"><small><%= display_date_long(topic.created_at) %> by </small><%= link_to topic.user.name, user_path(topic.user) %></p>
+    <ul class="topic-tag-list d-flex justify-content-start small-text">
+        <% topic.tag_types.each do |t| %>
+            <li class="tag"><%= t.name %>  </li>
+        <% end %>
+    </ul>
+    <p class="standard-text top-margin-sm"><%= strip_tags(markdown(topic.content.truncate_words(50))) %></p>
     <%= render 'topics/summary_reactions', topic: topic %>
 </div><!-- /.blog-post -->

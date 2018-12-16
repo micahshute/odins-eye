@@ -1,4 +1,5 @@
-<%= form_for([user, topic]) do |f| %>
+<%= form_for([outer_nest, topic]) do |f| %>
+
     <div class="form-group">
         <%= f.submit "Publish Topic", class: "btn btn-primary bg-lavender border-lavender" %>
         <%= delete_text_button(topic_path(topic), "charcoal") if editing?(topic) %>
@@ -15,7 +16,7 @@
                 <%= t.text_field :tag_type_name, class: 'form-control tag-boxes', placeholder: "Tag", list: 'tag-name' %>
                 
                 <datalist id="tag-name">
-                    <% @tag_types.each do |tag_type| %>
+                    <% tag_types.each do |tag_type| %>
                         <option value="<%= tag_type.name %>"></option>
                     <% end %>
                 </datalist>
@@ -24,7 +25,7 @@
             <% end %>
         
 
-       
+    
     </div>
     <div class="form-group topic-content-wrapper">
         <%= f.text_area :content, class: "form-control topic-content", placeholder: "Content" %>

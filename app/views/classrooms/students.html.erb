@@ -1,0 +1,49 @@
+<%= render 'classrooms/routing_buttons', classroom: @classroom %>
+<div class="row">
+
+    <div class="col-md-2"></div>
+
+    <div class="col-md-8">
+    
+        <% if @is_professor %>
+
+            <%= form_tag(student_finder_path(@classroom.professor, @classroom)) do%>
+                <div class="form-row">
+                    <%= text_field_tag :user, nil, class: "form-control", list: "user-name"%>
+                    <datalist id="user-name">
+                        <% @users.each do |user| %>
+                            <option value="<%= user.name %> :: <%= user.email %>" class="thin-text">
+                            </option>
+                        <% end %>
+                    </datalist>
+                </div>
+                <div class="form-row top-space-sm bottom-space-lg">
+                    <%= submit_tag "Add Student", class: "btn btn-primary bg-lavender border-lavender"%>
+                </div>
+            
+            <% end %>
+
+        <% end %>
+        <% if @is_enrolled or @is_professor %>
+
+            <% @students.each do |student| %>
+                <div class="bottom-space-md">
+                    <%= render 'users/summary', user: student %>
+                    <% if @is_professor %>
+                        <%= render 'classrooms/delete_student_button', classroom: @classroom, student: student %>
+                    <% end %>
+                </div>
+            <% end %>
+
+        <% end %>
+    
+    </div>
+
+    <div class="col-md-2"></div>
+
+</div>
+
+
+
+
+

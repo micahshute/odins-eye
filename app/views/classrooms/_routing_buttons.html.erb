@@ -1,0 +1,19 @@
+<div class="row">
+    <div class="col-md-4">
+        <div>
+            <a class="btn btn-<%= 'outline-' if @students.nil? %>info btn-block" href="<%= classroom_students_path(classroom.professor, classroom) %>" role="button"><%= "Students (#{classroom.users.length})"%></a>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="bottom-space-md">
+            <a class="btn btn-<%= 'outline-' if @topics.nil? %>info btn-block" href="<%= classroom_topics_path(classroom) %>" role="button"><%= "Classroom Topics (#{classroom.topics.length})" %></a>
+        </div>
+    </div>
+
+     <div class="col-md-4">
+        <div class="bottom-space-md">
+            <a class="btn btn-outline-info btn-block" href="<%= user_classroom_path(classroom.professor, classroom) %>" role="button"><%= "Classroom Home" %></a>
+        </div>
+    </div>
+</div>

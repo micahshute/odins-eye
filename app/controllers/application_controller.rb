@@ -30,14 +30,15 @@ class ApplicationController < ActionController::Base
     end
 
     def authorize_classroom_entry(classroom)
+        authorize
         not_authorized("You are not enrolled in this class") unless (current_user.classrooms.include?(classroom) or current_user.enrolled_classes.include?(classroom))
     end
 
     def authorize_topic(topic)
-        authorize
         return true if topic.public?
         authorize_classroom_entry(topic.classroom)
     end
+
 
     def authorize_post(post)
         authorize

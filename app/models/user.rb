@@ -130,6 +130,15 @@ class User < ApplicationRecord
         self.notifications.sort{ |a,b| a.created_at <=> b.created_at }
     end
 
+    def enrolled_in?(classroom)
+        self.enrolled_classes.include?(classroom)
+    end
+
+    def enroll_in(classroom)
+        self.enrolled_classes << classroom
+    end
+
+
     def most_liked_topics
 
     end

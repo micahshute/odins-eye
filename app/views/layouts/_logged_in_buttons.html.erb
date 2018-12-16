@@ -24,6 +24,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="<%= user_path(current_user)%>">Public Profile</a>
                 <a class="dropdown-item" href="<%= new_user_topic_path(current_user) %>">Write a Topic</a>
+                <a class="dropdown-item" href="<%= new_user_classroom_path(current_user) %>">Start a Classroom</a>
                 <a class="dropdown-item" href="<%= edit_user_path(current_user) %>">Settings</a>
             <div class="dropdown-divider"></div>
                 <a class="dropdown-item" data-method="delete" href="<%= logout_path%>">Logout</a>

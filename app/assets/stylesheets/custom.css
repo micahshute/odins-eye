@@ -710,6 +710,18 @@ textarea#post_content{
     margin: 0px;
 }
 
+.top-space-lg{
+    margin-top: 50px;
+}
+
+.top-margin-sm{
+    margin-top: 5px;
+}
+
+.no-bottom-margin{
+    margin-bottom: 0px;
+}
+
 .reply-button{
     margin-bottom: 0px;
 }

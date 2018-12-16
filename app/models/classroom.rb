@@ -5,10 +5,12 @@ class Classroom < ApplicationRecord
     
     belongs_to :professor, class_name: "User", foreign_key: "user_id"
     has_many :student_classrooms, dependent: :destroy
-    has_many :topics
+    has_many :topics, dependent: :destroy
     has_many :tags, as: :taggable, dependent: :destroy
     has_many :users, through: :student_classrooms
     has_many :tag_types, through: :tags
+
+    accepts_nested_attributes_for :tags, reject_if: ->(tags_attributes){tags_attributes["tag_type_name"].blank? }
 
     def self.all_by_tag_name(tag_name)
         Classroom.joins(tag_types: :tags).where(tag_types: {name: tag_name}).group('id')
@@ -23,17 +25,21 @@ class Classroom < ApplicationRecord
     end
 
     def self.all_private
-        where(private: true)
+        where(private: true).order(created_at: :desc)
     end
 
     def self.all_public
-        where(private: false)
+        where(private: false).order(created_at: :desc)
     end
 
     
 
     def students
         self.users
+    end
+
+    def enroll(user)
+        self.users << user
     end
     
 end

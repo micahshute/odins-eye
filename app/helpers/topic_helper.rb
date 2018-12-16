@@ -35,6 +35,12 @@ module TopicHelper
             else
                 render 'topics/user_topics_header', user: grouped_by
             end
+        elsif grouped_by.is_a?(Classroom)
+            if grouped_by.professor == current_user
+                render 'classrooms/professor_header', classroom: grouped_by
+            else
+                render 'classrooms/header', classroom: grouped_by
+            end
         else
             not_found
         end
@@ -46,6 +52,8 @@ module TopicHelper
             render 'topics/tag_index_card', topics: topics, tag_type: grouped_by, tag_users: tag_users
         elsif grouped_by.is_a?(User)
             render 'topics/user_index_card', topics: topics, user: grouped_by, user_tag_types: grouped_by.tag_types.shuffle.take(3).map{ |name| TagType.find_by(name: name) }
+        elsif grouped_by.is_a?(Classroom)
+
         else
             not_found
         end

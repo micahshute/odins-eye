@@ -15,7 +15,7 @@
                     <% end %>
                 </ul>
             </div>
-            <%= edit_text_button(edit_topic_path(@topic), "aqua") if @topic.user == current_user %>
+            <%= edit_text_button(@edit_path, "aqua") if @topic.user == current_user %>
             <hr>
             
             <%= render_markdown(@topic.content) %>

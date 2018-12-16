@@ -42,6 +42,11 @@ Rails.application.routes.draw do
   # get 'messages/users/:user_id/new' => 'messages#new', as: "new_message_for_reciever"
   post 'messages/new/find_reciever' => 'messages#find_reciever', as: 'message_finder'
 
+ 
+  
+ 
+
+
   resources :topics do
     resources :posts, only: [:new, :create, :edit, :update, :index, :destroy]
   end
@@ -51,6 +56,10 @@ Rails.application.routes.draw do
   resources :tags do 
     resources :topics, only: [:index, :show]
     resources :classrooms, only: [:index, :show]
+  end
+
+  resources :classrooms do 
+    resources :topics
   end
  
 
@@ -66,6 +75,8 @@ Rails.application.routes.draw do
 
   resources :users, only: [:new, :create, :show]
 
-  resources :classrooms
+  post 'users/:user_id/classrooms/:id/find_student' => 'classrooms#find_student', as: 'student_finder'
+  get 'users/:user_id/classrooms/:id/students' => 'classrooms#students', as: 'classroom_students'
+  delete 'classrooms/:classroom_id/student/:id' => 'classrooms#destroy_student', as: 'delete_classroom_student'
 
 end
