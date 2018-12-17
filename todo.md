@@ -1,5 +1,6 @@
 - [ ] Make posts optionally private inside of classrooms
-- [ ] Make Admin Controller
+- [ ] Make Admin Controller more functional
 - [ ] Passowrd change
 - [ ] Password recovery
 - [ ] Email person for verification
+- [ ] Add return to classroom button for posts inside of classroom

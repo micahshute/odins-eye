@@ -63,6 +63,7 @@ class TopicsController < ApplicationController
     def show
         @logged_in = logged_in?
         @topic = Topic.where(id: params[:id]).includes(:user, :tags).includes(posts: {reactions: :reaction_type}).first
+        @classroom = @topic.classroom unless @topic.classroom.nil?
         @user = current_user
         authorize_topic(@topic)
         @edit_path = @topic.classroom.nil? ? edit_topic_path(@topic) : edit_classroom_topic_path(@topic.classroom, @topic)
