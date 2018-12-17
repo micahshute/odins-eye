@@ -26,6 +26,7 @@ class ApplicationController < ActionController::Base
             !!current_user
         else
             not_authorized unless user == current_user
+            true
         end
     end
 
@@ -52,6 +53,7 @@ class ApplicationController < ActionController::Base
     def authorize_admin
         authorize
         not_authorized("You must be an admin to view this page.") unless current_user.admin 
+        true
     end
 
     def not_authorized(msg = "You are not authorized to view that page")

@@ -13,6 +13,11 @@ class Post < ApplicationRecord
     most_reacted_type('like', limit, true)
   end
 
+  def self.reported
+    limit = Post.all.length
+    most_reacted_type('report', limit, false)
+  end
+
   def self.most_liked(limit = 5)
     most_reacted_type('like', limit, false)
   end

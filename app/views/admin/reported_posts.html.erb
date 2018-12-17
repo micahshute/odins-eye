@@ -1,0 +1,8 @@
+<% @reported_posts.each do |post| %>
+    <hr>
+    <div class="fill bg-offwhite padded shadow-sm rounded">
+        <%= render 'posts/summary', post: post%>
+    </div>
+    <%= link_to( "Delete Post", admin_delete_post_path(post), class: "btn btn-primary", method: :delete) %>
+    <hr>
+<% end %>

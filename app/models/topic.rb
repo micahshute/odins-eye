@@ -94,6 +94,11 @@ class Topic < ApplicationRecord
        
     end
 
+    def self.reported
+        limit = Topic.all.length
+        most_reacted_type('report', limit, false)
+    end
+
     def self.most_geniuses(limit=5)
         most_reacted_type('genius', limit, false)
     end

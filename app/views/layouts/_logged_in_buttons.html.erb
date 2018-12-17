@@ -33,6 +33,11 @@
         <li class="nav-item">
             <a class="nav-link" href="<%= reading_list_path %>">Saved Reading</a>
         </li>
+        <% if current_user.admin %>
+            <li class="nav-item">
+                <a class="nav-link" href="<%= admin_home_path %>">ADMIN ACTIONS</a>
+            </li>
+        <% end %>
     </ul>
     <form class="form-inline my-2 my-lg-0">
     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

@@ -1,0 +1,6 @@
+<% @reported_topics.each do |topic| %>
+    <hr>
+    <%= render 'topics/summary_view', topic: topic %>
+    <%= link_to( "Delete Topic", admin_delete_topic_path(topic), class: "btn btn-primary", method: :delete) %>
+    <hr>
+<% end %>

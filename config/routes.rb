@@ -80,4 +80,13 @@ Rails.application.routes.draw do
   delete 'classrooms/:classroom_id/student/:id' => 'classrooms#destroy_student', as: 'delete_classroom_student'
   post 'classrooms/:id/enroll' => 'classrooms#enroll_student', as: 'classroom_user_enroll'
 
+
+  get 'admin/home' => 'admin#home', as: 'admin_home'
+  get 'admin/reports/topics' => 'admin#reported_topics', as: 'reported_topics'
+  get 'admin/reports/posts' => 'admin#reported_posts', as: 'reported_posts'
+  get 'admin/users' => 'admin#display_users', as: 'admin_view_users'
+  delete 'admin/topics/:id' => 'admin#destroy_topic', as: 'admin_delete_topic'
+  delete 'admin/users/:id' => 'admin#destroy_user', as: 'admin_delete_user'
+  delete 'admin/posts/:id' => 'admin#destroy_post', as: 'admin_delete_post'
+  delete 'admin/reports' => 'admin#destroy_reports', as: 'admin_destroy_reports'
 end

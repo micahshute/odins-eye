@@ -1,0 +1,6 @@
+<% @users.each do |user| %>
+<hr>
+    <%= render 'users/summary', user: user %>
+    <%= link_to( "Delete User", admin_delete_user_path(user), class: "btn btn-primary", method: :delete) %>
+<hr>
+<% end %>

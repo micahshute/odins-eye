@@ -1,0 +1,12 @@
+<% if @reported_topics.length > 0 %>
+    <h1><%= link_to pluralize(@reported_topics.length, "reported Topics"), reported_topics_path %></h1>
+<% end %>
+<% if @reported_posts.length > 0 %>
+    <h1><%= link_to pluralize(@reported_posts.length, "reported posts"), reported_posts_path %></h1>
+<% end %>
+<% if (@reported_posts.length == 0) and (@reported_topics.length == 0) %>
+    <h1>There are no reported topics or posts</h1>
+<% end %>
+<h1><%= link_to "View all users", admin_view_users_path %></h1>
+
+<%= link_to( "Remove All Reports", admin_destroy_reports_path, class: "btn btn-primary", method: :delete) %>
