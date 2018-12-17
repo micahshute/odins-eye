@@ -3,4 +3,4 @@
 - [ ] Passowrd change
 - [ ] Password recovery
 - [ ] Email person for verification
-- [ ] Add return to classroom button for posts inside of classroom
+- [x] Add return to classroom button for posts inside of classroom
