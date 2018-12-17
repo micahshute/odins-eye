@@ -12,19 +12,22 @@ reaction_types = ["like", "dislike", "genius", "report"]
 tag_types.map!{ |tag| TagType.create(name: tag) }
 reaction_types.map!{ |reaction| ReactionType.create(name: reaction)}
 admin = User.create(name: "Admin", email: "admin@odinseye.com", password: "Adminpassword123!@#", password_confirmation: "Adminpassword123!@#")
-micah = User.create(name: "Micah Shute", email: "test@test.com", password: password, password_confirmation: password)
-taylor = User.create(name: "Taylor Swift", email:"taylor@swift.com", password: password, password_confirmation: password)
+micah = User.create(name: "Micah Shute", email: "test@test.com", password: password, password_confirmation: password, bio: "My name is Micah and I like programming")
+taylor = User.create(name: "Taylor Swift", email:"taylor@swift.com", password: password, password_confirmation: password, bio: "I am secretly in love with Micah Shute")
+voldi = User.create(name: "Lord Voldimort", email: "darkLord@killhp.com", password: password, password_confirmation: password, bio: "I like water sports, killing muggles and making #horcruxes", image_path: "https://static.independent.co.uk/s3fs-public/thumbnails/image/2015/09/10/12/Ralph-Fiennes-Voldemort.jpg?w968%20968w,%20https://static.independent.co.uk/s3fs-public/thumbnails/image/2015/09/10/12/Ralph-Fiennes-Voldemort.jpg?w375%20375w,%20https://static.independent.co.uk/s3fs-public/thumbnails/image/2015/09/10/12/Ralph-Fiennes-Voldemort.jpg?w768%20768w%22%20src=%22https://static.independent.co.uk/s3fs-public/thumbnails/image/2015/09/10/12/Ralph-Fiennes-Voldemort.jpg?w968h681")
 first_topic = Topic.create(user: micah, title: "What is the Fourier Transform?", content: "No, I really don't know. Can anyone tell me?") 
 first_reply = first_topic.posts.build(user: micah, content: "An equation mapping time domain to the frequency domain")
 first_topic.tags << Tag.new(tag_type: TagType.find_by(name: "math"))
 first_topic.save
 
-cs_topic = Topic.create(user: micah, title: "Sorting algorithms", content: "Here's what you have to know about sorting algorithms. First of all, everyone talks about them but nobody uses them. Also, ")
+cs_topic = Topic.create(user: micah, title: "Sorting algorithms", content: "# Sorting Stuff \n Here's what you have to know about sorting algorithms. First of all, everyone talks about them but nobody uses them. Also, every language has built-in sorting that is most likely better than what you could make yourself")
 cs_topic.tag("Computer Science", "Programming", "Beginners")
 cs_topic.save
 classroom = Classroom.new(name: "Math Class", professor: micah)
 
 classroom.save
+
+vtopic = Topic.create(user: voldi, title: "Good nosejob guy?", content: "If it turns out well ill give you lots of money and power. if not ill probs kill ya. Any suggestions leave below plz!")
 
 class_topic = classroom.topics.build(user: micah, content: "Math stuff?")
 class_topic.tags << Tag.new(tag_type: TagType.find_by(name: "math"))
@@ -43,13 +46,13 @@ taylor.message(micah, "I love you")
 micah.message(taylor, "I know")
 taylor.message(micah, "You stuck-up, half-witted, scruffy-looking nerf herder!")
 micah.message(taylor, "Who's scruffy-lookin?")
-admin.message(micah, "There's nothing to see. I used to live here, you know")
-micah.message(admin, "You're going to die here, you know. Convenient.")
-taylor.posts << Post.create(postable: first_reply, content: "This is not clever")
-taylor.posts.last.posts << Post.create(user: micah, content: "whteva")
+micah.message(voldi, "There's nothing to see. I used to live here, you know")
+voldi.message(micah, "You're going to die here, you know. Convenient.")
+taylor.posts << Post.create(postable: first_reply, content: "Look what you made me do")
+taylor.posts.last.posts << Post.create(user: micah, content: "Why does it feel so good")
 taylor.like(micah.posts.last)
 micah.like(micah.posts.last)
-admin.like(micah.posts.last)
+voldi.like(micah.posts.last)
 micah.like(taylor.posts.last)
 taylor.save
 
