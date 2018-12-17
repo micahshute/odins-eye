@@ -39,14 +39,14 @@
 
 
                     <ul class="list-group list-group-flush bg-offwhite">
-                        <% if @user.facebook_url %>
-                            <li class="list-group-item"><%= render 'users/social_media', type: :facebook, url: @user.facebook_url %></li>
+                        <% if @user.facebook_url and not @user.facebook_url.blank? %>
+                            <li class="list-group-item bg-offwhite"><%= render 'users/social_media', type: :facebook, url: @user.facebook_url %></li>
                         <% end %>
-                        <% if @user.github_url %>
-                            <li class="list-group-item"><%= render 'users/social_media', type: :github, url: @user.github_url %></li>
+                        <% if @user.github_url and not @user.github_url.blank? %>
+                            <li class="list-group-item bg-offwhite"><%= render 'users/social_media', type: :github, url: @user.github_url %></li>
                         <% end %>
-                        <% if @user.linkedin_url %>
-                            <li class="list-group-item"><%= render 'users/social_media', type: :linkedin, url: @user.linkedin_url  %></li>
+                        <% if @user.linkedin_url and not @user.linkedin_url.blank? %>
+                            <li class="list-group-item bg-offwhite"><%= render 'users/social_media', type: :linkedin, url: @user.linkedin_url  %></li>
                         <% end %>
                     </ul>
                 </div>
