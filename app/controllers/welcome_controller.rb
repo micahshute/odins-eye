@@ -7,7 +7,9 @@ class WelcomeController < ApplicationController
         else
             @spotlight = Topic.most_likes(1).first
         end
-
+        if @spotlight.nil?
+            @spotlight = Topic.all.first || Topic.create(title: "Placeholder", user: User.find_by(name: "Admin"))
+        end
         popular_tags = Tag.most_popular(2)
         @popular_posts_by_tag = {}
         popular_tags.each do |tag|
