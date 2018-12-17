@@ -7,9 +7,9 @@
                     <p class="card-text">some other tags this author has written about</p>
                 <% end%>
             </div>
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush bg-offwhite">
                 <% user_tag_types.each do |tag|%>
-                    <%= link_to tag.name, tag_topics_path(tag), class: "list-group-item"%>
+                    <%= link_to tag.name, tag_topics_path(tag), class: "list-group-item bg-offwhite"%>
                 <% end %>
             </ul>
 
