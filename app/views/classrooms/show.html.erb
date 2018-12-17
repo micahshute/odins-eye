@@ -11,7 +11,7 @@
                 <h3 class="bg-charcoal color-offwhite text-center rounded shadow-sm">Welcome Professor, to </h3>
             <% end %>
             <h1 class="bottom-space-lg"><%= @classroom.name %></h1>
-            <%= render 'tag_types/list_tag_types', tag_types: classroom.tag_types %>
+            <%= render 'tag_types/list_tag_types', tag_types: @classroom.tag_types %>
             <h6>Professor: <%= link_to @classroom.professor.name, user_path(@classroom.professor), class: "link-plain-hover link-bluegray-hover"%></h6>
             
             <% if @is_enrolled or @is_professor %>
