@@ -238,6 +238,9 @@ html, body{
 .no-decoration{
     text-decoration: none;
 }
+.card{
+    background-color: #fffff0;
+}
 
 .link-no-underline:hover{
     text-decoration: none;
