@@ -4,3 +4,4 @@
 - [ ] Password recovery
 - [ ] Email person for verification
 - [x] Add return to classroom button for posts inside of classroom
+- [ ] Add latex engine to markdown
