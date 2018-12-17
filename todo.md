@@ -1,0 +1,5 @@
+- [ ] Make posts optionally private inside of classrooms
+- [ ] Make Admin Controller
+- [ ] Passowrd change
+- [ ] Password recovery
+- [ ] Email person for verification

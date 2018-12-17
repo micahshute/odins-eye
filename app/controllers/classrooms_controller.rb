@@ -98,7 +98,10 @@ class ClassroomsController < ApplicationController
         authorize(professor)
         user_email = params[:user].split("::").last.strip
         if (new_student = User.find_by(email: user_email))
-            new_student.enroll_in(classroom) unless new_student.enrolled_in?(classroom)
+            if not new_student.enrolled_in?(classroom)
+                new_student.enroll_in(classroom) 
+                Notification.create(user: new_student, content: "You are enrolled in <a href='#{user_classroom_path(classroom.professor, classroom)}' >#{classroom.name}</a>")
+            end
             redirect_to classroom_students_path(professor, classroom)
         else    
             not_found
@@ -118,6 +121,7 @@ class ClassroomsController < ApplicationController
                 redirect_to last_page
             else
                 student.enroll_in(classroom)
+                Notification.create(user: new_student, content: "You are enrolled in <a href='#{user_classroom_path(classroom.professor, classroom)}' >#{classroom.name}</a>")
                 redirect_to user_classroom_path(classroom.professor, classroom)
             end
         end

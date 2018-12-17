@@ -12,7 +12,7 @@ reaction_types = ["like", "dislike", "genius", "report"]
 tag_types.map!{ |tag| TagType.create(name: tag) }
 reaction_types.map!{ |reaction| ReactionType.create(name: reaction)}
 admin = User.create(name: "Admin", email: "admin@odinseye.com", password: "Adminpassword123!@#", password_confirmation: "Adminpassword123!@#")
-micah = User.create(name: "Micah Shute", email: "test@test.com", password: password, password_confirmation: password, bio: "My name is Micah and I like programming")
+micah = User.create(name: "Micah Shute", email: "micah.shute@gmail.com", password: password, password_confirmation: password, bio: "My name is Micah and I like programming", image_path: "https://i.imgur.com/2jzzqWF.jpg", facebook_url: "https://www.facebook.com/micah.shute", github_url: "https://github.com/micahshute", linkedin_url: "https://www.linkedin.com/in/micahshute/")
 taylor = User.create(name: "Taylor Swift", email:"taylor@swift.com", password: password, password_confirmation: password, bio: "I am secretly in love with Micah Shute")
 voldi = User.create(name: "Lord Voldimort", email: "darkLord@killhp.com", password: password, password_confirmation: password, bio: "I like water sports, killing muggles and making #horcruxes", image_path: "https://static.independent.co.uk/s3fs-public/thumbnails/image/2015/09/10/12/Ralph-Fiennes-Voldemort.jpg?w968%20968w,%20https://static.independent.co.uk/s3fs-public/thumbnails/image/2015/09/10/12/Ralph-Fiennes-Voldemort.jpg?w375%20375w,%20https://static.independent.co.uk/s3fs-public/thumbnails/image/2015/09/10/12/Ralph-Fiennes-Voldemort.jpg?w768%20768w%22%20src=%22https://static.independent.co.uk/s3fs-public/thumbnails/image/2015/09/10/12/Ralph-Fiennes-Voldemort.jpg?w968h681")
 first_topic = Topic.create(user: micah, title: "What is the Fourier Transform?", content: "No, I really don't know. Can anyone tell me?") 
@@ -28,8 +28,10 @@ classroom = Classroom.new(name: "Math Class", professor: micah)
 classroom.save
 
 vtopic = Topic.create(user: voldi, title: "Good nosejob guy?", content: "If it turns out well ill give you lots of money and power. if not ill probs kill ya. Any suggestions leave below plz!")
+student_lounge = classroom.topics.build(user: micah, title: "Student Lounge", classroom: classroom)
+announcements = classroom.topics.build(user: micah, title: "Announcements", classroom: classroom)
+class_topic = classroom.topics.build(user: micah, title: "Math stuff?", classroom: classroom)
 
-class_topic = classroom.topics.build(user: micah, content: "Math stuff?")
 class_topic.tags << Tag.new(tag_type: TagType.find_by(name: "math"))
 classroom.save
 

@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     end
 
     def create
-        @user = User.new(all_user_params)
+        @user = User.new(new_user_params)
         if @user.save
             log_in(@user)
             flash[:success] = "Welcome #{@user.name}!"
@@ -22,10 +22,18 @@ class UsersController < ApplicationController
     end
 
     def edit
-
+        @user = User.find(params[:id])
+        authorize(@user)
     end
 
     def update
+        @user = User.find(params[:id])
+        authorize(@user)
+        if @user.update(user_params(:bio, :image_path, :github_url, :facebook_url, :linkedin_url, :name))
+            redirect_to user_path(@user)
+        else
+            render 'new'
+        end
 
     end
 
@@ -91,7 +99,7 @@ class UsersController < ApplicationController
         params.require(:user).permit(*args)
     end
 
-    def all_user_params
+    def new_user_params
         params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
 end

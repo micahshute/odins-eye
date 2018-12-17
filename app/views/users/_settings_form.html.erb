@@ -1,0 +1,43 @@
+<%= form_for(user) do |f| %>
+
+    <div class="form-group">
+        <%= f.text_field :name, class: "form-control" %>
+        <%= f.label :name %>
+        <%= error_msg_for(user, :name) %>
+    </div>
+
+    <div class="form-group">
+        <%= f.text_area :bio, class: "form-control" %>
+        <%= f.label :bio %>
+        <%= error_msg_for(user, :bio) %>
+    </div>
+
+    <div class="form-group">
+        <%= f.text_field :image_path, class: "form-control" %>
+        <%= f.label :image_path%>
+        <%= error_msg_for(user, :image_path) %>
+    </div>
+
+    <div class="form-row">
+        <div class="col-4">
+            <%= f.text_field :facebook_url, class:" form-control" %>
+            <%= f.label :facebook_url %>
+            <%= error_msg_for(user, :facebook_url) %>
+        </div>
+        <div class="col-4">
+            <%= f.text_field :github_url, class: "form-control" %>
+            <%= f.label :github_url %>
+            <%= error_msg_for(user, :github_url) %>
+        </div>
+        <div class="col-4">
+            <%= f.text_field :linkedin_url, class: "form-control" %>
+            <%= f.label :linkedin_url %>
+            <%= error_msg_for(user, :linkedin_url) %>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <%= f.submit class: "btn btn-primary bg-lavender border-lavender"%>
+    </div>
+
+<% end %>

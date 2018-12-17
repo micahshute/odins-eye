@@ -18,9 +18,9 @@
                             <%= render('users/contact_info', type: "Email", info: @user.email, link: false) if @user.display_email %>
                         </div>
                         <div class="d-flex justify-content-around bottom-space-md">
-                            <%= render('users/social_media', type: :facebook, url: @user.facebook_url) if @user.facebook_url  %>
-                            <%= render('users/social_media', type: :github, url: @user.github_url) if @user.github_url  %>
-                            <%= render('users/social_media', type: :linkedin, url: @user.github_url) if @user.linkedin_url  %>
+                            <%= render('users/social_media', type: :facebook, url: @user.facebook_url) if @user.facebook_url and !@user.facebook_url.blank? %>
+                            <%= render('users/social_media', type: :github, url: @user.github_url) if @user.github_url and !@user.github_url.blank? %>
+                            <%= render('users/social_media', type: :linkedin, url: @user.github_url) if @user.linkedin_url and !@user.linkedin_url.blank?  %>
                         </div>
                     </div>
                 </div>

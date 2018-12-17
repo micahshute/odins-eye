@@ -32,8 +32,8 @@
                 <div class="row">
 
                     <div class="col-12">
-                        <%= render 'topics/summary_view', topic: @classroom.topics.find{ |t| t.title == "Announcements"} %>
-                        <%= render 'topics/summary_view', topic: @classroom.topics.find{ |t| t.title == "Student Lounge"} %>
+                        <%= render('topics/summary_view', topic: @classroom.topics.find{ |t| t.title == "Announcements"}) if @classroom.topics.find{ |t| t.title == "Announcements" }%>
+                        <%= render('topics/summary_view', topic: @classroom.topics.find{ |t| t.title == "Student Lounge"}) if @classroom.topics.find{ |t| t.title == "Student Lounge"} %>
                         <hr>
                         
                         <% if @classroom.topics.length > 2 %>
