@@ -78,5 +78,6 @@ Rails.application.routes.draw do
   post 'users/:user_id/classrooms/:id/find_student' => 'classrooms#find_student', as: 'student_finder'
   get 'users/:user_id/classrooms/:id/students' => 'classrooms#students', as: 'classroom_students'
   delete 'classrooms/:classroom_id/student/:id' => 'classrooms#destroy_student', as: 'delete_classroom_student'
+  post 'classrooms/:id/enroll' => 'classrooms#enroll_student', as: 'classroom_user_enroll'
 
 end

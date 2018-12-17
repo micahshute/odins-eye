@@ -76,8 +76,21 @@
         </div>
     </div>
 
+    <% if @user.classrooms.length != 0 or @user.enrolled_classes.length != 0 %>
+        <div class="row bottom-space-md">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-5">
+                <%= render 'classrooms/list', classrooms: @user.classrooms, title: "Professor for" %>
+                    
+            </div>
+            <div class="col-sm-5">
+                <%= render 'classrooms/list', classrooms: @user.enrolled_classes, title: "Enrolled Classes" %> 
+            </div>
+            <div class="col-sm-1"></div>
+        
+        </div>
 
-
+    <% end %>
 
 
     <div class="row">

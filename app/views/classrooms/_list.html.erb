@@ -1,0 +1,16 @@
+<div class="bg-offwhite rounded padded shadow-sm bottom-space-md">
+
+        <h5><%= title %></h5>
+        
+        <div class="bottom-space-md">
+            <ul>
+                <% classrooms.each do |classroom| %>
+                    <li class="no-text-decoration"><%= link_to classroom.name, user_classroom_path(classroom.professor, classroom), class: "link-no-underline link-bluegray-hover no-decoration" %></li>
+                <% end %>
+            </ul>
+        </div>
+
+
+</div>
+
+

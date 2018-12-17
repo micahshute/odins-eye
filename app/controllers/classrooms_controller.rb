@@ -61,8 +61,14 @@ class ClassroomsController < ApplicationController
     end
 
     def index
-        @public_classrooms = Classroom.all_public
-        @private_classrooms = Classroom.all_private
+        if params[:tag_name] and !params[:tag_name].blank?
+            @tag_type = TagType.find_by(name: params[:tag_name])
+            @classrooms = Classroom.by_tag(@tag_type.name)
+            @tag_types = TagType.all
+        else
+            @classrooms = Classroom.all
+            @tag_types = TagType.all
+        end
     end
 
     def update
@@ -99,12 +105,31 @@ class ClassroomsController < ApplicationController
         end
     end
 
+    def enroll_student
+        if authorize
+            student = current_user
+            classroom = Classroom.find(params[:id])
+            if classroom.private 
+                flash[:danger] = "This is a private classroom. A request has been sent to the professor"
+                redirect_to last_page
+            else
+                student.enroll_in(classroom)
+                redirect_to user_classroom_path(classroom.professor, classroom)
+            end
+        end
+
+    end
+
     def destroy_student
         classroom = Classroom.find(params[:classroom_id])
         student = User.find(params[:id])
-        authorize(classroom.professor)
+        not_authorized unless (logged_in? and ((current_user == classroom.professor) or (current_user == student)))
         classroom.users.delete(student)
-        redirect_to classroom_students_path(classroom.professor, classroom)
+        if current_user == classroom.professor
+            redirect_to classroom_students_path(classroom.professor, classroom)
+        else
+            redirect_to root_path
+        end
     end
 
  
@@ -112,7 +137,7 @@ class ClassroomsController < ApplicationController
 
     def classroom_params
         params.require(:classroom).permit(
-        [:name, tags_attributes: [
+        [:name, :private, tags_attributes: [
                 :tag_type_name
             ]
         ])

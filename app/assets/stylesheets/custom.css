@@ -213,7 +213,11 @@ html, body{
 /* FIELDS and COMPONENTS */
 .error-text{
     color: red;
-}   
+}  
+
+.large-text{
+    font-size: 2em;
+}
 
 .small-text{
     font-size: 0.8em;
@@ -229,6 +233,10 @@ html, body{
 
 .lg-text{
     font-size: 1.25em;
+}
+
+.no-decoration{
+    text-decoration: none;
 }
 
 .link-no-underline:hover{

@@ -123,5 +123,18 @@ class ApplicationController < ActionController::Base
         request.referer
     end
 
+    def clean_hash(hash)
+        ret_hash = {}
+        hash.each do |k,v|
+            if v.is_a? Array
+                vals = v.compact
+                ret_hash[k] = vals if vals.length > 0 
+            else
+                ret_hash[k] = v unless v.nil?
+            end
+        end
+        ret_hash
+    end 
+
   
 end

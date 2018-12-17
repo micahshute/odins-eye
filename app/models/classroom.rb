@@ -32,6 +32,11 @@ class Classroom < ApplicationRecord
         where(private: false).order(created_at: :desc)
     end
 
+    def self.by_tag(tag_name)
+        tag_type = TagType.find_by(name: tag_name)
+        return [] if tag_type.nil?
+        joins(:tag_types).where(tag_types: {id: tag_type.id})
+    end
     
 
     def students

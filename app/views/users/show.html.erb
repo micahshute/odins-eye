@@ -41,9 +41,32 @@
                 </div>
             </div>   
         </div>
+
+
         
         <%= render_unless_nil 'components/row_decorator', title: nil, shadow: true, path: 'users/profile_tags', args: {tag_types: @user.tag_types} %>
         <%= render 'components/row_decorator', title: nil, bg_color: '', shadow: false, path: 'users/profile_stats', args: { user: @user } %>
+        
+        
+        <% if @user.classrooms.length != 0 or @user.enrolled_classes.length != 0 %>
+            <div class="row bottom-space-md">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-5">
+                    <%= render 'classrooms/list', classrooms: @user.classrooms, title: "Professor for" %>
+                        
+                </div>
+                <div class="col-sm-5">
+                    <%= render 'classrooms/list', classrooms: @user.enrolled_classes, title: "Enrolled Classes" %> 
+                </div>
+                <div class="col-sm-1"></div>
+            
+            </div>
+
+        <% end %>
+        
+        
+        
+        
         <%= render_unless_nil 'components/row_decorator', title: "Most reacted post", path: 'topics/summary_view', args: {topic: @user.most_reacted_topics(3).first} %>
         <% if @user.topics.length > 0 %>
             <div class="bottom-space-md">

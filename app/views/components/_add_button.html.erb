@@ -1,0 +1,6 @@
+
+<div class="inline">
+    <a class="rounded-circle <%= enrolled ? enrolled_color : not_enrolled_color %> padded-sm follow link-bluegray-bg-hover link-plain-hover" data-method="post" href="<%= classroom_user_enroll_path(classroom) %>">
+        <i class="material-icons <%= "small-" if small %>follow large-text color-charcoal" >add_circle</i>
+    </a>
+</div>

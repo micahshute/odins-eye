@@ -24,12 +24,13 @@
             <% end %>
 
         <% end %>
+        
         <% if @is_enrolled or @is_professor %>
 
             <% @students.each do |student| %>
                 <div class="bottom-space-md">
                     <%= render 'users/summary', user: student %>
-                    <% if @is_professor %>
+                    <% if @is_professor or current_user == student %>
                         <%= render 'classrooms/delete_student_button', classroom: @classroom, student: student %>
                     <% end %>
                 </div>
