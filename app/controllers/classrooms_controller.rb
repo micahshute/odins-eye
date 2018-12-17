@@ -111,6 +111,10 @@ class ClassroomsController < ApplicationController
             classroom = Classroom.find(params[:id])
             if classroom.private 
                 flash[:danger] = "This is a private classroom. A request has been sent to the professor"
+                content = "<a href='#{user_path(student)}'>#{student.name}</a> requests to join <a href='#{user_classroom_path(classroom.professor, classroom)}'>  #{classroom.name}</a>"
+                if Notification.where(content: content).length == 0
+                    Notification.create(user: classroom.professor, content: content)
+                end
                 redirect_to last_page
             else
                 student.enroll_in(classroom)

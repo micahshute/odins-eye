@@ -11,44 +11,52 @@
                 <h3 class="bg-charcoal color-offwhite text-center rounded shadow-sm">Welcome Professor, to </h3>
             <% end %>
             <h1 class="bottom-space-lg"><%= @classroom.name %></h1>
+             <h6>Professor: <%= link_to @classroom.professor.name, user_path(@classroom.professor), class: "link-plain-hover link-bluegray-hover"%></h6>
             <% if @is_enrolled or @is_professor %>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div>
-                        <a class="btn btn-outline-info btn-block" href="<%= classroom_students_path(@classroom) %>" role="button"><%= "Students (#{@classroom.users.length})"%></a>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div>
+                            <a class="btn btn-outline-info btn-block" href="<%= classroom_students_path(@classroom) %>" role="button"><%= "Students (#{@classroom.users.length})"%></a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="bottom-space-md">
+                            <a class="btn btn-outline-info btn-block" href="<%= classroom_topics_path(@classroom) %>" role="button"><%= "Classroom Topics (#{@classroom.topics.length})" %></a>
+                        </div>
                     </div>
                 </div>
 
-                <div class="col-md-6">
-                    <div class="bottom-space-md">
-                        <a class="btn btn-outline-info btn-block" href="<%= classroom_topics_path(@classroom) %>" role="button"><%= "Classroom Topics (#{@classroom.topics.length})" %></a>
+                <hr>
+                <div class="row">
+
+                    <div class="col-12">
+                        <%= render 'topics/summary_view', topic: @classroom.topics.find{ |t| t.title == "Announcements"} %>
+                        <%= render 'topics/summary_view', topic: @classroom.topics.find{ |t| t.title == "Student Lounge"} %>
+                        <hr>
+                        
+                        <% if @classroom.topics.length > 2 %>
+                            <h6>Most Recent Topic</h6>
+                            <%= render 'topics/summary_view', topic: @classroom.topics.last %>
+                        <% end %>
                     </div>
+                
                 </div>
-            </div>
-
-            <hr>
-            <div class="row">
-
-                <div class="col-12">
-                    <%= render 'topics/summary_view', topic: @classroom.topics.find{ |t| t.title == "Announcements"} %>
-                    <%= render 'topics/summary_view', topic: @classroom.topics.find{ |t| t.title == "Student Lounge"} %>
-                    <hr>
-                    
-                    <% if @classroom.topics.length > 2 %>
-                        <h6>Most Recent Topic</h6>
-                        <%= render 'topics/summary_view', topic: @classroom.topics.last %>
-                    <% end %>
-                </div>
-            
-            </div>
 
             <% else %>
 
-
-                <p>Is Private? <%= @classroom.private %></p>
-                <p>Request Join</p>
-
+                <% if @classroom.private %>
+                    <h5 class="top-space-sm bg-sunshine text-center rounded">PRIVATE CLASSROOM</h5>
+                <% end %>
+                <div class="col-2">
+                    <% if logged_in? and current_user != @classroom.professor %>
+                        <div class="d-flex fill justify-content-center align-items-center">
+                            <h6>Join Classroom</h6>
+                            <%= render 'components/add_button', small: false, user: current_user, classroom: @classroom, enrolled: current_user.enrolled_in?(@classroom) , enrolled_color: 'bg-aqua', not_enrolled_color: ''%>
+                        </div>
+                    <% end %>
+                </div>
 
 
 
