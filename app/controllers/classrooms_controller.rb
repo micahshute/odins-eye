@@ -62,8 +62,12 @@ class ClassroomsController < ApplicationController
 
     def index
         if params[:tag_name] and !params[:tag_name].blank?
-            @tag_type = TagType.find_by(name: params[:tag_name])
-            @classrooms = Classroom.by_tag(@tag_type.name)
+            @tag_type = TagType.find_by(name: params[:tag_name]) 
+            if !!@tag_type
+                @classrooms = Classroom.by_tag(@tag_type.name) 
+            else
+                @classrooms = []
+            end
             @tag_types = TagType.all
         else
             @classrooms = Classroom.all
