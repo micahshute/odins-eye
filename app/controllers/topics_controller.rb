@@ -40,6 +40,7 @@ class TopicsController < ApplicationController
                         redirect_to classroom_topics_path(@topic.classroom)
                     end
                 else
+                    @topic.tags.each { |tag| tag.delete if tag.tag_type_id.nil? }
                     @tag_types = Tag.most_popular(10)
                     needed_tags = 4 - @topic.tags.length
                     needed_tags.times do 
@@ -130,6 +131,7 @@ class TopicsController < ApplicationController
                     redirect_to classroom_topics_path(@topic.classroom)
                 end
             else
+                @topic.tags.each { |tag| tag.delete if tag.tag_type_id.nil? }
                 @tag_types = Tag.most_popular(10)
                 needed_tags = 4 - @topic.tags.length
                 needed_tags.times do 

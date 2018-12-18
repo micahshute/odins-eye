@@ -5,6 +5,8 @@ class Tag < ApplicationRecord
 
   after_destroy :check_if_last
 
+  validates :tag_type_id, presence: true
+
   # MARK Callbacks
 
   def check_if_last
