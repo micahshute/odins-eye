@@ -116,6 +116,11 @@ class TopicsController < ApplicationController
         authorize(@topic.user)
         @topic.tags.destroy_all
         @topic.update(topic_params)
+        if !!params[:classroom_id]
+            classroom = Classroom.find params[:classroom_id]
+            authorize(classroom.professor)
+            @topic.classroom = classroom
+        end
         if @topic.validate
             flash[:success] = "Congratulations, your topic was updated"
             if @topic.classroom.nil?
