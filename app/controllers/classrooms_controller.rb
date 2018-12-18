@@ -38,7 +38,7 @@ class ClassroomsController < ApplicationController
                 needed_tags.times do 
                     @classroom.tags.build
                 end
-                flash[:danger] = "#{@classroom.user.name}, there was a problem creating your classroomc"
+                flash[:danger] = "#{@classroom.professor.name}, there was a problem creating your classroom"
                 render 'new'
             end
         end
