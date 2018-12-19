@@ -27,6 +27,6 @@ class TagType < ApplicationRecord
 
     def self.format_name(name)
         regex = /[\w_]+/
-        name.gsub(" ", "_").downcase.match(regex).to_s
+        name.strip.gsub(" ", "_").downcase.match(regex).to_s
     end
 end
