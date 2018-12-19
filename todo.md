@@ -1,4 +1,6 @@
 - [ ] Make posts optionally private inside of classrooms
+- [ ] Email verification when account made manually
+- [ ] Google add user image
 - [ ] Make Admin Controller more functional
 - [ ] Passowrd change
 - [ ] Password recovery

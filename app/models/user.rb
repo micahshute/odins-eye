@@ -76,6 +76,7 @@ class User < ApplicationRecord
                 rand_password = RandomPasswordStrategy.random_password
                 u.password = rand_password
                 u.password_confirmation = rand_password
+                u.image_path = auth.info.image
             end
             return new_user
         end
