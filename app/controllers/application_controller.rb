@@ -25,8 +25,12 @@ class ApplicationController < ActionController::Base
             not_authorized("#{'<a href="/login">Login</a>'} or #{'<a href="/signup">Signup</a>'} to view this page!") unless logged_in?
             !!current_user
         else
-            not_authorized unless user == current_user
-            true
+            if user == current_user
+                true
+            else
+                not_authorized
+                false
+            end
         end
     end
 
