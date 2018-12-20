@@ -9,3 +9,7 @@
 - [ ] Add latex engine to markdown
 - [ ] Add reading stats (ie how easy the read is, time to read, word count, etc)
 - [ ] Custom 404 error page
+- [ ] Change order of topic rendering for topic index page
+- [ ] Fix spelling error in database (`reciever_id` should be `receiver_id`)
+- [ ] Add slugs for topic and user routes
+- [ ] nest all topic routes with user
