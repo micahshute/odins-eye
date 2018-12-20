@@ -817,16 +817,21 @@ textarea#post_content{
     width: 50px;
 }
 
+/* MARK PREV ERROR */
+
 .topic-report-box .dropdown a.btn-secondary{
-    background-color: rgba(150,150,150);
-    border-color: rgba(150,150,150);
+    background-color: rgb(150,150,150);
+    border-color: rgb(150,150,150);
 }
 
 div.post-actions-container div.post-report-container a.btn-secondary{
 
-    background-color: rgba(150,150,150);
-    border-color: rgba(150,150,150);
+    background-color: rgb(150,150,150);
+    border-color: rgb(150,150,150);
 }
+
+/* */
+
 
 .follow{
     display: inline-flex;
