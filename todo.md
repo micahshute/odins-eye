@@ -7,3 +7,4 @@
 - [ ] Email person for verification
 - [x] Add return to classroom button for posts inside of classroom
 - [ ] Add latex engine to markdown
+- [ ] Add reading stats (ie how easy the read is, time to read, word count, etc)
