@@ -1,6 +1,6 @@
 - [ ] Make posts optionally private inside of classrooms
 - [ ] Email verification when account made manually
-- [ ] Google add user image
+- [x] Google add user image
 - [ ] Make Admin Controller more functional
 - [ ] Passowrd change
 - [ ] Password recovery
@@ -13,3 +13,4 @@
 - [ ] Fix spelling error in database (`reciever_id` should be `receiver_id`)
 - [ ] Add slugs for topic and user routes
 - [ ] nest all topic routes with user
+- [ ] *****Migrate from Google+ Signin to Google Signin
