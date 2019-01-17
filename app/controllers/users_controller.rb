@@ -69,6 +69,7 @@ class UsersController < ApplicationController
                 redirect_to last_page
             else
                 auth_user.follow(user_to_follow)
+                create_notification(user_to_follow, "#{auth_user.name} is following you!")
                 redirect_to last_page
             end
         end
@@ -101,5 +102,9 @@ class UsersController < ApplicationController
 
     def new_user_params
         params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    end
+
+    def create_notification(user, msg = "")
+        Notification.create(user: user, content: msg)
     end
 end

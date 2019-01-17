@@ -29,7 +29,6 @@ class SessionsController < ApplicationController
             redirect_to dashboard_path
         else
             flash[:danger] = "There was a problem logging you in"
-            raise user.errors.inspect
             redirect_to root_path
         end
 

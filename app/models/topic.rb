@@ -33,7 +33,7 @@ class Topic < ApplicationRecord
     has_many :tag_types, through: :tags
     has_many :user_saved_topics, dependent: :destroy
     has_many :user_saved, through: :user_saved_topics, source: "user"
-
+    has_many :user_reactors, through: :reactions, source: "user"
 
     before_save :format_content
 

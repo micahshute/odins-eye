@@ -140,25 +140,25 @@ class User < ApplicationRecord
     end
 
 
-    def most_liked_topics
+    # def most_liked_topics
 
-    end
+    # end
 
-    def most_replied_topics
+    # def most_replied_topics
 
-    end
+    # end
 
-    def most_viewed_topics
+    # def most_viewed_topics
 
-    end
+    # end
 
-    def most_popular_posts
+    # def most_popular_posts
 
-    end
+    # end
 
-    def most_popular_topics
+    # def most_popular_topics
 
-    end
+    # end
 
     # MARK: ACTIONS 
 

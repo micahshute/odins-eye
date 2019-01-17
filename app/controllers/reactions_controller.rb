@@ -43,13 +43,11 @@ class ReactionsController < ApplicationController
                     user.report(reactable)
                 end
             else
-                # byebug
                 not_found
             end
 
             redirect_to last_page
         else
-            # byebug
             not_found
         end
 

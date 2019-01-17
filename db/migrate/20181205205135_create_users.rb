@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :google_uid
       t.string :google_refresh_token
       t.string :password_digest
-      t.string :image_path, default: "https://i.imgur.com/JkzJkzM.png"
+      t.string :image_path, default: "https://i.imgur.com/iAmPmit.png"
       t.string :github_url
       t.string :facebook_url
       t.string :linkedin_url

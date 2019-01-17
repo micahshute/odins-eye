@@ -13,4 +13,10 @@
 - [ ] Fix spelling error in database (`reciever_id` should be `receiver_id`)
 - [ ] Add slugs for topic and user routes
 - [ ] nest all topic routes with user
+- [ ] Don't let tags be made if it fails to publish the topic
 - [ ] *****Migrate from Google+ Signin to Google Signin
+- [ ] Add notification for getting followed
+- [ ] Fix images so they are not distorted
+- [ ] Add javascript for signup validations
+  - [ ] Turn green for correct
+  - [ ] Turn red/show inaccuracies for bad input
