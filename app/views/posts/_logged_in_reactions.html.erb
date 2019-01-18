@@ -1,9 +1,9 @@
 <div class="row reaction-holder no-padding">
-    <div class="col-sm-4 no-padding">
+    <div class="col-sm-4 no-padding" id="post-reactions-<%= post.id%>">
 
-        <%= link_to(genius(post, genius_color, 'charcoal', 'md-14'), create_post_reaction_path(post, ReactionType::ID[:genius]), method: :post, class: 'post-reaction') %>
-        <%= link_to(likes(post, like_color, 'charcoal', 'md-14'), create_post_reaction_path(post, ReactionType::ID[:like]), method: :post, class: 'post-reaction')%>
-        <%= link_to(dislikes(post, dislike_color, 'charcoal', 'md-14'), create_post_reaction_path(post, ReactionType::ID[:dislike]), method: :post, class: 'post-reaction')%>
+        <%= link_to(genius(post, genius_color, 'charcoal', 'md-14'), create_post_reaction_path(post, ReactionType::ID[:genius]), class: 'reaction post-reaction') %>
+        <%= link_to(likes(post, like_color, 'charcoal', 'md-14'), create_post_reaction_path(post, ReactionType::ID[:like]), class: 'reaction post-reaction')%>
+        <%= link_to(dislikes(post, dislike_color, 'charcoal', 'md-14'), create_post_reaction_path(post, ReactionType::ID[:dislike]), class: 'reaction post-reaction')%>
     
     </div>
 

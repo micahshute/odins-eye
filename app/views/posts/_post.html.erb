@@ -1,4 +1,4 @@
-<div class="markdown-holder bg-offwhite post-container">
+<div class="markdown-holder bg-offwhite post-container" id="post-<%= post.id%>">
     <p><%= link_to post.user.name, user_path(post.user) %><small class="faded-text"> <%= time_from_now(post.created_at)%>   <%= "::  edited #{time_from_now(post.updated_at)}" if post.edited? %></small></p>
     <hr>
     <%= render_markdown(post.content) %>

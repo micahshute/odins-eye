@@ -46,7 +46,38 @@ class ReactionsController < ApplicationController
                 not_found
             end
 
-            redirect_to last_page
+            respond_to do |format|
+                format.html { redirect_to last_page }
+                format.json {
+                    response = {
+                        reactableType: reactable.class.to_s,
+                        reactableId: reactable.id,
+                        data:
+                            [
+                                {
+                                    reactionType: "like",
+                                    userRespond: user.likes?(reactable),
+                                    reactionCount: reactable.likes
+                                },
+                                    
+                                {
+                                    reactionType: "dislike",
+                                    userRespond: user.dislikes?(reactable),
+                                    reactionCount: reactable.dislikes
+                                },
+
+                                {
+                                    reactionType: "genius",
+                                    userRespond: user.thinks_is_genius?(reactable),
+                                    reactionCount: reactable.geniuses
+                                }
+                            ]
+                    }
+
+                    render json: JSON.generate(response), status: 201 
+                }
+            end
+            
         else
             not_found
         end
