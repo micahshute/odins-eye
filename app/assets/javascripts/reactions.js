@@ -13,7 +13,6 @@ class Reactions{
 
     update(dataset){
         for(let data of dataset){
-            console.log(data)
             switch(data.reactionType){
                 case "like":
                     this.doesLike(data.userRespond)
@@ -119,116 +118,47 @@ class TopicReactions extends Reactions{
     constructor(topicId){
         super(topicId, "Topic")
         this.topicId = topicId
-        this.reactionElements = document.querySelector(`#post-reactions-${this.postId}`).children;
+        this.reactionElements = document.querySelector(`#topic-reactions-${this.topicId}`).children;
+    }
+
+    like(){ 
+        if(!this.reactionElements[1].classList.contains('topic-option-selected')){
+            this.reactionElements[1].classList.add('topic-option-selected')
+        }
+    }
+
+    removeLike(){
+        if(this.reactionElements[1].classList.contains('topic-option-selected')){
+            this.reactionElements[1].classList.remove('topic-option-selected');
+        }
+    }
+
+    dislike(){
+        if(!this.reactionElements[2].classList.contains('topic-option-selected')){
+            this.reactionElements[2].classList.add('topic-option-selected');
+        }
+    }
+
+    removeDislike(){
+        if(this.reactionElements[2].classList.contains('topic-option-selected')){
+            this.reactionElements[2].classList.remove('topic-option-selected');
+        }
+    }
+
+    genius(){
+        if(!this.reactionElements[0].classList.contains('topic-option-selected')){
+            this.reactionElements[0].classList.add('topic-option-selected');
+        }
+    }
+
+    removeGenius(){
+        if(this.reactionElements[0].classList.contains('topic-option-selected')){
+            this.reactionElements[0].classList.remove('topic-option-selected');
+        }
     }
 
 }
 
-
-// function Reactions(postId){
-
-//     this.postId = postId;
-    // this.reactionElements = document.querySelector(`#post-reactions-${this.postId}`).children;
-    // this.like = function(){ 
-    //     if(this.reactionElements[1].childNodes[0].classList.contains('color-charcoal')){
-    //         this.reactionElements[1].childNodes[0].classList.remove('color-charcoal');
-    //         this.reactionElements[1].childNodes[0].classList.add('color-aqua')
-    //     }
-    // }
-    // this.removeLike = function(){
-    //     if(this.reactionElements[1].childNodes[0].classList.contains('color-aqua')){
-    //         this.reactionElements[1].childNodes[0].classList.remove('color-aqua');
-    //         this.reactionElements[1].childNodes[0].classList.add('color-charcoal');
-    //     }
-    // }
-
-    // this.dislike = function(){
-    //     if(this.reactionElements[2].childNodes[0].classList.contains('color-charcoal')){
-    //         this.reactionElements[2].childNodes[0].classList.remove('color-charcoal');
-    //         this.reactionElements[2].childNodes[0].classList.add('color-aqua');
-    //     }
-    // }
-
-    // this.removeDislike = function(){
-    //     if(this.reactionElements[2].childNodes[0].classList.contains('color-aqua')){
-    //         this.reactionElements[2].childNodes[0].classList.remove('color-aqua');
-    //         this.reactionElements[2].childNodes[0].classList.add('color-charcoal');
-    //     }
-    // }
-
-    // this.genius = function(){
-    //     if(this.reactionElements[0].childNodes[0].classList.contains('color-charcoal')){
-    //         this.reactionElements[0].childNodes[0].classList.remove('color-charcoal');
-    //         this.reactionElements[0].childNodes[0].classList.add('color-aqua');
-    //     }
-    // }
-
-    // this.removeGenius = function(){
-    //     if(this.reactionElements[0].childNodes[0].classList.contains('color-aqua')){
-    //         this.reactionElements[0].childNodes[0].classList.remove('color-aqua');
-    //         this.reactionElements[0].childNodes[0].classList.add('color-charcoal');
-    //     }
-    // }
-
-    // this.doesLike = function(bool){ bool ? this.like() : this.removeLike() }
-
-    // this.doesDislike = function(bool){ bool ? this.dislike() : this.removeDislike() }
-
-    // this.doesGenius = function(bool){ bool ? this.genius() : this.removeGenius() }
-
-    // this.updateLikeCount = (count) => {
-    //     this.reactionElements[1].childNodes[1].textContent = "  " + count;
-    // }
-
-    // this.updateDislikeCount = function(count){
-    //     this.reactionElements[2].childNodes[1].textContent = "  " + count;
-    // }
-
-    // this.updateGeniusCount = function(count){
-    //     this.reactionElements[0].childNodes[1].textContent = "  " + count;
-    // }
-
-// }
-
-// Reactions.prototype.doesLike = function(bool){ bool ? this.like() : this.removeLike() }
-// Reactions.prototype.doesDislike = function(bool){ bool ? this.dislike() : this.removeDislike() }
-// Reactions.prototype.doesGenius = function(bool){ bool ? this.genius() : this.removeGenius() }
-// Reactions.prototype.updateLikeCount = function(count){
-//     this.reactionElements[1].childNodes[1].textContent = "  " + count;
-// }
-// Reactions.prototype.updateDislikeCount = function(count){
-//     this.reactionElements[2].childNodes[1].textContent = "  " + count;
-// }
-
-// Reactions.prototype.update = function(dataset){
-//     for(data of dataset){
-//         switch(data.reactionType){
-//             case "like":
-//                 this.doesLike(data.userRespond)
-//                 this.updateLikeCount(data.reactionCount)
-//                 break;
-
-//             case "dislike":
-//                 this.doesDislike(data.userRespond)
-//                 this.updateDislikeCount(data.reactionCount)
-//                 break;
-
-//             case "genius":
-//                 this.doesGenius(data.userRespond)
-//                 this.updateGeniusCount(data.reactionCount)
-//                 break;
-            
-//             default:
-//                 console.log("ERROR IN REACTIONTYPE");
-//         }
-
-//     }
-// }
-
-function TopicReaction(topicId){
-    this.topicId = topicId;
-
-}
 
 function getParentLink(e){
     let target = e.target;

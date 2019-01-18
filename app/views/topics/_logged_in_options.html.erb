@@ -1,5 +1,5 @@
 <div class="col-sm-1 sticky-holder">
-        <div class="sticky-sidebar after-navbar">    
+        <div class="sticky-sidebar after-navbar" id="topic-reactions-<%= topic.id%>">    
                
             <%=link_to(genius(topic, 'whitesmoke', 'whitesmoke'), create_topic_reaction_path(topic, ReactionType::ID[:genius]), class: "reaction #{('topic-option-selected' if genius_selected)}") %>
             <%=link_to(likes(topic, 'whitesmoke', 'whitesmoke'), create_topic_reaction_path(topic, ReactionType::ID[:like]), class: "reaction #{('topic-option-selected' if like_selected)}") %>
