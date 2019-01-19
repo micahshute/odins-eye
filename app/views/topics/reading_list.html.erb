@@ -1,7 +1,7 @@
-<h1>Reading List</h1>
+<h1 id="js-reading-list">Reading List</h1>
 <hr>
 <% @topics.each do |topic| %>
-    <div class="row">
+    <div class="row js-reading-item">
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
             <div class= "bg-offwhite topic-summary border shadow-sm">
@@ -14,3 +14,5 @@
  
 
 <% end %>
+
+<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>

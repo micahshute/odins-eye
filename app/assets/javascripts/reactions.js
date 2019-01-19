@@ -162,30 +162,55 @@ class TopicReactions extends Reactions{
 class SaveButton{
 
     static newFromElement(element){
-        const idString = element.id;
-        const idComponents = idString.split('-');
+        const idString = element.id
+        const idComponents = idString.split('-')
         const id = idComponents[idComponents.length - 1]
-        return new SaveButton(id)
+        const btn = new SaveButton(id)
+        btn.element = element
+        btn.imageEl = btn.element.children[0]
+        btn.inSummary = btn.element.parentElement.classList.contains('js-summary-reaction-parent')
+        btn.inSpotlight = btn.element.parentElement.classList.contains('spotlight-container');
+        btn.inFeaturedTopics = btn.element.parentElement.classList.contains('js-tag-spotlight');
+        if(btn.inSummary || btn.inFeaturedTopics){
+            btn.selectedColor = 'color-aqua'
+            btn.imgColor = 'color-charcoal'
+        }else if (btn.inSpotlight){
+            btn.selectedColor = 'color-sunshine'
+            btn.imgColor = 'color-charcoal'
+        }else{
+            btn.imgColor = 'color-offwhite'
+            btn.selectedColor = 'color-offwhite'
+        }
+        return btn;
     }
 
     constructor(topicId){
         this.topicId = topicId;
         this.element = document.querySelector(`#save-topic-${topicId}`);
-        this.url = this.element.getAttribute('href');
+        this.url = this.element.getAttribute('href')
         this.imageEl = this.element.children[0]
         this.inSummary = this.element.parentElement.classList.contains('js-summary-reaction-parent')
         this.inSpotlight = this.element.parentElement.classList.contains('spotlight-container');
         this.inFeaturedTopics = this.element.parentElement.classList.contains('js-tag-spotlight');
+        this.inReadingList = !!document.querySelector('h1#js-reading-list')
         if(this.inSummary || this.inFeaturedTopics){
-            this.selectedColor = 'color-aqua';
-            this.imgColor = 'color-charcoal';
+            this.selectedColor = 'color-aqua'
+            this.imgColor = 'color-charcoal'
         }else if (this.inSpotlight){
             this.selectedColor = 'color-sunshine'
-            this.imgColor = 'color-charcoal';
+            this.imgColor = 'color-charcoal'
         }else{
-            this.imgColor = 'color-offwhite';
+            this.imgColor = 'color-offwhite'
             this.selectedColor = 'color-offwhite'
         }
+    }
+
+    readingListRow(){
+        let parentEl = this.element
+        while(!parentEl.classList.contains('js-reading-item')){
+            parentEl = parentEl.parentElement
+        }
+        return parentEl
     }
 
     saved(){
@@ -202,6 +227,10 @@ class SaveButton{
     }
 
     notSaved(){
+        if(this.inReadingList){
+            this.readingListRow().remove()
+            return
+        }
         if(this.inSummary || this.inSpotlight || this.inFeaturedTopics){
             if(this.imageEl.classList.contains(this.selectedColor)){
                 this.imageEl.classList.remove(this.selectedColor)
@@ -214,20 +243,42 @@ class SaveButton{
         }
     }
 
+    updateUI(data){
+        if(data.data.saved){
+            this.saved()
+        }else{
+            this.notSaved()
+        }
+    }
+
     async update(){
         const req = new JSONRequestManager(this.url, { method: "POST" })
          try{
             console.log(this)
-            const res = await req.afetch()
-            const data = await res.json()
+            const data = await req.afetch()
             if(data.data.saved){
                 this.saved()
             }else{
                 this.notSaved()
             }
+            return data;
          }catch(err){
              console.log(err)
          }
+    }
+
+    async updateAll(){
+        const duplicateElements = [].slice.call(document.querySelectorAll(`#save-topic-${this.topicId}`));
+        const dupObjects = duplicateElements.map((el) => SaveButton.newFromElement(el));
+        if(dupObjects.length === 1){
+            dupObjects[0].update()
+        }else{
+            let data = await dupObjects[0].update()
+            let btns = dupObjects.slice(1)
+            for(let btn of btns){
+                btn.updateUI(data)
+            }
+        }
     }
 
 }
@@ -276,7 +327,7 @@ const attachResponseEventListeners = () => {
         }else if(isSaveButton(target)){
             e.preventDefault();
             const btn = SaveButton.newFromElement(target);
-            btn.update();
+            btn.updateAll();
         }
     });
 

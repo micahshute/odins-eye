@@ -38,11 +38,12 @@ class JSONRequestManager{
     }
 
     async afetch(){
-        return await fetch(this.url, {
+        const res = await fetch(this.url, {
             method: this.method,
             body: this.body,
             headers: this.headers
         });
+        return await res.json()
     }
 
     async send(suc, err){ 
