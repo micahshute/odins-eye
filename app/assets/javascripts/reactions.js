@@ -315,6 +315,7 @@ const attachResponseEventListeners = () => {
                     reactions.update(data.data)
                 }else if(data.reactableType === "Topic"){
                     let reactions = new TopicReactions(data.reactableId)
+                    console.log(data)
                     reactions.update(data.data)
                 }else{
                     console.log("REACTABLE TYPE ERROR")
