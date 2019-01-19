@@ -254,7 +254,6 @@ class SaveButton{
     async update(){
         const req = new JSONRequestManager(this.url, { method: "POST" })
          try{
-            console.log(this)
             const data = await req.afetch()
             if(data.data.saved){
                 this.saved()
