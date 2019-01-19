@@ -173,17 +173,23 @@ class SaveButton{
         this.element = document.querySelector(`#save-topic-${topicId}`);
         this.url = this.element.getAttribute('href');
         this.imageEl = this.element.children[0]
-        this.imgColor = 'color-offwhite';
         this.inSummary = this.element.parentElement.classList.contains('js-summary-reaction-parent')
-        if(this.inSummary){
+        this.inSpotlight = this.element.parentElement.classList.contains('spotlight-container');
+        this.inFeaturedTopics = this.element.parentElement.classList.contains('js-tag-spotlight');
+        if(this.inSummary || this.inFeaturedTopics){
             this.selectedColor = 'color-aqua';
+            this.imgColor = 'color-charcoal';
+        }else if (this.inSpotlight){
+            this.selectedColor = 'color-sunshine'
+            this.imgColor = 'color-charcoal';
         }else{
+            this.imgColor = 'color-offwhite';
             this.selectedColor = 'color-offwhite'
         }
     }
 
     saved(){
-        if(this.inSummary){
+        if(this.inSummary || this.inSpotlight || this.inFeaturedTopics){
             if(this.imageEl.classList.contains(this.imgColor)){
                 this.imageEl.classList.remove(this.imgColor)
                 this.imageEl.classList.add(this.selectedColor)
@@ -196,7 +202,7 @@ class SaveButton{
     }
 
     notSaved(){
-        if(this.inSummary){
+        if(this.inSummary || this.inSpotlight || this.inFeaturedTopics){
             if(this.imageEl.classList.contains(this.selectedColor)){
                 this.imageEl.classList.remove(this.selectedColor)
                 this.imageEl.classList.add(this.imgColor)
@@ -211,6 +217,7 @@ class SaveButton{
     async update(){
         const req = new JSONRequestManager(this.url, { method: "POST" })
          try{
+            console.log(this)
             const res = await req.afetch()
             const data = await res.json()
             if(data.data.saved){

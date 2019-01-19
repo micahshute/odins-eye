@@ -15,7 +15,7 @@
     </div>
 
     <div class="p-3 p-md-5 text-white rounded bg-lavender">
-    <div class="col-md-6 px-0">
+    <div class="col-md-6 px-0 spotlight-container">
         <%= save_topic_button(@spotlight, "sunshine") if logged_in?%>
         <h5 class="color-sunshine">Spotlight Topic: </h5>
         <h1 class="display-4 font-italic"><%= @spotlight.title %></h1>
@@ -27,7 +27,7 @@
     <div class="row mb-2">
     <div class="col-md-6">
         <div class="card flex-md-row mb-4 shadow-sm h-md-250 top-space bg-offwhite">
-            <div class="card-body d-flex flex-column align-items-start">
+            <div class="card-body d-flex flex-column align-items-start js-tag-spotlight">
                 <strong class="d-inline-block mb-2 standard-text color-dusty-rose"><%= @popular_posts_by_tag.keys.first.name%></strong>
                 <h3 class="mb-0">
                 <a class="text-dark" href="<%= topic_path(@popular_posts_by_tag.values.first)%>"><%= @popular_posts_by_tag.values.first.title %></a>
@@ -42,7 +42,7 @@
     </div>
     <div class="col-md-6">
         <div class="card flex-md-row mb-4 shadow-sm h-md-250 top-space bg-offwhite">
-            <div class="card-body d-flex flex-column align-items-start">
+            <div class="card-body d-flex flex-column align-items-start js-tag-spotlight">
                 <strong class="d-inline-block mb-2 standard-text color-sunshine"><%= @popular_posts_by_tag.keys.last.name%></strong>
                 <h3 class="mb-0">
                 <a class="text-dark" href="<%= topic_path(@popular_posts_by_tag.values.last)%>"><%= @popular_posts_by_tag.values.last.title %></a>
@@ -114,6 +114,7 @@
     </div><!-- /.row -->
 
 </main><!-- /.container -->
+<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
 
 <footer class="blog-footer">
     <p><%= (link_to("Sign up", signup_path) + " to contribute to the community!") unless logged_in? %></p>
