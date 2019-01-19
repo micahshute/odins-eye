@@ -85,10 +85,25 @@ class UsersController < ApplicationController
                 else
                     user.save_topic(topic)
                 end
-                redirect_to request.referer
+                respond_to do |f|
+                    f.html { redirect_to request.referer }
+                    f.json { 
+                        resp =  {
+                                topicId: topic.id,
+                                data: {
+                                    saved: user.topic_saved?(topic)
+                                }
+                            }
+                        render json: JSON.generate(resp), status: 201
+                    }
+                end
+                
             else
                 flash[:danger] = "There was a problem saving this post, please contact a system Admin"
-                redirect_to request.referer
+                respond_to do |f| 
+                    f.html { redirect_to request.referer }
+                    f.json { render json: JSON.generate({error: "Could not find post"}), status: 201 }
+                end
             end
         end
     end

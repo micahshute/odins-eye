@@ -1,1 +1,1 @@
-<a class="save-button <%= size_class %>" href="<%= create_reading_list_path(topic.id) %>" data-method="post" ><i class="material-icons color-<%= current_user.topic_saved?(topic) ? saved_color : img_color %>">save</i></a>
+<a id="save-topic-<%= topic.id%>" class="save-button <%= size_class %>" href="<%= create_reading_list_path(topic.id) %>" ><i class="material-icons color-<%= current_user.topic_saved?(topic) ? saved_color : img_color %>">save</i></a>

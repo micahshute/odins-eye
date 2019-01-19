@@ -1,16 +1,16 @@
 <% if logged_in? %>
     <div class="row">
         <div class="col-sm-3">
-            <p class="inline"><%= genius(topic) %></p>
+            <p class="inline js-summary-reaction-parent"><%= genius(topic) %></p>
         </div>
         <div class="col-sm-3">
-            <p class="inline"><%= likes(topic) %></p>
+            <p class="inline js-summary-reaction-parent"><%= likes(topic) %></p>
         </div>
         <div class="col-sm-3">
-            <p class="inline"><%= dislikes(topic) %></p>
+            <p class="inline js-summary-reaction-parent"><%= dislikes(topic) %></p>
         </div>
         <div class="col-sm-3">
-            <p class="inline"><%= save_topic_button(topic) %></p>
+            <p class="inline js-summary-reaction-parent"><%= save_topic_button(topic) %></p>
         </div>
     </div>
 <% else %>

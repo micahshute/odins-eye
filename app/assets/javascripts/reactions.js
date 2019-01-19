@@ -159,6 +159,72 @@ class TopicReactions extends Reactions{
 
 }
 
+class SaveButton{
+
+    static newFromElement(element){
+        const idString = element.id;
+        const idComponents = idString.split('-');
+        const id = idComponents[idComponents.length - 1]
+        return new SaveButton(id)
+    }
+
+    constructor(topicId){
+        this.topicId = topicId;
+        this.element = document.querySelector(`#save-topic-${topicId}`);
+        this.url = this.element.getAttribute('href');
+        this.imageEl = this.element.children[0]
+        this.imgColor = 'color-offwhite';
+        this.inSummary = this.element.parentElement.classList.contains('js-summary-reaction-parent')
+        if(this.inSummary){
+            this.selectedColor = 'color-aqua';
+        }else{
+            this.selectedColor = 'color-offwhite'
+        }
+    }
+
+    saved(){
+        if(this.inSummary){
+            if(this.imageEl.classList.contains(this.imgColor)){
+                this.imageEl.classList.remove(this.imgColor)
+                this.imageEl.classList.add(this.selectedColor)
+            }
+        }else{
+            if(!this.element.classList.contains('topic-option-selected')){
+                this.element.classList.add('topic-option-selected')
+            }
+        }
+    }
+
+    notSaved(){
+        if(this.inSummary){
+            if(this.imageEl.classList.contains(this.selectedColor)){
+                this.imageEl.classList.remove(this.selectedColor)
+                this.imageEl.classList.add(this.imgColor)
+            }
+        }else{
+            if(this.element.classList.contains('topic-option-selected')){
+                this.element.classList.remove('topic-option-selected')
+            }
+        }
+    }
+
+    async update(){
+        const req = new JSONRequestManager(this.url, { method: "POST" })
+         try{
+            const res = await req.afetch()
+            const data = await res.json()
+            if(data.data.saved){
+                this.saved()
+            }else{
+                this.notSaved()
+            }
+         }catch(err){
+             console.log(err)
+         }
+    }
+
+}
+
 
 function getParentLink(e){
     let target = e.target;
@@ -172,9 +238,14 @@ function isReactionLink(el){
     return ((el.tagName === "A") && el.classList.contains("reaction"))
 }
 
+function isSaveButton(el){
+    return (el.tagName === "A") && el.classList.contains('save-button')
+}
+
+
+
 const attachResponseEventListeners = () => {
-    const reactionLinks = document.querySelectorAll('a.reaction');
-        document.addEventListener('click', function(e){
+    document.addEventListener('click', function(e){
         const target = getParentLink(e)
         if(isReactionLink(target)){
             e.preventDefault();
@@ -183,12 +254,9 @@ const attachResponseEventListeners = () => {
             jsonReq.comm()
             .success(function(data){
                 if(data.reactableType === "Post"){
-                    console.log(data.data)
                     let reactions = new PostReactions(data.reactableId)
-                    console.log(reactions)
                     reactions.update(data.data)
                 }else if(data.reactableType === "Topic"){
-                    console.log(data)
                     let reactions = new TopicReactions(data.reactableId)
                     reactions.update(data.data)
                 }else{
@@ -198,6 +266,12 @@ const attachResponseEventListeners = () => {
             .error(function(error){
                 console.log(error)
             })
+        }else if(isSaveButton(target)){
+            e.preventDefault();
+            const btn = SaveButton.newFromElement(target);
+            btn.update();
         }
-    })
+    });
+
+    
 }
