@@ -50,12 +50,24 @@ class FollowUserButton{
     async toggle(){
         if(this.selected){
             this.unFollow()
+            this.selected = false
         }else{
             this.follow()
+            this.selected = true
         }
         const req = new JSONRequestManager(this.url, { method: "POST"})
         const data = await req.afetch();
-        this.updateUI(data.data)
+        if(!!data.error){
+            this.selected ? this.unFollow() : this.follow()
+            const flashMessage = new FlashMessage('danger', 'You cannot follow yourself')
+            const flashTemplate = HandlebarsTemplates['flash_message'](flashMessage)
+            const contentDiv = document.querySelector('#flash-message')
+            contentDiv.innerHTML = flashTemplate
+            
+        }else{
+            this.updateUI(data.data)
+        }
+        
     }
 
 }

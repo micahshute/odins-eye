@@ -62,7 +62,7 @@ class UsersController < ApplicationController
             auth_user = current_user
             user_to_follow = User.find(params[:id])
             if auth_user == user_to_follow
-                flash[:danger] = "You cannot follow yourself"
+                # flash[:danger] = "You cannot follow yourself"
                 respond_to do |f|
                     f.html { redirect_to last_page }
                     f.json { 
