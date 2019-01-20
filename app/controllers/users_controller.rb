@@ -63,20 +63,53 @@ class UsersController < ApplicationController
             user_to_follow = User.find(params[:id])
             if auth_user == user_to_follow
                 flash[:danger] = "You cannot follow yourself"
-                redirect_to last_page
+                respond_to do |f|
+                    f.html { redirect_to last_page }
+                    f.json { 
+                        res = {
+                            error: "You cannot follow yourself",
+                            data: {}
+                        }
+                        render json: JSON.generate(res)
+                    }
+                end
+
             elsif auth_user.following?(user_to_follow)
                 user_to_follow.followers.delete(auth_user)
-                redirect_to last_page
+                respond_to do |f|
+                    f.html { redirect_to last_page }
+                    f.json {
+                        res = {
+                            error: nil,
+                            data: {
+                                following: false
+                            }
+                        }
+                        render json: JSON.generate(res)
+                    }
+                end
             else
                 auth_user.follow(user_to_follow)
                 create_notification(user_to_follow, "#{auth_user.name} is following you!")
-                redirect_to last_page
+                respond_to do |f|
+                    f.html { redirect_to last_page }
+                    f.json {
+                        res = {
+                            error: nil,
+                            data: {
+                                following: true
+                            }
+                        }
+                        render json: JSON.generate(res)
+                    }
+                end
             end
         end
     end
 
 
     def reading_list_create
+
         if authorize
             user = current_user
             if(topic = Topic.find(params[:topic_id]))

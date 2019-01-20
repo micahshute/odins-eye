@@ -5,11 +5,26 @@ document.addEventListener('DOMContentLoaded', function(){
 
 class Reactions{
 
+    static isReactionLink(el){
+        return ((el.tagName === "A") && el.classList.contains("reaction"))
+    }
+
     constructor(reactableId, reactableType){
         this.reactableId = reactableId;
         this.reactableType = reactableType;
     }
 
+    get likes(){
+        return parseInt(this.reactionElements[1].children[1].textContent)
+    }
+
+    get dislikes(){
+        return parseInt(this.reactionElements[2].children[1].textContent)
+    }
+
+    get geniuses(){
+        return parseInt(this.reactionElements[0].children[1].textContent)
+    }
 
     update(dataset){
         for(let data of dataset){
@@ -60,6 +75,37 @@ class Reactions{
         this.reactionElements[0].childNodes[1].textContent = "  " + count;
     }
 
+    toggleUI(target){
+        if(target === this.reactionElements[0]){
+            if(this.geniused){
+                this.removeGenius()
+                this.updateGeniusCount(this.geniuses - 1)
+            }else{
+                this.genius()
+                this.updateGeniusCount(this.geniuses + 1)
+                this.removeDislike()
+            }
+        }else if(target === this.reactionElements[1]){
+            if(this.liked){
+                this.removeLike()
+                this.updateLikeCount(this.likes - 1)
+            }else{
+                this.like()
+                this.updateLikeCount(this.likes + 1)
+                this.removeDislike()
+            }
+        }else if(target === this.reactionElements[2]){
+            if(this.disliked){
+                this.removeDislike()
+                this.updateDislikeCount(this.dislikes - 1)
+            }else{
+                this.dislike()
+                this.updateDislikeCount(this.dislikes + 1)
+                this.removeLike()
+                this.removeGenius()
+            }
+        }
+    }
 }
 
 class PostReactions extends Reactions{
@@ -68,6 +114,18 @@ class PostReactions extends Reactions{
         super(postId, "Post");
         this.postId = this.reactableId;
         this.reactionElements = document.querySelector(`#post-reactions-${this.postId}`).children;
+    }
+
+    get liked(){
+        return this.reactionElements[1].childNodes[0].classList.contains('color-aqua')
+    }
+
+    get disliked(){
+        return this.reactionElements[0].childNodes[0].classList.contains('color-charcoal')
+    }
+
+    get geniused(){
+        return this.reactionElements[0].childNodes[0].classList.contains('color-aqua')
     }
 
     like(){ 
@@ -119,6 +177,18 @@ class TopicReactions extends Reactions{
         super(topicId, "Topic")
         this.topicId = topicId
         this.reactionElements = document.querySelector(`#topic-reactions-${this.topicId}`).children;
+    }
+
+    get liked(){
+        return this.reactionElements[1].classList.contains('topic-option-selected')
+    }
+
+    get disliked(){
+        return this.reactionElements[2].classList.contains('topic-option-selected')
+    }
+
+    get geniused(){
+        return this.reactionElements[0].classList.contains('topic-option-selected')
     }
 
     like(){ 
@@ -184,6 +254,10 @@ class SaveButton{
         return btn;
     }
 
+    static isSaveButton(el){
+        return (el.tagName === "A") && el.classList.contains('save-button')
+    }
+
     constructor(topicId){
         this.topicId = topicId;
         this.element = document.querySelector(`#save-topic-${topicId}`);
@@ -202,6 +276,22 @@ class SaveButton{
         }else{
             this.imgColor = 'color-offwhite'
             this.selectedColor = 'color-offwhite'
+        }
+    }
+
+    get selected(){
+        if(this.inSummary || this.inSpotlight || this.inFeaturedTopics){
+            if(this.imageEl.classList.contains(this.imgColor)){
+                return false
+            }else{
+                return true
+            }
+        }else{
+            if(this.element.classList.contains('topic-option-selected')){
+                return true
+            }else{
+                return false
+            }
         }
     }
 
@@ -251,7 +341,16 @@ class SaveButton{
         }
     }
 
+    toggleUI(){
+        if(this.selected){
+            this.notSaved()
+        }else{
+            this.saved()
+        }
+    }
+
     async update(){
+        this.toggleUI();
         const req = new JSONRequestManager(this.url, { method: "POST" })
          try{
             const data = await req.afetch()
@@ -270,8 +369,10 @@ class SaveButton{
         const duplicateElements = [].slice.call(document.querySelectorAll(`#save-topic-${this.topicId}`));
         const dupObjects = duplicateElements.map((el) => SaveButton.newFromElement(el));
         if(dupObjects.length === 1){
+            dupObjects[0].toggleUI()
             dupObjects[0].update()
         }else{
+            dupObjects[0].toggleUI()
             let data = await dupObjects[0].update()
             let btns = dupObjects.slice(1)
             for(let btn of btns){
@@ -283,29 +384,22 @@ class SaveButton{
 }
 
 
-function getParentLink(e){
-    let target = e.target;
-    if(target.tagName !== "A" && target.parentElement.tagName === "A"){
-        target = target.parentElement;
-    }
-    return target;
-}
-
-function isReactionLink(el){
-    return ((el.tagName === "A") && el.classList.contains("reaction"))
-}
-
-function isSaveButton(el){
-    return (el.tagName === "A") && el.classList.contains('save-button')
-}
-
-
 
 const attachResponseEventListeners = () => {
     document.addEventListener('click', function(e){
-        const target = getParentLink(e)
-        if(isReactionLink(target)){
+        const target = ElementFunctions.getParentLinkFromClick(e)
+        if(Reactions.isReactionLink(target)){
             e.preventDefault();
+            const encasingDiv = ElementFunctions.getParentOfType(target, "div");
+            const reactableType = encasingDiv.id.split('-')[0]
+            const reactableId = encasingDiv.id.split('-')[2]
+            if(reactableType === "post"){
+                let reactions = new PostReactions(reactableId)
+                reactions.toggleUI(target)
+            }else if(reactableType === "topic"){
+                let reactions = new TopicReactions(reactableId)
+                reactions.toggleUI(target)
+            }
             const url = target.getAttribute("href");
             const jsonReq = new JSONRequestManager(url, { method: "POST"});
             jsonReq.comm()
@@ -315,7 +409,6 @@ const attachResponseEventListeners = () => {
                     reactions.update(data.data)
                 }else if(data.reactableType === "Topic"){
                     let reactions = new TopicReactions(data.reactableId)
-                    console.log(data)
                     reactions.update(data.data)
                 }else{
                     console.log("REACTABLE TYPE ERROR")
@@ -324,7 +417,7 @@ const attachResponseEventListeners = () => {
             .error(function(error){
                 console.log(error)
             })
-        }else if(isSaveButton(target)){
+        }else if(SaveButton.isSaveButton(target)){
             e.preventDefault();
             const btn = SaveButton.newFromElement(target);
             btn.updateAll();

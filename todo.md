@@ -20,3 +20,4 @@
 - [ ] Add javascript for signup validations
   - [ ] Turn green for correct
   - [ ] Turn red/show inaccuracies for bad input
+- [x] Add javascript logic for instant change to reactions (for likes, dislikes, and genius). Add change before ajax return
