@@ -25,7 +25,7 @@
 
         
         
-        <div class="row bottom-padding-md" id="js-topic-<%=@topic.id %>-reply-container">
+        <div class="row bottom-padding-md" id="js-topic-<%=@topic.id %>-reply-button">
             <div class="col-sm-12">
                 <%= render('topics/reply_button', topic: @topic) if (logged_in? and @post.nil?) %>
                 <%= render('topics/add_post', post: @post) if (logged_in? and !@post.nil? )%>

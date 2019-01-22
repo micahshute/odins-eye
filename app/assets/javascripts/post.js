@@ -17,19 +17,41 @@ class Post{
         return document.querySelector(`#post-${this.id}`)
     }
 
-    get container(){
+    get newTopicContainer(){
+        return document.querySelector(`#js-${this.postable.type}-${this.postable.id}-reply-button`)
+    }
+
+    get newPostContainer(){
         return document.querySelector(`#js-${this.postable.type}-${this.postable.id}-reply-container`)
     }
 
+    get editedContainer(){
+        return document.querySelector(`#js-post-${this.id}-reply-container`)
+    }
+
     replaceForm(){
-        let container = this.container
+        // the new form will replace the post itself
+        let container 
+        if(this.edited){
+            container = this.editedContainer
+        }else{
+            container = this.postable.type === "post" ? this.newPostContainer : this.newTopicContainer
+        }
+        // the id of the form will say if it is a new or edited post. This will determine whether
+        // we need to replace the topic reply button (below). In every case the post will replace the form
+        let form = ElementFunctions.getChildWithType(container, 'form')
+        let editPost = form && (form.id === "edit-post")
         container.innerHTML = this.html
         container.className = "row"
         container.removeAttribute("id")
         container.insertAdjacentHTML('afterend', `<div id="js-post-${this.id}-reply-container"></div>`)
-        if(this.postable.type === "topic"){
+        if(this.postable.type === "topic" && !editPost){
             this.replaceReplyButton()
         }
+        if(this.postable.type === "post" && !editPost){
+            container.insertAdjacentHTML('beforebegin', `<div id="js-post-${this.postable.id}-reply-container"></div>`)
+        }
+
     }
 
     replaceReplyButton(){

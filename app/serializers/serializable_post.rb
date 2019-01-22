@@ -11,6 +11,10 @@ class SerializablePost < JSONAPI::Serializable::Resource
         ActionController::Base.helpers.sanitize(markdown, tags:  Loofah::HTML5::WhiteList::ALLOWED_ELEMENTS_WITH_LIBXML2.to_a + %w(table th td tr span), attibutes: Loofah::HTML5::WhiteList::ALLOWED_ATTRIBUTES + %w( style ))
     end
 
+    attribute :markdown_content do 
+        @object.content
+    end
+
     attribute :postable do 
         type = @object.postable.class.to_s.downcase
         id = @object.postable.id

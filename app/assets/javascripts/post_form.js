@@ -1,21 +1,25 @@
 class PostForm{
 
-    static newFromReplyButton(btn){
+    static newFromButton(btn){
         const url = btn.getAttribute('href')
-        console.log(url)
         const form = PostForm.newFromUrl(url)
         form.new = btn.classList.contains("reply-button")
-        if(form.postableType === "post"){
-            const container = ElementFunctions.getParentWithClass(btn, 'post-container')
-            form.nestedPostReply = !!container.parentElement.previousElementSibling && container.parentElement.previousElementSibling.classList.contains('col-sm-1')
-            if(form.nestedPostReply){
-                const userLink = ElementFunctions.getChildWithType(container, "a")
-                const userName = userLink.textContent
-                const userId = userLink.getAttribute('href').split('/')[userLink.getAttribute('href').split('/').length - 1]
-                const user = new User(userId, userName)
-                form.user = user
-                form.content = `[${form.user.name}](${form.user.path})`
-            } 
+        const container = ElementFunctions.getParentWithClass(btn, 'post-container')
+        if(!form.new){
+            form.id = container.id.split('-')[1]
+            form.getContent()
+        }else{
+            if(form.postableType === "post"){     
+                form.nestedPostReply = !!container.parentElement.previousElementSibling && container.parentElement.previousElementSibling.classList.contains('col-sm-1')
+                if(form.nestedPostReply && form.new){
+                    const userLink = ElementFunctions.getChildWithType(container, "a")
+                    const userName = userLink.textContent
+                    const userId = userLink.getAttribute('href').split('/')[userLink.getAttribute('href').split('/').length - 1]
+                    const user = new User(userId, userName)
+                    form.user = user
+                    form.content = `[${form.user.name}](${form.user.path})`
+                } 
+            }
         }
         return form
     }
@@ -45,6 +49,21 @@ class PostForm{
         this.method = data.newPost ? "post" : "patch"
         this.type = data.newPost ? "new" : "edit"
         this.submitButton = data.newPost ? "Add Post" : "Update"
+    }
+
+    getContent(){
+        const req = new JSONRequestManager(`/posts/${this.id}`)
+        req.comm()
+        .success(data => {
+            console.log(data)
+            this.content = data.data.attributes.markdown_content
+            this.display()
+        })
+        .error(err => {
+            this.content = data.data.errors
+            this.display()
+        })
+        
     }
 
     get newUrl(){
@@ -79,17 +98,29 @@ class PostForm{
 
     display(){
         let replyContainer
-        if(this.postableType === "topic"){
-            replyContainer = document.querySelector(`#js-topic-${this.postableId}-reply-container`)
-            replyContainer.className = ""
-            
+        if(this.new){
+            if(this.postableType === "topic"){
+                //form for replying to a topic will replace the Topic reply button
+                replyContainer = document.querySelector(`#js-topic-${this.postableId}-reply-button`)
+                replyContainer.className = ""   
+            }else{
+                //for for replying to a post will go below the post in the reply container
+                replyContainer = document.querySelector(`#js-post-${this.postableId}-reply-container`)
+            }
         }else{
-            replyContainer = document.querySelector(`#js-post-${this.postableId}-reply-container`)
+            //when editing a post, the replyContainer will replace the post itself
+            replyContainer = document.querySelector(`#post-${this.id}`).parentElement.parentElement
+            //when editing the post, the empty reply container will create a duplicate id and must be deleted
+
+            let duplicate = document.querySelector(`#js-post-${this.id}-reply-container`)
+            if(!!duplicate) duplicate.remove()
+
+            replyContainer.id = `js-post-${this.id}-reply-container`
+            replyContainer.removeAttribute('class')
         }
+        
         this.authToken = document.querySelector('[name="authenticity_token"]').value
         replyContainer.innerHTML = this.htmlForm
-        this.positionPage()
     }
-
 
 }

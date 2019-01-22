@@ -11,7 +11,7 @@ function addReplyButtonEventListener(){
         const link = ElementFunctions.getParentLinkFromClick(e)
         if(isReplyButton(link)){
             e.preventDefault()
-            const form = PostForm.newFromReplyButton(link)
+            const form = PostForm.newFromButton(link)
             console.log(form)
             form.display()
         }

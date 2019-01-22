@@ -78,6 +78,10 @@ class PostsController < ApplicationController
         
     end
 
+    def show
+        @post = Post.find(params[:id])
+        render jsonapi: @post
+    end
 
 
     def edit
@@ -142,20 +146,40 @@ class PostsController < ApplicationController
             @topic = Topic.find(params[:topic_id])
             authorize_topic(@topic)
             if @post.update(post_params)
-                redirect_to topic_path(@topic)
+                respond_to do |f|
+                    f.html { redirect_to topic_path(@topic) }
+                    f.json { render jsonapi: @post, 
+                        include: [user: [:id, :name]]
+                    }
+                end
             else  
-                flash[:danger] = "#{post.user.name}, your post was too long"
-                render 'edit'
+                flash[:danger] = "#{post.user.name}, your post was too long"        
+                respond_to do |f|
+                    f.html { render 'edit' }
+                    f.json { render jsonapi: @post, 
+                        include: [user: [:id, :name]]
+                    }
+                end
             end
         elsif !!params[:post_id]
             @reply = post
             @post = Post.find(params[:post_id])
             authorize_topic(@post.topic)
             if @reply.update(post_params)
-                redirect_to topic_path(@post.topic)
+                respond_to do |f|
+                    f.html { redirect_to topic_path(@post.topic) }
+                    f.json { render jsonapi: @reply, 
+                        include: [user: [:id, :name]]
+                    }
+                end
             else
                 flash[:danger] = "#{post.user.name}, your post was too long"
-                render 'edit'
+                respond_to do |f|
+                    f.html { render 'edit' }
+                    f.json { render jsonapi: @reply, 
+                        include: [user: [:id, :name]]
+                    }
+                end
             end
         else
             not_found

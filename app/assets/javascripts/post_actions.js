@@ -20,10 +20,12 @@ function addPostActionEventListeners(){
         const link = ElementFunctions.getParentLinkFromClick(e)
         if(isEditButton(link)){
             e.preventDefault()
+            console.log(link)
+            let form = PostForm.newFromButton(link)
             let postContainer = ElementFunctions.getParentWithClass(link, 'post-container')
             console.log(postContainer)
             let id = postContainer.id.split('-')[1]
-            
+
         }else if(isDeleteButton(link)){
             e.preventDefault()
             console.log(`delete`)

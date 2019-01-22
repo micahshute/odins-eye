@@ -44,8 +44,10 @@ class ElementFunctions{
         let queue = [el]
         while(queue.length > 0){
             let child = queue.shift()
-            if(child.tagName === type.toUpperCase()) return child
-            queue = queue.concat([...child.children])
+            if(child){
+                if(child.tagName === type.toUpperCase()) return child
+                if(child.children.length > 0) queue = queue.concat([...child.children])
+            }
         }
         return null
     }

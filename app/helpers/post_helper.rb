@@ -10,6 +10,7 @@ module PostHelper
             reply_queue = reply_queue + curr_post.posts.to_a
         end
         harvested_posts
+        # harvested_posts.sort{ |a,b| b.created_at <=> a.created_at}
     end
 
     def reactions(post)
