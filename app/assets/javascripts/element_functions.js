@@ -30,5 +30,28 @@ class ElementFunctions{
         return parentEl
     }
 
+    static getChildWithClass(el, klass){
+        let queue = [el]
+        while(queue.length > 0){
+            let child = queue.shift()
+            if(child.classList.contains(klass)) return child
+            queue = queue.concat([...child.children])
+        }
+        return null
+    }
+
+    static getChildWithType(el, type){
+        let queue = [el]
+        while(queue.length > 0){
+            let child = queue.shift()
+            if(child.tagName === type.toUpperCase()) return child
+            queue = queue.concat([...child.children])
+        }
+        return null
+    }
+
+    static nodeListToArray(nodeList){
+        return [...nodeList]
+    }
 
 }

@@ -1,4 +1,4 @@
-{{#if nested_reply}}<div class="col-sm-1"></div>{{/if}}
+{{#if post_reply}}<div class="col-sm-1"></div>{{/if}}
 <div class="col-sm-11">
     <div class="markdown-holder bg-offwhite post-container" id="post-{{id}}">
         <p><a href="/users/{{author.id}}">{{author.name}}</a>
@@ -8,5 +8,5 @@
         {{> posts/_reactions}}
     </div>
 </div>
-{{#unless nested_reply}}<div class="col-sm-1"></div>{{/unless}}
+{{#unless post_reply}}<div class="col-sm-1"></div>{{/unless}}
 

@@ -32,8 +32,16 @@ class SerializablePost < JSONAPI::Serializable::Resource
         @object.updated_at > @object.created_at
     end
 
+    attribute :post_reply do 
+        @object.postable.class.to_s.downcase == "post" 
+    end
+
     attribute :nested_reply do 
-        @object.postable.class.to_s.downcase == "post" && @object.postable.postable.class.to_s.downcase == "post"
+        if (@object.postable.class.to_s.downcase == "post" && @object.postable.postable.class.to_s.downcase == "post")
+            { author: @object.postable.user.name, author_id: @object.postable.user.id }
+        else
+            false
+        end
     end
 
     

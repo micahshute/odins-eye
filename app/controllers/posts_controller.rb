@@ -17,6 +17,10 @@ class PostsController < ApplicationController
             @reply.postable = @post
             @reply.content = "[#{@post.user.name}](#{user_path(@post.user)})" unless @post.first_level_reply?
             render 'posts/show'
+            respond_to do |f|
+                f.html { render 'posts/show' }
+                f.json { render jsonapi: @post }
+            end
         else
             not_found
         end

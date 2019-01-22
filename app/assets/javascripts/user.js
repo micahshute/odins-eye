@@ -4,4 +4,8 @@ class User{
         this.id = id;
         this.name = name;
     }
+
+    get path(){
+        return `/users/${this.id}`
+    }
 }

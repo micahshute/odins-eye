@@ -1,5 +1,25 @@
 class PostForm{
 
+    static newFromReplyButton(btn){
+        const url = btn.getAttribute('href')
+        console.log(url)
+        const form = PostForm.newFromUrl(url)
+        form.new = btn.classList.contains("reply-button")
+        if(form.postableType === "post"){
+            const container = ElementFunctions.getParentWithClass(btn, 'post-container')
+            form.nestedPostReply = !!container.parentElement.previousElementSibling && container.parentElement.previousElementSibling.classList.contains('col-sm-1')
+            if(form.nestedPostReply){
+                const userLink = ElementFunctions.getChildWithType(container, "a")
+                const userName = userLink.textContent
+                const userId = userLink.getAttribute('href').split('/')[userLink.getAttribute('href').split('/').length - 1]
+                const user = new User(userId, userName)
+                form.user = user
+                form.content = `[${form.user.name}](${form.user.path})`
+            } 
+        }
+        return form
+    }
+
     static newFromUrl(url){
         const urlParts = url.split('/')
         const type = urlParts[urlParts.length - 1].split('#')[0]
@@ -16,6 +36,7 @@ class PostForm{
         return new PostForm(data)
     }
 
+
     constructor(data){
         this.postableType = data.postableType.toLowerCase()
         this.postableId = data.postableId
@@ -26,9 +47,17 @@ class PostForm{
         this.submitButton = data.newPost ? "Add Post" : "Update"
     }
 
-    get url(){
+    get newUrl(){
         let postscript = this.postableType === "topic" ? "posts" : "replies"
         return `/${this.postableType}s/${this.postableId}/${postscript}`
+    }
+
+    get editUrl(){
+        return `${this.newUrl}/${this.id}`
+    }
+
+    get url(){
+        return this.new ? this.newUrl : this.editUrl
     }
 
     set url(newURL){

@@ -2,7 +2,7 @@
 <% paths = Rails.application.routes.url_helpers %>
 
 <div class="row reaction-holder no-padding">
-    <div class="col-sm-4 no-padding" id="post-reactions-{{id}}">
+    <div class="col-sm-4 no-padding js-post-reactions" id="post-reactions-{{id}}">
         <a href="/posts/{{id}}/reactions/<%= ReactionType::ID[:genius] %>" class="reaction post-reaction"><i class="material-icons color-charcoal md-14">whatshot</i><small class="color-charcoal preview-text geniuses-count">  {{geniuses}}</small></a>
         <a href="/posts/{{id}}/reactions/<%= ReactionType::ID[:like] %>" class="reaction post-reaction"><i class="material-icons color-charcoal md-14">thumb_up</i><small class="color-charcoal preview-text likes-count">  {{likes}}</small></a>
         <a href="/posts/{{id}}/reactions/<%= ReactionType::ID[:dislike] %>" class="reaction post-reaction"><i class="material-icons color-charcoal md-14">thumb_down</i><small class="color-charcoal preview-text dislikes-count">  {{dislikes}}</small></a>
