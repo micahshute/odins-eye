@@ -25,32 +25,33 @@
 
         
         
-        <div class="row bottom-padding-md" id="js-topic-reply-container">
+        <div class="row bottom-padding-md" id="js-topic-<%=@topic.id %>-reply-container">
             <div class="col-sm-12">
                 <%= render('topics/reply_button', topic: @topic) if (logged_in? and @post.nil?) %>
                 <%= render('topics/add_post', post: @post) if (logged_in? and !@post.nil? )%>
             </div>
         </div>
-        
+
         <% @topic.ordered_posts.each do |post| %>
             <div class="row">
                 <div class="col-sm-11"> 
                     <%= render 'posts/post', post: post %>
-                    <div id="js-post-<%= post.id %>-reply-container"></div>
                 </div>
                 <div class="col-sm-1"></div>
             </div>
+            <div id="js-post-<%= post.id %>-reply-container"></div>
             <% retrieve_replies(post).each do |inner_post|%>
                 <div class="row">
-                <div class="col-sm-1"></div>
-                <div class="col-sm-11"> 
-                    <%= render 'posts/post', post: inner_post, inner?: true %>
-                    <div id="js-post-<%= inner_post.id %>-reply-container"></div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-11"> 
+                        <%= render 'posts/post', post: inner_post, inner?: true %>
+                    </div>
                 </div>
-            </div>
+                <div id="js-post-<%= inner_post.id %>-reply-container"></div>
+
             <% end %>
         <% end %>
-        
+
     </div>
     <div class="col-sm-1"></div>
 </div>

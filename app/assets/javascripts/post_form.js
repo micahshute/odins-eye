@@ -27,7 +27,8 @@ class PostForm{
     }
 
     get url(){
-        return `/${this.postableType}s/${this.postableId}/posts`
+        let postscript = this.postableType === "topic" ? "posts" : "replies"
+        return `/${this.postableType}s/${this.postableId}/${postscript}`
     }
 
     set url(newURL){
@@ -50,7 +51,7 @@ class PostForm{
     display(){
         let replyContainer
         if(this.postableType === "topic"){
-            replyContainer = document.querySelector('#js-topic-reply-container')
+            replyContainer = document.querySelector(`#js-topic-${this.postableId}-reply-container`)
             replyContainer.className = ""
             
         }else{

@@ -32,6 +32,10 @@ class SerializablePost < JSONAPI::Serializable::Resource
         @object.updated_at > @object.created_at
     end
 
+    attribute :nested_reply do 
+        @object.postable.class.to_s.downcase == "post" && @object.postable.postable.class.to_s.downcase == "post"
+    end
+
     
     def time_from_now(time)
         seconds = Time.now - time

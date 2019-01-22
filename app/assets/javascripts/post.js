@@ -18,15 +18,15 @@ class Post{
     }
 
     get container(){
-        return document.querySelector(`#js-${this.postable.type}-reply-container`)
+        return document.querySelector(`#js-${this.postable.type}-${this.postable.id}-reply-container`)
     }
 
     replaceForm(){
-        console.log(`${this.postable.type}, ${this.postable.id}`)
-        
-        this.container.innerHTML = this.html
-        this.container.className = "row"
-        this.container.removeAttribute("id")
+        let container = this.container
+        container.innerHTML = this.html
+        container.className = "row"
+        container.removeAttribute("id")
+        container.insertAdjacentHTML('afterend', `<div id="js-post-${this.id}-reply-container"></div>`)
         if(this.postable.type === "topic"){
             this.replaceReplyButton()
         }

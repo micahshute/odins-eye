@@ -37,7 +37,6 @@ class PostsController < ApplicationController
                     f.html { redirect_to topic_path(@topic) }
                     f.json { render jsonapi: @post, 
                         include: [user: [:id, :name]]
-
                     }
                 end
             else
@@ -56,25 +55,17 @@ class PostsController < ApplicationController
             @reply.user = current_user
             if @reply.save
                 Notification.create(user: @post.user, content: "<a href='#{user_path(@reply.user)}'>#{@reply.user.name}</a> responded to <a href='#{topic_path(@post.topic)}'>your post</a>")
-                redirect_to topic_path(@post.topic)
+                respond_to do |f|
+                    f.html { redirect_to topic_path(@topic) }
+                    f.json { render jsonapi: @reply, 
+                        include: [user: [:id, :name]]
+                    }
+                end
             else
                 flash[:danger] = "#{post.user.name}, your post was too long"
                 respond_to do |f|
                     f.html { render 'new' }
-                    f.json {
-                        data = {
-                            data: {
-                                postableType: "topic",
-                                postableId: @topic.id,
-                                errors: {
-                                    exist: false
-                                },
-                                content: nil,
-                                newPost: false
-                            }
-                        }
-                        render json: JSON.generate(data)
-                    }
+                    f.json { render jsonapi_errors: @post.errors }
                 end
             end
         else
