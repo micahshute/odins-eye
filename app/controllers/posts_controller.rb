@@ -32,11 +32,21 @@ class PostsController < ApplicationController
             @post.postable = @topic
             @post.user = current_user
             if @post.save
-                Notification.create(user: @topic.user, content: "<a href='#{user_path(@post.user)}'>#{@post.user.name}</a> responded to <a href='#{topic_path(@topic)}'>#{@topic.title}</a>")
-                redirect_to topic_path(@topic)
+                Notification.create(user: @topic.user, content: "<a href='#{user_path(@post.user)}'>#{@post.user.name}</a> responded to <a href='#{topic_path(@topic)}'>#{@topic.title}</a>")            
+                respond_to do |f|
+                    f.html { redirect_to topic_path(@topic) }
+                    f.json { render jsonapi: @post, 
+                        include: [user: [:id, :name]]
+
+                    }
+                end
             else
                 flash[:danger] = "#{post.user.name}, your post was too long"
-                render 'new'
+                respond_to do |f|
+                    f.html { render 'new' }
+                    f.json { render jsonapi_errors: @post.errors }
+                end
+                
             end
         elsif !!params[:post_id]
             @post = Post.find(params[:post_id])
@@ -49,7 +59,23 @@ class PostsController < ApplicationController
                 redirect_to topic_path(@post.topic)
             else
                 flash[:danger] = "#{post.user.name}, your post was too long"
-                render 'new'
+                respond_to do |f|
+                    f.html { render 'new' }
+                    f.json {
+                        data = {
+                            data: {
+                                postableType: "topic",
+                                postableId: @topic.id,
+                                errors: {
+                                    exist: false
+                                },
+                                content: nil,
+                                newPost: false
+                            }
+                        }
+                        render json: JSON.generate(data)
+                    }
+                end
             end
         else
             not_found
@@ -67,12 +93,44 @@ class PostsController < ApplicationController
             @post = post
             @topic = Topic.find(params[:topic_id])
             authorize_topic(@topic)
-            render 'topics/show'
+            respond_to do |f|
+                f.html { render 'topics/show' }
+                f.json {
+                    data = {
+                        data: {
+                            postableType: "topic",
+                            postableId: @topic.id,
+                            errors: {
+                                exist: false
+                            },
+                            content: nil,
+                            newPost: false
+                        }
+                    }
+                    render json: JSON.generate(data)
+                }
+            end
         elsif !!params[:post_id]
             @reply = post
             @post = Post.find(params[:post_id])
             authorize_topic(@post.topic)
-            render 'posts/show'
+            respond_to do |f|
+                f.html { render 'posts/show' }
+                f.json { 
+                    data = {
+                        data: {
+                            postableType: "post",
+                            postableId: @post.id,
+                            errors: {
+                                exist: false
+                            },
+                            content: nil,
+                            newPost: false
+                        }
+                    }
+                    render json: JSON.generate(data)
+                }
+            end
         else
             not_found
         end

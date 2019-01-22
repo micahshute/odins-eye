@@ -1,0 +1,18 @@
+<a name="post-anchor"></a>
+<div class="bottom-space-md">
+    <div class="row post-form-container">
+        <div class="col-sm-11 post-form-container" id="js-{{postableType}}-{{postableId}}-post">
+            <form class="{{type}}-post" id="{{type}}-post" action="{{url}}" method="{{method}}" onsubmit="submitPost(this);return false">
+                <input type="hidden" name="authenticity_token" value="{{authToken}}">
+                <div class="form-group post-field-container">
+                    <textarea name="post[content]" id="post_content" placeholder="Reply..." class="bg-offwhite form-control form-content-text">{{content}}</textarea>
+                </div>
+                {{#if errors.exist}}<p class="error-text small-text">{{errors.content}}</p>{{/if}}
+                <div class="form-group">
+                    <input class="btn btn-primary bg-lavender border-lavender btn-sm" type="submit" name="commit" value="{{submitButton}}">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

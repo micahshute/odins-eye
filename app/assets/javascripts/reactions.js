@@ -83,7 +83,11 @@ class Reactions{
             }else{
                 this.genius()
                 this.updateGeniusCount(this.geniuses + 1)
+                if(this.disliked){
+                    this.updateDislikeCount(this.dislikes - 1)
+                }
                 this.removeDislike()
+                
             }
         }else if(target === this.reactionElements[1]){
             if(this.liked){
@@ -92,7 +96,11 @@ class Reactions{
             }else{
                 this.like()
                 this.updateLikeCount(this.likes + 1)
+                if(this.disliked){
+                    this.updateDislikeCount(this.dislikes - 1)
+                }
                 this.removeDislike()
+                
             }
         }else if(target === this.reactionElements[2]){
             if(this.disliked){
@@ -101,8 +109,15 @@ class Reactions{
             }else{
                 this.dislike()
                 this.updateDislikeCount(this.dislikes + 1)
+                if(this.liked){
+                    this.updateLikeCount(this.likes - 1)
+                }
+                if(this.geniused){
+                    this.updateGeniusCount(this.geniuses - 1)
+                }
                 this.removeLike()
                 this.removeGenius()
+                
             }
         }
     }
@@ -121,7 +136,7 @@ class PostReactions extends Reactions{
     }
 
     get disliked(){
-        return this.reactionElements[0].childNodes[0].classList.contains('color-charcoal')
+        return this.reactionElements[2].childNodes[0].classList.contains('color-aqua')
     }
 
     get geniused(){

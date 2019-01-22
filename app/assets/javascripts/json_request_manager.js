@@ -1,7 +1,7 @@
 class JSONRequestManager{
 
 
-    constructor(url, { method = "GET", body = null, authToken = window._token } = {}){
+    constructor(url, { method = "GET", body = null, authToken = window._token, form = null } = {}){
         this.url = url;
         this.method = method.toUpperCase();
         if(body) this._body = JSON.stringify(body)
@@ -12,12 +12,17 @@ class JSONRequestManager{
         if(auth_elem){
             this.authToken = auth_elem.value;
         }
+        if(!!form){
+            this.formElement = form
+            this.form = new FormData(form)
+            this._body = this.form
+            this.contentType = null
+        }
     }
 
     get headers(){
         let headers = {
             "Accept": this.accepts,
-            "Content-Type": this.contentType,
             "credentials": "same-origin"
         }
         if(this.authToken){
@@ -25,6 +30,9 @@ class JSONRequestManager{
                 ...headers, 
                 "X-CSRF-Token": this.authToken
             }
+        }
+        if(this.contentType){
+            headers = {...headers, "Content-Type": this.contentType }
         }
         return headers;
     }
@@ -73,10 +81,9 @@ class JSONRequestManager{
     comm(){
         let res = fetch(this.url, {
             method: this.method,
-            body: this.body,
+            body: this._body,
             headers: this.headers
         });
-
         return {
             success: (cb) => { 
                 res.then((res) => res.json()).then(json => cb(json));

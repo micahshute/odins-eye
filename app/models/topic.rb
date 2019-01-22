@@ -180,6 +180,10 @@ class Topic < ApplicationRecord
 
     #MARK Instance Methods
 
+    def ordered_posts
+        posts.order(created_at: 'desc').includes(:user, posts: {reactions: :reaction_type})
+    end
+
     def update_views
         update(views: self.views + 1)
     end
