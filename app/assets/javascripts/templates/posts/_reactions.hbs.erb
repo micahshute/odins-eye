@@ -16,7 +16,7 @@
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <a class="dropdown-item" href="/{{postable.type}}s/{{postable.id}}/posts/{{id}}/edit">Edit</a>
-                <a class="dropdown-item" href="/{{postable.type}}s/{{postable.id}}/posts/{{id}}">Delete</a>
+                <a class="dropdown-item" href="/{{postable.type}}s/{{postable.id}}/{{#replyType}}{{data}}{{/replyType}}/{{id}}">Delete</a>
                 <a class="dropdown-item" href="/posts/{{id}}/reactions/4">Report</a>
             </div>
         </div>

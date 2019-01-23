@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-
+    include PostHelper
 
     def new
 
@@ -136,6 +136,24 @@ class PostsController < ApplicationController
 
     end
 
+    def index
+        @topic = Topic.find(params[:topic_id])
+        topic_posts = @topic.ordered_posts
+        @posts = []
+        topic_posts.each do |post|
+            @posts << post
+            nested_posts = retrieve_replies(post)
+            @posts.concat nested_posts
+        end
+        respond_to do |f|
+            f.json { render jsonapi: @posts,
+                include: [user: [:name, :id]],
+                fields: { users: [:id, :name]}
+            }
+        end
+
+    end
+
   
     def update
 
@@ -191,7 +209,10 @@ class PostsController < ApplicationController
         @post = Post.find(params[:id])
         authorize_post(@post)
         deleted = @post.destroy
-        redirect_to topic_path(deleted.topic)
+        respond_to do |f|
+            f.html { redirect_to topic_path(deleted.topic) }
+            f.json { render jsonapi: deleted }
+        end
     end
 
     private

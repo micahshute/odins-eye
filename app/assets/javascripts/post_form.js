@@ -89,12 +89,12 @@ class PostForm{
         return HandlebarsTemplates['post_form'](this)
     }
 
-    positionPage(){
-        let h = 'post-anchor'
-        let url = location.href;               
-        location.href = "#"+h;                
-        history.replaceState(null,null,url);   
-    }
+    // positionPage(){
+    //     let h = 'post-anchor'
+    //     let url = location.href;               
+    //     location.href = "#"+h;                
+    //     history.replaceState(null,null,url);   
+    // }
 
     display(){
         let replyContainer

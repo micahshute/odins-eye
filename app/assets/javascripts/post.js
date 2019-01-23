@@ -4,13 +4,31 @@ class Post{
         for(let attr in data.data.attributes){
             this[attr] = data.data.attributes[attr]
         }
-        
-        const userAttributes = data.included[0].attributes
+        let userAttributes
+        if(data.included.length > 1){
+            const userId = data.data.relationships.user.data.id
+            const attributes = data.included
+            for(let att of attributes){
+                if(att.attributes.id === userId){
+                    userAttributes = att.attributes
+                }
+            }
+
+        }
+        userAttributes = data.included[0].attributes
         this.author = new User(userAttributes.id, userAttributes.name)
     }
 
     get html(){
         return HandlebarsTemplates['posts/post'](this)
+    }
+
+    get htmlInRow(){
+        return `<div class="row">${this.html}</div>`
+    }
+
+    get fullHtml(){
+        return `${this.htmlInRow}<div id="js-post-${this.id}-reply-container"></div>`
     }
 
     get element(){
@@ -54,6 +72,7 @@ class Post{
 
     }
 
+
     replaceReplyButton(){
         const topicEl = document.querySelector('.js-topic-container')
         const html = HandlebarsTemplates['posts/topic_reply_button']({id: this.postable.id})
@@ -62,6 +81,11 @@ class Post{
 
     render(){
         this.replaceForm()
+    }
+
+    displayAtBottom(){
+        const replyButton = document.querySelector('.topic-reply').parentElement.parentElement
+        replyButton.insertAdjacentHTML('afterend', this.fullHtml)
     }
 
 }

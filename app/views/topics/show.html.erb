@@ -3,8 +3,8 @@
 <div class="row">
     <%= topic_options(@topic) %>
 
-    <div class="col-sm-10 ">
-        <div class="markdown-holder bg-offwhite js-topic-container">
+    <div class="col-sm-10 js-topic-show-container">
+        <div class="markdown-holder bg-offwhite js-topic-container" id="js-topic-<%= @topic.id%>">
 
             <%= topic_report_dropdown(@topic) %>
 

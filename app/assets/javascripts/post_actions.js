@@ -21,16 +21,45 @@ function addPostActionEventListeners(){
         if(isEditButton(link)){
             e.preventDefault()
             console.log(link)
-            let form = PostForm.newFromButton(link)
-            let postContainer = ElementFunctions.getParentWithClass(link, 'post-container')
-            console.log(postContainer)
-            let id = postContainer.id.split('-')[1]
+            PostForm.newFromButton(link)
 
         }else if(isDeleteButton(link)){
             e.preventDefault()
-            console.log(`delete`)
             let postContainer = ElementFunctions.getParentWithClass(link, 'post-container')
-            console.log(postContainer)
+            let url = link.getAttribute('href')
+            let id = postContainer.id.split('-')[1]
+            let req = new JSONRequestManager(url, { method: 'delete' })
+            req.comm()
+            .success(data => {
+                let row = ElementFunctions.getParentWithClass(postContainer, 'row')
+                row.remove()
+                document.querySelector(`#js-post-${id}-reply-container`).remove()
+
+                //Get updated page info
+                let topicContainer = document.querySelector('.js-topic-container')
+                let topicId = topicContainer.id.split("-")[2]
+                const url = `/topics/${topicId}/posts`
+                let postReq = new JSONRequestManager(url)
+                postReq.comm()
+                .success(data => {
+                    const postArr = data.data
+                    console.log(data)
+                    const postObjects = postArr.map(postData => new Post({data: postData, included: data.included})).reverse()
+                    //delete all posts
+                    const objectsToRemove = [...topicContainer.parentElement.children].slice(2)
+                    console.log(objectsToRemove)
+                    for(let objToRem of objectsToRemove){
+                        objToRem.remove()
+                    }
+                    for(let postObject of postObjects){
+                        postObject.displayAtBottom()
+                    }
+                })
+                .error(e => {
+                    console.log(e)
+                })
+            })
+            .error(er => console.log(er))
         }else if(isReportButton(link)){
             e.preventDefault()
             console.log('report')
