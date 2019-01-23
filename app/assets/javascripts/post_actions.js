@@ -20,7 +20,6 @@ function addPostActionEventListeners(){
         const link = ElementFunctions.getParentLinkFromClick(e)
         if(isEditButton(link)){
             e.preventDefault()
-            console.log(link)
             PostForm.newFromButton(link)
 
         }else if(isDeleteButton(link)){
@@ -43,11 +42,9 @@ function addPostActionEventListeners(){
                 postReq.comm()
                 .success(data => {
                     const postArr = data.data
-                    console.log(data)
                     const postObjects = postArr.map(postData => new Post({data: postData, included: data.included})).reverse()
                     //delete all posts
                     const objectsToRemove = [...topicContainer.parentElement.children].slice(2)
-                    console.log(objectsToRemove)
                     for(let objToRem of objectsToRemove){
                         objToRem.remove()
                     }
@@ -56,15 +53,37 @@ function addPostActionEventListeners(){
                     }
                 })
                 .error(e => {
-                    console.log(e)
+                    const flashMessage = new FlashMessage('danger', e)
+                    const flashTemplate = HandlebarsTemplates['flash_message'](flashMessage)
+                    const contentDiv = document.querySelector('#flash-message')
+                    contentDiv.innerHTML = flashTemplate
                 })
             })
-            .error(er => console.log(er))
+            .error(er => {
+                const flashMessage = new FlashMessage('danger', er)
+                const flashTemplate = HandlebarsTemplates['flash_message'](flashMessage)
+                const contentDiv = document.querySelector('#flash-message')
+                contentDiv.innerHTML = flashTemplate
+            })
         }else if(isReportButton(link)){
             e.preventDefault()
             console.log('report')
             let postContainer = ElementFunctions.getParentWithClass(link, 'post-container')
-            console.log(postContainer)
+            const url = link.getAttribute('href')
+            const req = new JSONRequestManager(url, { method: 'post'})
+            req.comm()
+            .success(data => {
+                const flashMessage = new FlashMessage('success', "Your report has been sent")
+                const flashTemplate = HandlebarsTemplates['flash_message'](flashMessage)
+                const contentDiv = document.querySelector('#flash-message')
+                contentDiv.innerHTML = flashTemplate
+            })
+            .error(err => {
+                const flashMessage = new FlashMessage('danger', 'Failed to send report')
+                const flashTemplate = HandlebarsTemplates['flash_message'](flashMessage)
+                const contentDiv = document.querySelector('#flash-message')
+                contentDiv.innerHTML = flashTemplate
+            })
         }
     })
 }

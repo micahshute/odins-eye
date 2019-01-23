@@ -32,6 +32,9 @@ function submitPost(e){
 
     })
     .error((err) => {
-        console.log(err)
+        const flashMessage = new FlashMessage('danger', err)
+        const flashTemplate = HandlebarsTemplates['flash_message'](flashMessage)
+        const contentDiv = document.querySelector('#flash-message')
+        contentDiv.innerHTML = flashTemplate
     })
 }

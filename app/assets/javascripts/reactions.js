@@ -45,7 +45,10 @@ class Reactions{
                     break;
                 
                 default:
-                    console.log("ERROR IN REACTIONTYPE");
+                const flashMessage = new FlashMessage('danger', 'Incorrect reaction type')
+                const flashTemplate = HandlebarsTemplates['flash_message'](flashMessage)
+                const contentDiv = document.querySelector('#flash-message')
+                contentDiv.innerHTML = flashTemplate
             }
     
         }
@@ -426,11 +429,17 @@ const attachResponseEventListeners = () => {
                     let reactions = new TopicReactions(data.reactableId)
                     reactions.update(data.data)
                 }else{
-                    console.log("REACTABLE TYPE ERROR")
+                    const flashMessage = new FlashMessage('danger', "Incorrect reaction type")
+                    const flashTemplate = HandlebarsTemplates['flash_message'](flashMessage)
+                    const contentDiv = document.querySelector('#flash-message')
+                    contentDiv.innerHTML = flashTemplate
                 }
             })
             .error(function(error){
-                console.log(error)
+                const flashMessage = new FlashMessage('danger', error)
+                const flashTemplate = HandlebarsTemplates['flash_message'](flashMessage)
+                const contentDiv = document.querySelector('#flash-message')
+                contentDiv.innerHTML = flashTemplate
             })
         }else if(SaveButton.isSaveButton(target)){
             e.preventDefault();

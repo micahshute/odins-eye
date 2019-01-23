@@ -60,8 +60,10 @@ class PostForm{
             this.display()
         })
         .error(err => {
-            this.content = data.data.errors
-            this.display()
+            const flashMessage = new FlashMessage('danger', err)
+            const flashTemplate = HandlebarsTemplates['flash_message'](flashMessage)
+            const contentDiv = document.querySelector('#flash-message')
+            contentDiv.innerHTML = flashTemplate
         })
         
     }
