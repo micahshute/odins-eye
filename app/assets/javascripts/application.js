@@ -18,4 +18,8 @@
 //= require bootstrap
 //= require handlebars
 //= require_tree .
+//= require_tree ./topics_posts
+//= require_tree ./login
+//= require_tree ./components
+//= require_tree ./http
 //= require_tree ./templates

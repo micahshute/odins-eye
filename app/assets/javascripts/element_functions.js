@@ -34,8 +34,8 @@ class ElementFunctions{
         let queue = [el]
         while(queue.length > 0){
             let child = queue.shift()
-            if(child.classList.contains(klass)) return child
-            queue = queue.concat([...child.children])
+            if(child.classList && child.classList.contains(klass)) return child
+            if(child.children && child.children.length > 0) queue = queue.concat([...child.children])
         }
         return null
     }
@@ -54,6 +54,23 @@ class ElementFunctions{
 
     static nodeListToArray(nodeList){
         return [...nodeList]
+    }
+
+    static getSiblingWithType(el, type){
+        return this.getChildWithType(el.parentElement, type)
+    }
+
+    static getSiblingWithClass(el, klass){
+        return this.getChildWithClass(el.parentElement, klass)
+    }
+
+    static toggleClasses({element, addClass, removeClass} = {}){
+        if(element.classList.contains(removeClass)){
+            element.classList.remove(removeClass)
+        }
+        if(!element.classList.contains(addClass)){
+            element.classList.add(addClass)
+        }
     }
 
 }

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 
+
   get 'signup' => 'users#new'
   post 'signup' => 'users#create'
 
@@ -16,6 +17,8 @@ Rails.application.routes.draw do
   post 'topics/:topic_id/save-for-later' => 'users#reading_list_create', as: "create_reading_list"
   get 'reading-list' => 'topics#reading_list', as: "reading_list"
 
+  
+  
   get 'posts/:post_id/replies' => "posts#index", as: "post_replies"
   get 'posts/:post_id/replies/new' => "posts#new", as: "new_post_reply"
   get 'posts/:post_id/replies/:id' => "posts#show", as: "post_reply"
@@ -75,6 +78,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:new, :create, :show]
 
+ 
   post 'users/:user_id/classrooms/:id/find_student' => 'classrooms#find_student', as: 'student_finder'
   get 'users/:user_id/classrooms/:id/students' => 'classrooms#students', as: 'classroom_students'
   delete 'classrooms/:classroom_id/student/:id' => 'classrooms#destroy_student', as: 'delete_classroom_student'
@@ -89,4 +93,7 @@ Rails.application.routes.draw do
   delete 'admin/users/:id' => 'admin#destroy_user', as: 'admin_delete_user'
   delete 'admin/posts/:id' => 'admin#destroy_post', as: 'admin_delete_post'
   delete 'admin/reports' => 'admin#destroy_reports', as: 'admin_destroy_reports'
+
+  post 'api/users/check-email' => 'api#check_email'
+  
 end

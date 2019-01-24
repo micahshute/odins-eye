@@ -1,17 +1,13 @@
 class JSONRequestManager{
 
 
-    constructor(url, { method = "GET", body = null, authToken = window._token, form = null } = {}){
+    constructor(url, { method = "GET", body = null, authToken = Rails.csrfToken(), form = null } = {}){
         this.url = url;
         this.method = method.toUpperCase();
         if(body) this._body = JSON.stringify(body)
         this.contentType = "application/json";
         this.accepts = 'application/json';
         this.authToken = authToken;
-        const auth_elem = document.querySelector('[name="authenticity_token"]');
-        if(auth_elem){
-            this.authToken = auth_elem.value;
-        }
         if(!!form){
             this.formElement = form
             this.form = new FormData(form)
@@ -22,8 +18,7 @@ class JSONRequestManager{
 
     get headers(){
         let headers = {
-            "Accept": this.accepts,
-            "credentials": "same-origin"
+            "Accept": this.accepts
         }
         if(this.authToken){
             headers = {
@@ -48,8 +43,9 @@ class JSONRequestManager{
     async afetch(){
         const res = await fetch(this.url, {
             method: this.method,
-            body: this.body,
-            headers: this.headers
+            body: this._body,
+            headers: this.headers,
+            credentials: "same-origin"
         });
         return await res.json()
     }
@@ -58,8 +54,9 @@ class JSONRequestManager{
         try{
             const res = await fetch(this.url, {
                     method: this.method,
-                    body: this.body,
-                    headers: this.headers
+                    body: this._body,
+                    headers: this.headers,
+                    credentials: "same-origin"
             });
             if(!suc) return res
             const data = await res.json();
@@ -70,11 +67,12 @@ class JSONRequestManager{
         }
     }
 
-    pFetch(){
+    pfetch(){
         return fetch(this.url, {
                 method: this.method,
-                body: this.body,
-                headers: this.headers
+                body: this._body,
+                headers: this.headers,
+                credentials: "same-origin"
         });
     }
 
@@ -82,7 +80,8 @@ class JSONRequestManager{
         let res = fetch(this.url, {
             method: this.method,
             body: this._body,
-            headers: this.headers
+            headers: this.headers,
+            credentials: "same-origin"
         });
         return {
             success: (cb) => { 
