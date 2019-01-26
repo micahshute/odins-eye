@@ -95,5 +95,10 @@ Rails.application.routes.draw do
   delete 'admin/reports' => 'admin#destroy_reports', as: 'admin_destroy_reports'
 
   post 'api/users/check-email' => 'api#check_email'
-  
+  get 'api/users/logged-in' => 'api#logged_in'
+  get 'api/users/current-user' => 'api#get_current_user'
+  get 'api/topics/recent' => 'api#most_recent_topics'
+  get 'api/users/current-user/reactions' => 'api#user_reactions'
+  get 'api/users/current-user/:reactable/:reactable_id/:reaction' => 'api#query_reacted_reactables'
+  get 'api/reactions/users/:user_id/:reactable/:reactable_id' => 'api#user_reactable_reaction'
 end

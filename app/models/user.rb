@@ -206,8 +206,20 @@ class User < ApplicationRecord
         has_reaction?(reactable, :like)
     end
 
+    def like?(reactable)
+        likes?(reactable)
+    end
+
     def dislikes?(reactable)
         has_reaction?(reactable, :dislike)
+    end
+
+    def dislike?(reactable)
+        dislikes?(reactable)
+    end
+
+    def genius?(reactable)
+        thinks_is_genius?(reactable)
     end
 
     def thinks_is_genius?(reactable)
@@ -220,6 +232,14 @@ class User < ApplicationRecord
 
     def topic_saved?(topic)
         self.saved_topics.include?(topic)
+    end
+
+    def saved?(topic)
+        self.saved_topics.include?(topic)
+    end
+
+    def save?(topic)
+        saved?(topic)
     end
 
     def save_topic(topic)
@@ -242,6 +262,7 @@ class User < ApplicationRecord
     def reports_for(reactable)
         reaction_for(reactable, :report)
     end
+
 
 
     #MARK Statistics

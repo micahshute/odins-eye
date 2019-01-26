@@ -12,7 +12,6 @@ function addReplyButtonEventListener(){
         if(isReplyButton(link)){
             e.preventDefault()
             const form = PostForm.newFromButton(link)
-            console.log(form)
             form.display()
         }
     })  
@@ -25,9 +24,7 @@ function submitPost(e){
     console.log(req)
     req.comm()
     .success((data) => {
-        console.log(data)
         const post = new Post(data)
-        console.log(post.html)
         post.render()
 
     })

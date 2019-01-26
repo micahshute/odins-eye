@@ -1,15 +1,24 @@
-class SerializablePost < JSONAPI::Serializable::Resource
+class SerializableTopic < JSONAPI::Serializable::Resource
     include SerializeHelpers
 
-    type 'posts'
+    type 'topics'
 
-    attributes :id, :errors, :content, :created_at, :updated_at, :likes, :dislikes, :geniuses
+    attributes :id, :title, :errors, :created_at, :updated_at, :likes, :dislikes, :geniuses, :views
 
-    belongs_to :user
-    has_many :posts do
-        data do
-            @object.posts
+    belongs_to :user do
+        data do 
+           @object.user
         end
+
+        meta do 
+            {
+                name: @object.user.name,
+                id: @object.user.id
+            }
+        end
+    end
+
+    has_many :posts do
 
         meta do 
             { count: @object.posts.length }
@@ -25,14 +34,6 @@ class SerializablePost < JSONAPI::Serializable::Resource
         @object.content
     end
 
-    attribute :postable do 
-        type = @object.postable.class.to_s.downcase
-        id = @object.postable.id
-         {
-            type: type,
-            id: id
-        }
-    end
 
     attribute :post_time do
         time_from_now(@object.created_at)
@@ -46,25 +47,30 @@ class SerializablePost < JSONAPI::Serializable::Resource
         @object.updated_at > @object.created_at
     end
 
-    attribute :post_reply do 
-        @object.postable.class.to_s.downcase == "post" 
+    attribute :created_display do
+        display_date_long(@object.created_at)
     end
 
-    attribute :nested_reply do 
-        if (@object.postable.class.to_s.downcase == "post" && @object.postable.postable.class.to_s.downcase == "post")
-            { author: @object.postable.user.name, author_id: @object.postable.user.id }
-        else
-            false
-        end
+    attribute :edited_display do 
+        display_date_long(@object.updated_at)
     end
 
-    attribute :num_replies do 
-        @topic.posts.length
+    attribute :author do
+        @object.user.name
     end
+
+    attribute :author_id do
+        @object.user.id
+    end
+
 
     meta do
-        { 
-            count: @object.class.all.length 
+        {   
+            count: @object.class.all_public.length,
+            total_count: @object.class.all.length,
+            tags: @object.tags.map{ |tag| tag.tag_type.name } 
         }
     end
+    
+
 end

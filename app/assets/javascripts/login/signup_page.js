@@ -1,6 +1,5 @@
-document.addEventListener('DOMContentLoaded', function(){
-    const form = document.querySelector('.js-signup')
-
+document.addEventListener('turbolinks:load', function(){
+    let form = document.querySelector('.js-signup')
     if(!!form){
         let nameInput = document.querySelector('form.js-signup .js-name-container input')
         let emailInput = document.querySelector('form.js-signup .js-email-container input')
@@ -29,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function(){
             email.isUnique()
             .then(res => res.json() )
             .then(data => {
-                console.log(data)
                 let uniqueError = document.querySelector('#js-unique-email-error')
                 if(uniqueError) uniqueError.remove()
                 if(!data.data){

@@ -55,7 +55,6 @@ class PostForm{
         const req = new JSONRequestManager(`/posts/${this.id}`)
         req.comm()
         .success(data => {
-            console.log(data)
             this.content = data.data.attributes.markdown_content
             this.display()
         })

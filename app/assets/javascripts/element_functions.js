@@ -16,7 +16,9 @@ class ElementFunctions{
                 return null
             }
         }
+
         return parentEl
+  
     }
 
     static getParentOfType(el, type){
@@ -72,5 +74,17 @@ class ElementFunctions{
             element.classList.add(addClass)
         }
     }
+
+    static addClass({element, klass}){
+        if(!element.classList.contains(klass)){
+            element.classList.add(klass)
+        }
+    }   
+
+    static removeClass({element, klass}){
+        if(element.classList.contains(klass)){
+            element.classList.remove(klass)
+        }
+    }   
 
 }

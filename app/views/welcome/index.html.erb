@@ -64,14 +64,16 @@
         <h3 class="pb-3 mb-4 font-italic border-bottom">
         Newest Contributions
         </h3>
-        <% @recent_topics.each do |topic| %>
-            <%= render 'topics/summary_view', topic: topic%>
-            <hr>
-        <% end%>
+        <div id="root-page-newest-topics" class="pagination-data-container">
+            <% @recent_topics.each do |topic| %>
+                <%= render 'topics/summary_view', topic: topic%>
+                <hr>
+            <% end%>
+        </div>
 
         <nav class="blog-pagination">
-        <a class="btn btn-outline-primary" href="#">Older</a>
-        <a class="btn btn-outline-secondary disabled" href="#">Newer</a>
+            <a id="older-newest-posts" data-offset="5" data-perpage="5" class="btn btn-outline-primary prevBtn" onClick="rootPagePaginate(this)" >Older</a>
+            <a id="newer-newest-posts" data-offset="0" data-perpage="5" class="btn btn-outline-secondary nextBtn disabled" onClick="rootPagePaginate(this)">Newer</a>
         </nav>
 
     </div><!-- /.blog-main -->
@@ -114,7 +116,7 @@
     </div><!-- /.row -->
 
 </main><!-- /.container -->
-<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+
 
 <footer class="blog-footer">
     <p><%= (link_to("Sign up", signup_path) + " to contribute to the community!") unless logged_in? %></p>

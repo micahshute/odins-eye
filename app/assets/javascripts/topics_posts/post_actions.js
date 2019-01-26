@@ -11,7 +11,7 @@ function isDeleteButton(el){
 }
 
 function isEditButton(el){
-    return (el.tagName === "A" && el.textContent == "Edit")
+    return (el.tagName === "A" && el.textContent == "Edit" && !!ElementFunctions.getParentWithClass(el, 'post-container'))
 }
 
 
