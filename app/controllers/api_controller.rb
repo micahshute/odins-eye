@@ -128,4 +128,17 @@ class ApiController < ApplicationController
     end
 
 
+    def post_nested_replies
+        post = Post.find_by(id: params[:id])
+        if post
+            replies = post.nested_replies
+            render jsonapi: replies,
+                include: [user: [:name, :id]],
+                fields: { users: [:id, :name]}
+        else
+            render json: JSON.generate({data: null, msg: "Unable to find Post"})
+        end
+    end
+
+
 end

@@ -72,7 +72,6 @@ class Post{
 
     }
 
-
     replaceReplyButton(){
         const topicEl = document.querySelector('.js-topic-container')
         const html = HandlebarsTemplates['posts/topic_reply_button']({id: this.postable.id})

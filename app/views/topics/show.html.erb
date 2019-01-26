@@ -31,28 +31,25 @@
                 <%= render('topics/add_post', post: @post) if (logged_in? and !@post.nil? )%>
             </div>
         </div>
-
-        <% @topic.ordered_posts.each do |post| %>
-            <div class="row">
-                <div class="col-sm-11"> 
-                    <%= render 'posts/post', post: post %>
-                </div>
-                <div class="col-sm-1"></div>
-            </div>
-            <div id="js-post-<%= post.id %>-reply-container"></div>
-            <% retrieve_replies(post).each do |inner_post|%>
+        <div id="topic-<%= @topic.id%>-replies" class="js-topic-replies pagination-data-container">
+            <% @topic.ordered_posts.each do |post| %>
                 <div class="row">
-                    <div class="col-sm-1"></div>
                     <div class="col-sm-11"> 
-                        <%= render 'posts/post', post: inner_post, inner?: true %>
+                        <%= render 'posts/post', post: post %>
                     </div>
+                    <div class="col-sm-1"></div>
                 </div>
-                <div id="js-post-<%= inner_post.id %>-reply-container"></div>
-
+                <div id="js-post-<%= post.id %>-reply-container"></div>
+                <% if ((num = post.nested_replies.length) > 0) %>
+                    <%= render 'components/view_post_replies_btn', post: post, num_nested_replies: num%>
+                <% end %>
             <% end %>
-        <% end %>
-
+        </div>
     </div>
+    <nav class="post-pagination bottom-space-lg">
+        <a id="newer-newest-posts" data-offset="0" data-perpage="25" class="btn btn-outline-secondary nextBtn disabled" onclick="postPaginate(this)">Newer</a>
+        <a id="older-newest-posts" data-offset="5" data-perpage="25" class="btn btn-outline-primary prevBtn" onclick="postPaginate(this)" >Older</a>
+    </nav>
     <div class="col-sm-1"></div>
 </div>
 

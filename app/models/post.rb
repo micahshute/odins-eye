@@ -68,6 +68,18 @@ class Post < ApplicationRecord
     self.postable.is_a?(Topic)
   end
 
+  def nested_replies()
+    reply_queue = self.posts.to_a
+    harvested_posts = []
+    while reply_queue.length > 0
+        curr_post = reply_queue.shift
+        harvested_posts << curr_post
+        reply_queue = reply_queue + curr_post.posts.to_a
+    end
+    # harvested_posts
+    harvested_posts.sort{ |a,b| b.created_at <=> a.created_at}
+  end
+
   private
 
   def self.most_reacted_type(type, limit, count)

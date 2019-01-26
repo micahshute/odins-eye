@@ -101,4 +101,5 @@ Rails.application.routes.draw do
   get 'api/users/current-user/reactions' => 'api#user_reactions'
   get 'api/users/current-user/:reactable/:reactable_id/:reaction' => 'api#query_reacted_reactables'
   get 'api/reactions/users/:user_id/:reactable/:reactable_id' => 'api#user_reactable_reaction'
+  get 'api/posts/:id/replies' => 'api#post_nested_replies'
 end

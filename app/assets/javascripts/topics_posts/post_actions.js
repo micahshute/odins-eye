@@ -87,3 +87,51 @@ function addPostActionEventListeners(){
         }
     })
 }
+
+
+async function viewPostReplies(self){
+    const id = self.id.split('-')[0]
+    self.className = ""
+    self.innerHTML = ""
+    self.setAttribute('onclick', '')
+    const req = new JSONRequestManager(`/api/posts/${id}/replies`)
+    try{
+        const data = await req.afetch()
+        const postArr = data.data
+        console.log(data)
+        const postObjects = postArr.map(postData => new Post({data: postData, included: data.included})).reverse()
+        for(let post of postObjects){
+            self.innerHTML += post.fullHtml
+        }
+    }catch(e){
+        const flash = new FlashMessage('danger', e)
+        flash.render()
+    }
+}
+
+//WORKING BELOW ON POST PAGINATE FN
+
+async function postPaginate(btn){
+    const baseUrl = `topics/${topicId}/posts`
+    try{
+        const pm = new PaginationManager({baseUrl: baseUrl})
+        const json = await pm.click(btn)
+        const userData = await CurrentUser.data()
+        
+        const loggedIn = userData.data !== null
+        const data = {
+            ...json,
+            templateData: {
+                loggedIn: loggedIn,
+                selectedColor: 'aqua',
+                unselectedColor: 'dusty-rose',
+                reactionIconSizeClass: ''
+            }
+        }
+        renderTopics(data, pm.dataContainer)
+
+    }catch(e){
+        const flashMessage = new FlashMessage('danger', e)
+        flashMessage.render()
+    }
+}

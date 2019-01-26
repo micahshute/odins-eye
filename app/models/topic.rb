@@ -184,6 +184,10 @@ class Topic < ApplicationRecord
         posts.order(created_at: 'desc').includes(:user, posts: {reactions: :reaction_type})
     end
 
+    def post_page(limit, offset=0)
+        posts.order(created_at: :desc).limit(limit).offset(offset).includes(:user, posts: {reactions: :reaction_type})
+    end
+
     def update_views
         update(views: self.views + 1)
     end
