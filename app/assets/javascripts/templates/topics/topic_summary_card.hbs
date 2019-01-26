@@ -1,3 +1,43 @@
 <div class="bg-offwhite topic-summary border shadow-sm">
-    {{< topics/_topic_summary}}
+   <div class="blog-post">
+        {{#if owned}}
+            <p class="small-text thin-text"><strong>{{views}}</strong> Views</p>
+        {{/if}}
+        <h2 class="blog-post-title"><a href="/topics/{{id}}" class="text-dark text-bold">{{title}}</a></h2>
+        <p class="blog-post-meta no-bottom-margin"><small>{{createdAt}} by </small><a href="/users/{{author.id}}">{{author.name}}</a></p>
+        <ul class="topic-tag-list d-flex justify-content-start small-text">
+            {{#each tags}}
+                <li class="tag">  {{this}}  </li>
+            {{/each}}
+        </ul>
+        <p class="standard-text top-margin-sm">{{summaryContent}}</p>
+        {{#if loggedIn}}
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="inline js-summary-reaction-parent">{{> components/_genius}}</p>
+                </div>
+                <div class="col-sm-3">
+                    <p class="inline js-summary-reaction-parent">{{> components/_like}}</p>
+                </div>
+                <div class="col-sm-3">
+                    <p class="inline js-summary-reaction-parent">{{> components/_dislike}}</p>
+                </div>
+                <div class="col-sm-3">
+                    <p class="inline js-summary-reaction-parent">{{> components/_save}}</p>
+                </div>
+            </div>
+        {{else}}
+            <div class="row">
+                <div class="col-sm-4">
+                    <p class="inline">{{> topics/_genius}}</p>
+                </div>
+                <div class="col-sm-4">
+                <p class="inline">{{> topics/_like }}</p>
+                </div>
+                <div class="col-sm-4">
+                    <p class="inline">{{> topics/_dislike }}</p>
+                </div>
+            </div>
+        {{/if}}
+    </div>
 </div>
