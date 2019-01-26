@@ -24,6 +24,7 @@ function submitPost(e){
     console.log(req)
     req.comm()
     .success((data) => {
+        console.log(data)
         const post = new Post(data)
         post.render()
 

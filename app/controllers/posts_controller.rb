@@ -60,7 +60,7 @@ class PostsController < ApplicationController
             if @reply.save
                 Notification.create(user: @post.user, content: "<a href='#{user_path(@reply.user)}'>#{@reply.user.name}</a> responded to <a href='#{topic_path(@post.topic)}'>your post</a>")
                 respond_to do |f|
-                    f.html { redirect_to topic_path(@topic) }
+                    f.html { redirect_to topic_path(@post.topic) }
                     f.json { render jsonapi: @reply, 
                         include: [user: [:id, :name]]
                     }

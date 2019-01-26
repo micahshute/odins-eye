@@ -76,6 +76,22 @@ class JSONRequestManager{
         });
     }
 
+    debugComm(){
+        let res = fetch(this.url, {
+            method: this.method,
+            body: this._body,
+            headers: this.headers,
+            credentials: "same-origin"
+        });
+        return {
+            success: (cb) => { 
+                res.then((res) => res.text()).then(json => cb(json));
+                return { error: (cb) => { res.catch(er => cb(er))}  }
+            },
+            error: (cb) => { res.catch(er => cb(er)) }
+        }
+    }
+
     comm(){
         let res = fetch(this.url, {
             method: this.method,

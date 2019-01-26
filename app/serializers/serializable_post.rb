@@ -59,7 +59,7 @@ class SerializablePost < JSONAPI::Serializable::Resource
     end
 
     attribute :num_replies do 
-        @topic.posts.length
+        @object.posts.length
     end
 
     meta do
