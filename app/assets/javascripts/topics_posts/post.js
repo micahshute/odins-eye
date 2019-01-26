@@ -36,7 +36,11 @@ class Post{
     }
 
     get newTopicContainer(){
-        return document.querySelector(`#js-${this.postable.type}-${this.postable.id}-reply-button`)
+        const replyContainer = document.querySelector('.js-topic-replies')
+        const newTopicContainer = document.createElement('div')
+        replyContainer.insertAdjacentElement('afterbegin', newTopicContainer)
+        document.querySelector(`#js-${this.postable.type}-${this.postable.id}-reply-button`).remove()
+        return newTopicContainer
     }
 
     get newPostContainer(){
