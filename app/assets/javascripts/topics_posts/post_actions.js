@@ -67,7 +67,6 @@ function addPostActionEventListeners(){
             })
         }else if(isReportButton(link)){
             e.preventDefault()
-            console.log('report')
             let postContainer = ElementFunctions.getParentWithClass(link, 'post-container')
             const url = link.getAttribute('href')
             const req = new JSONRequestManager(url, { method: 'post'})
@@ -92,46 +91,61 @@ function addPostActionEventListeners(){
 async function viewPostReplies(self){
     const id = self.id.split('-')[0]
     self.className = ""
-    self.innerHTML = ""
+    self.innerHTML = "<div class='loader center'></div>"
     self.setAttribute('onclick', '')
     const req = new JSONRequestManager(`/api/posts/${id}/replies`)
     try{
         const data = await req.afetch()
         const postArr = data.data
-        console.log(data)
         const postObjects = postArr.map(postData => new Post({data: postData, included: data.included})).reverse()
-        for(let post of postObjects){
-            self.innerHTML += post.fullHtml
+        const replyContainer = document.querySelector(`#js-post-${id}-reply-container`)
+        replyContainer.innerHTML = ''
+        let nextSibling = replyContainer.nextSibling 
+        while(nextSibling !== self){
+            const removeEl = nextSibling
+            nextSibling = nextSibling.nextSibling
+            removeEl.remove() 
         }
+        let htmlToRender = ''
+        for(let post of postObjects){
+            await post.fetchUserData()
+            htmlToRender += post.fullHtml
+        }
+        self.innerHTML = htmlToRender
     }catch(e){
         const flash = new FlashMessage('danger', e)
         flash.render()
     }
 }
 
-//WORKING BELOW ON POST PAGINATE FN
 
 async function postPaginate(btn){
-    const baseUrl = `topics/${topicId}/posts`
+    const topicId = getTopicIdFromPage()
+    const baseUrl = `/topics/${topicId}/posts`
     try{
         const pm = new PaginationManager({baseUrl: baseUrl})
         const json = await pm.click(btn)
-        const userData = await CurrentUser.data()
-        
-        const loggedIn = userData.data !== null
-        const data = {
-            ...json,
-            templateData: {
-                loggedIn: loggedIn,
-                selectedColor: 'aqua',
-                unselectedColor: 'dusty-rose',
-                reactionIconSizeClass: ''
-            }
-        }
-        renderTopics(data, pm.dataContainer)
+        const data = json
+        await renderPosts(data, pm.dataContainer)
 
     }catch(e){
         const flashMessage = new FlashMessage('danger', e)
         flashMessage.render()
     }
+}
+
+function getTopicIdFromPage(){
+    const topicContainer = document.querySelector('.js-topic-container')
+    return topicContainer.id.split('-')[2]
+}
+
+async function renderPosts(data, container){
+    const postDataArr = data.data
+    const postObjects = postDataArr.map(postData => new Post({data: postData, included: data.included}))
+    let content = ""
+    for(let post of postObjects){
+        await post.fetchUserData()
+        content += post.fullHtml
+    }
+    container.innerHTML = content
 }

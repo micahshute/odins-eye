@@ -32,7 +32,7 @@
             </div>
         </div>
         <div id="topic-<%= @topic.id%>-replies" class="js-topic-replies pagination-data-container">
-            <% @topic.ordered_posts.each do |post| %>
+            <% @posts.each do |post| %>
                 <div class="row">
                     <div class="col-sm-11"> 
                         <%= render 'posts/post', post: post %>
@@ -48,7 +48,7 @@
     </div>
     <nav class="post-pagination bottom-space-lg">
         <a id="newer-newest-posts" data-offset="0" data-perpage="25" class="btn btn-outline-secondary nextBtn disabled" onclick="postPaginate(this)">Newer</a>
-        <a id="older-newest-posts" data-offset="5" data-perpage="25" class="btn btn-outline-primary prevBtn" onclick="postPaginate(this)" >Older</a>
+        <a id="older-newest-posts" data-offset="25" data-perpage="25" class="btn btn-outline-primary prevBtn" onclick="postPaginate(this)" >Older</a>
     </nav>
     <div class="col-sm-1"></div>
 </div>

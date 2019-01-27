@@ -64,7 +64,8 @@ class SerializablePost < JSONAPI::Serializable::Resource
 
     meta do
         { 
-            count: @object.class.all.length 
+            total_count: @object.class.all.length,
+            count: @object.topic.posts.length
         }
     end
 end

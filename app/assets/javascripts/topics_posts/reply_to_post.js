@@ -25,7 +25,10 @@ function submitPost(e){
     req.comm()
     .success((data) => {
         console.log(data)
+        data.data.attributes = {...data.data.attributes, owned: true, loggedIn: true, liked: false, disliked: false, geniused: false}
+        console.log(data)
         const post = new Post(data)
+        console.log(post)
         post.render()
 
     })

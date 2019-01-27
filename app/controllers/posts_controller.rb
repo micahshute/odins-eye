@@ -138,20 +138,21 @@ class PostsController < ApplicationController
 
     def index
         @topic = Topic.find(params[:topic_id])
-        topic_posts = @topic.ordered_posts
-        @posts = []
-        topic_posts.each do |post|
-            @posts << post
-            nested_posts = retrieve_replies(post)
-            @posts.concat nested_posts
-        end
+        offset = params[:offset] || 0
+        per_page = params[:per_page] || 25
+        @posts = @topic.post_page(per_page, offset)
+        # @posts = []
+        # topic_posts.each do |post|
+        #     @posts << post
+        #     nested_posts = retrieve_replies(post)
+        #     @posts.concat nested_posts
+        # end
         respond_to do |f|
             f.json { render jsonapi: @posts,
                 include: [user: [:name, :id]],
                 fields: { users: [:id, :name]}
             }
         end
-
     end
 
   

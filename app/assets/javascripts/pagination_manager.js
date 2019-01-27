@@ -1,6 +1,6 @@
 class PaginationManager{
 
-    constructor({nextBtn = null, prevBtn = null, dataContainer = null, baseUrl, perPage = null, totalItems = Number.POSITIVE_INFINITY, customPrevDisabledTest = () => false, customNextDisabledTest = () => false} = {}){
+    constructor({nextBtn = null, prevBtn = null, dataContainer = null, baseUrl, perPage = null, totalItems = Number.POSITIVE_INFINITY, customPrevDisabledTest = () => false, customNextDisabledTest = () => false, includeSpinner = true} = {}){
         this.nextBtn = nextBtn || document.querySelector('.nextBtn')
         this.prevBtn = prevBtn || document.querySelector('.prevBtn')
         this.dataContainer = dataContainer || document.querySelector('.pagination-data-container')
@@ -14,6 +14,7 @@ class PaginationManager{
         }
         this.customNextDisabledTest = customNextDisabledTest
         this.customPrevDisabledTest = customPrevDisabledTest
+        this.includeSpinner = includeSpinner
     }
 
     get inactiveBtn(){
@@ -59,12 +60,27 @@ class PaginationManager{
     }
 
     async click(btn){
+        if(this.includeSpinner){
+            this.renderSpinner()
+        }
         this.justClick(btn)
         const data = await this.getData()
-        if(data.data && data.data.length > 0) this.totalItems = data.data[0].meta['count']
-        console.log(data)
+        if(data.data && data.data.length > 0) this.totalItems = parseInt(data.data[0].meta['count'])
         this.updateButtons()
         return data
+    }
+
+    renderSpinner(){
+        this.renderedSpinner = document.createElement('div')
+        this.renderedSpinner.className = 'loader center'
+        this.dataContainer.insertAdjacentElement('beforeend', this.renderedSpinner)
+    }
+
+    removeSpinner(){
+        if(this.renderedSpinner){
+            this.renderedSpinner.remove()
+            this.renderedSpinner = null
+        }
     }
 
     verifyClick(){
@@ -74,6 +90,7 @@ class PaginationManager{
     error(e){
         const flashMessage = new FlashMessage('danger', e)
         flashMessage.render()
+        this.removeSpinner()
     }
 
     updateButtons(){
@@ -95,7 +112,7 @@ class PaginationManager{
                 console.log('enable next btn')
             }else{
                 const newOffset = parseInt(this.nextBtn.dataset.offset)
-                newOffset.setAttribute('data-offset', (newOffset + parseInt(this.perPage)).toString())
+                this.nextBtn.setAttribute('data-offset', (newOffset + parseInt(this.perPage)).toString())
                 console.log(`update next btn offset ${newOffset + this.perPage}`)
             }
 
@@ -111,7 +128,7 @@ class PaginationManager{
                 this.prevBtn.classList.remove('disabled')
             }else{
                 const oldOffset = parseInt(this.prevBtn.dataset.offset)
-                oldOffset.setAttribute('data-offset', (oldOffset - parseInt(this.perPage)).toString())
+                this.prevBtn.setAttribute('data-offset', (oldOffset - parseInt(this.perPage)).toString())
             }
         }
     }

@@ -66,6 +66,7 @@ class TopicsController < ApplicationController
         @topic = Topic.where(id: params[:id]).includes(:user, :tags).includes(posts: {reactions: :reaction_type}).first
         @classroom = @topic.classroom unless @topic.classroom.nil?
         @user = current_user
+        @posts = @topic.post_page(25, 0)
         authorize_topic(@topic)
         @edit_path = @topic.classroom.nil? ? edit_topic_path(@topic) : edit_classroom_topic_path(@topic.classroom, @topic)
         @topic.update_views unless current_user == @topic.user

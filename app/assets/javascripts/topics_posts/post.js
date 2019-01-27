@@ -17,6 +17,8 @@ class Post{
         }
         userAttributes = data.included[0].attributes
         this.author = new User(userAttributes.id, userAttributes.name)
+        this.selectedColor = 'aqua'
+        this.unselectedColor = 'charcoal'
     }
 
     get html(){
@@ -27,8 +29,20 @@ class Post{
         return `<div class="row">${this.html}</div>`
     }
 
+    get viewRepliesButtonHTML(){
+        const buttonInfo = {
+            replies_phrase: Functions.pluralize(this.num_replies, "Reply"),
+            id: this.id
+        }
+        return HandlebarsTemplates['posts/view_replies_button'](buttonInfo)
+    }
+
     get fullHtml(){
-        return `${this.htmlInRow}<div id="js-post-${this.id}-reply-container"></div>`
+        let buttonHTML = ''
+        if(this.num_replies > 0){
+            buttonHTML = this.viewRepliesButtonHTML
+        }
+        return `${this.htmlInRow}<div id="js-post-${this.id}-reply-container"></div>${buttonHTML}`
     }
 
     get element(){
@@ -49,6 +63,29 @@ class Post{
 
     get editedContainer(){
         return document.querySelector(`#js-post-${this.id}-reply-container`)
+    }
+
+    async fetchUserData(){
+        try{
+            const currentUser = await CurrentUser.data()
+            const reactions = await CurrentUser.reactionsForPost(this.id)
+            if(currentUser.data !== null){
+                this.loggedIn = true
+                this.liked = reactions.data.like
+                this.disliked = reactions.data.dislike
+                this.geniused = reactions.data.geniused
+                this.owned = parseInt(currentUser.data.attributes.id) === parseInt(this.author.id)
+            }else{
+                this.loggedIn = false
+                this.liked = false
+                this.dislike = false
+                this.geniused = false
+                this.owned = false
+            }
+        }catch(e){
+            const flash = new FlashMessage('danger', e)
+            flash.render()
+        }
     }
 
     replaceForm(){

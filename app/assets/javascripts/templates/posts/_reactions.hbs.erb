@@ -3,23 +3,28 @@
 
 <div class="row reaction-holder no-padding">
     <div class="col-sm-4 no-padding js-post-reactions" id="post-reactions-{{id}}">
-        <a href="/posts/{{id}}/reactions/<%= ReactionType::ID[:genius] %>" class="reaction post-reaction"><i class="material-icons color-charcoal md-14">whatshot</i><small class="color-charcoal preview-text geniuses-count">  {{geniuses}}</small></a>
-        <a href="/posts/{{id}}/reactions/<%= ReactionType::ID[:like] %>" class="reaction post-reaction"><i class="material-icons color-charcoal md-14">thumb_up</i><small class="color-charcoal preview-text likes-count">  {{likes}}</small></a>
-        <a href="/posts/{{id}}/reactions/<%= ReactionType::ID[:dislike] %>" class="reaction post-reaction"><i class="material-icons color-charcoal md-14">thumb_down</i><small class="color-charcoal preview-text dislikes-count">  {{dislikes}}</small></a>
+        {{#if loggedIn}}<a href="/posts/{{id}}/reactions/<%= ReactionType::ID[:genius] %>" class="reaction post-reaction">{{/if}}<i class="material-icons color-{{#if geniused}}{{selectedColor}}{{else}}{{unselecctedColor}}{{/if}} md-14">whatshot</i><small class="color-charcoal preview-text geniuses-count">  {{geniuses}}  </small>{{#if loggedIn}}</a>{{/if}}
+        {{#if loggedIn}}<a href="/posts/{{id}}/reactions/<%= ReactionType::ID[:like] %>" class="reaction post-reaction">{{/if}}<i class="material-icons color-{{#if liked}}{{selectedColor}}{{else}}{{unselecctedColor}}{{/if}} md-14">thumb_up</i><small class="color-charcoal preview-text likes-count">  {{likes}}  </small>{{#if loggedIn}}</a>{{/if}}
+        {{#if loggedIn}}<a href="/posts/{{id}}/reactions/<%= ReactionType::ID[:dislike] %>" class="reaction post-reaction">{{/if}}<i class="material-icons color-{{#if disliked}}{{selectedColor}}{{else}}{{unselecctedColor}}{{/if}} md-14">thumb_down</i><small class="color-charcoal preview-text dislikes-count">  {{dislikes}}  </small>{{#if loggedIn}}</a>{{/if}}
     </div>
 
     <div class="col-sm-7 no-padding post-actions-container">
-        <div class="dropdown show inline post-report-container">
-            <a class="btn btn-secondary btn-sm dropdown-toggle post-report-dropdown" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                More Actions
-            </a>
+        {{#if loggedIn}}
+            <div class="dropdown show inline post-report-container">
+                <a class="btn btn-secondary btn-sm dropdown-toggle post-report-dropdown" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More Actions
+                </a>
 
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="/{{postable.type}}s/{{postable.id}}/posts/{{id}}/edit">Edit</a>
-                <a class="dropdown-item" href="/{{postable.type}}s/{{postable.id}}/{{#replyType}}{{data}}{{/replyType}}/{{id}}">Delete</a>
-                <a class="dropdown-item" href="/posts/{{id}}/reactions/4">Report</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    {{#if owned}}
+                        <a class="dropdown-item" href="/{{postable.type}}s/{{postable.id}}/posts/{{id}}/edit">Edit</a>
+                        <a class="dropdown-item" href="/{{postable.type}}s/{{postable.id}}/{{#replyType}}{{data}}{{/replyType}}/{{id}}">Delete</a>
+                    {{/if}}
+                    <a class="dropdown-item" href="/posts/{{id}}/reactions/4">Report</a>
+                </div>
+
             </div>
-        </div>
+        {{/if}}
     </div>
 
 

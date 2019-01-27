@@ -25,14 +25,15 @@ async function rootPagePaginate(btn){
 }
 
 async function renderTopics(data, container){
-    container.innerHTML = ''
     const templateData = data.templateData
+    let htmlToRender = ''
     for(let topicData of data.data){
         topicData.attributes = {...topicData.attributes, ...templateData}
         const topicSummary = new Topic(topicData)
         await topicSummary.fetchUserData()
         let html = topicSummary.summaryHtml
-        container.innerHTML += html
-        container.innerHTML += "<hr>"
+        htmlToRender += html
+        htmlToRender += "<hr>"
     }
+    container.innerHTML = htmlToRender
 }

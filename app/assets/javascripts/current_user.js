@@ -65,6 +65,11 @@ class CurrentUser{
         return await req.afetch()
     }
 
+    static async reactionsForPost(postId){
+        const req = new JSONRequestManager(`/api/reactions/users/current-user/posts/${postId}`)
+        return await req.afetch()
+    }
+
     static async reactionsForTopic(topicId){
         const req = new JSONRequestManager(`/api/reactions/users/current-user/topics/${topicId}`)
         return await req.afetch()
