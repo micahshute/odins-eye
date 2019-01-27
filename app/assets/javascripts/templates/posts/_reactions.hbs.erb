@@ -3,9 +3,9 @@
 
 <div class="row reaction-holder no-padding">
     <div class="col-sm-4 no-padding js-post-reactions" id="post-reactions-{{id}}">
-        {{#if loggedIn}}<a href="/posts/{{id}}/reactions/<%= ReactionType::ID[:genius] %>" class="reaction post-reaction">{{/if}}<i class="material-icons color-{{#if geniused}}{{selectedColor}}{{else}}{{unselecctedColor}}{{/if}} md-14">whatshot</i><small class="color-charcoal preview-text geniuses-count">  {{geniuses}}  </small>{{#if loggedIn}}</a>{{/if}}
-        {{#if loggedIn}}<a href="/posts/{{id}}/reactions/<%= ReactionType::ID[:like] %>" class="reaction post-reaction">{{/if}}<i class="material-icons color-{{#if liked}}{{selectedColor}}{{else}}{{unselecctedColor}}{{/if}} md-14">thumb_up</i><small class="color-charcoal preview-text likes-count">  {{likes}}  </small>{{#if loggedIn}}</a>{{/if}}
-        {{#if loggedIn}}<a href="/posts/{{id}}/reactions/<%= ReactionType::ID[:dislike] %>" class="reaction post-reaction">{{/if}}<i class="material-icons color-{{#if disliked}}{{selectedColor}}{{else}}{{unselecctedColor}}{{/if}} md-14">thumb_down</i><small class="color-charcoal preview-text dislikes-count">  {{dislikes}}  </small>{{#if loggedIn}}</a>{{/if}}
+        {{#if loggedIn}}<a href="/posts/{{id}}/reactions/<%= ReactionType::ID[:genius] %>" class="reaction post-reaction">{{else}}<div class="inline logged-out-rxns">{{/if}}<i class="material-icons color-{{#if geniused}}{{selectedColor}}{{else}}{{unselecctedColor}}{{/if}} md-14">whatshot</i><small class="color-charcoal preview-text geniuses-count">  {{geniuses}}  </small>{{#if loggedIn}}</a>{{else}}</div>{{/if}}
+        {{#if loggedIn}}<a href="/posts/{{id}}/reactions/<%= ReactionType::ID[:like] %>" class="reaction post-reaction">{{else}}<div class="inline logged-out-rxns">{{/if}}<i class="material-icons color-{{#if liked}}{{selectedColor}}{{else}}{{unselecctedColor}}{{/if}} md-14">thumb_up</i><small class="color-charcoal preview-text likes-count">  {{likes}}  </small>{{#if loggedIn}}</a>{{else}}</div>{{/if}}
+        {{#if loggedIn}}<a href="/posts/{{id}}/reactions/<%= ReactionType::ID[:dislike] %>" class="reaction post-reaction">{{else}}<div class="inline logged-out-rxns">{{/if}}<i class="material-icons color-{{#if disliked}}{{selectedColor}}{{else}}{{unselecctedColor}}{{/if}} md-14">thumb_down</i><small class="color-charcoal preview-text dislikes-count">  {{dislikes}}  </small>{{#if loggedIn}}</a>{{else}}</div>{{/if}}
     </div>
 
     <div class="col-sm-7 no-padding post-actions-container">
@@ -29,7 +29,9 @@
 
 
     <div class="col-sm-1 no-padding">
-        <a class="reply-button" href="/posts/{{id}}/replies/new" ><i class="material-icons color-aqua md-14">reply</i><small class="color-aqua">Reply</small></a>
+        {{#if loggedIn}}
+            <a class="reply-button" href="/posts/{{id}}/replies/new" ><i class="material-icons color-aqua md-14">reply</i><small class="color-aqua">Reply</small></a>
+        {{/if}}
     </div>
 </div>
 

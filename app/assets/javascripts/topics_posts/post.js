@@ -39,7 +39,7 @@ class Post{
 
     get fullHtml(){
         let buttonHTML = ''
-        if(this.num_replies > 0){
+        if(this.num_replies > 0 && !this.post_reply){
             buttonHTML = this.viewRepliesButtonHTML
         }
         return `${this.htmlInRow}<div id="js-post-${this.id}-reply-container"></div>${buttonHTML}`

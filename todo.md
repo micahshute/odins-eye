@@ -6,7 +6,7 @@
 - [ ] Password recovery
 - [ ] Email person for verification
 - [x] Add return to classroom button for posts inside of classroom
-- [ ] Add latex engine to markdown
+- [ ] Add latex engine to markdown ***************
 - [ ] Add reading stats (ie how easy the read is, time to read, word count, etc)
 - [ ] Custom 404 error page
 - [ ] Change order of topic rendering for topic index page
@@ -22,3 +22,5 @@
   - [ ] Turn red/show inaccuracies for bad input
 - [x] Add javascript logic for instant change to reactions (for likes, dislikes, and genius). Add change before ajax return
 - [ ] Import new topic from file
+- [ ] Make report post an ajax call
+- [ ] ADD SPINNER DURING SIGNUP/LOGIN OPS

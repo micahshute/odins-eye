@@ -21,7 +21,6 @@ function submitPost(e){
     const url = e.getAttribute('action');
     const method = e.getAttribute('method');
     const req = new JSONRequestManager(url, {method: method, form: e})
-    console.log(req)
     req.comm()
     .success((data) => {
         console.log(data)
