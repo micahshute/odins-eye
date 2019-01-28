@@ -380,9 +380,6 @@ textarea#topic_content{
 
 /* TOPIC SIDEBAR  */
 
-.sticky-holder{
-  
-}
 
 .sticky-sidebar{
     width: 16%;
@@ -476,8 +473,8 @@ textarea#topic_content{
         bottom: 0px;
         left: 0px;
         display: inline;
-        width: 100%;
-        height: 3em;
+        /* width: 100%; */
+        /* height: 3em; */
         border-radius: 0px;
         padding-left: 15%;
         padding-right: 15%; 
@@ -485,14 +482,14 @@ textarea#topic_content{
     }
     .sticky-sidebar a {
         display: inline;
-        text-size: 0.7em;
+        /* text-size: 0.7em; */
         padding-left: 8%;
         padding-right: 8%;
     }
 
     .sticky-sidebar span {
         display: inline;
-        text-size: 0.7em;
+        /* text-size: 0.7em; */
         padding-left: 11%;
         padding-right: 8%;
     }
@@ -505,22 +502,22 @@ textarea#topic_content{
         bottom: 0px;
         left: 0px;
         display: inline;
-        width: 100%;
-        height: 3em;
+        /* width: 100%; */
+        /* height: 3em; */
         border-radius: 0px;
         padding-left: 12%;
         padding-right: 12%; 
     }
     .sticky-sidebar a {
         display: inline;
-        text-size: 0.7em;
+        /* text-size: 0.7em; */
         padding-left: 8%;
         padding-right: 8%;
     }
 
     .sticky-sidebar span{
         display: inline;
-        text-size: 0.7em;
+        /* text-size: 0.7em; */
         padding-left: 11%;
         padding-right: 8%;
     }
@@ -533,21 +530,21 @@ textarea#topic_content{
         bottom: 0px;
         left: 0px;
         display: inline;
-        width: 100%;
-        height: 3em;
+        /* width: 100%; */
+        /* height: 3em; */
         border-radius: 0px;
         padding-left: 1em;
         padding-right: 1em; 
     }
     .sticky-sidebar a {
         display: inline;
-        text-size: 0.7em;
+        /* text-size: 0.7em; */
         padding-left: 7%;
         padding-right: 7%;
     }
     .sticky-sidebar span {
         display: inline;
-        text-size: 0.7em;
+        /* text-size: 0.7em; */
         padding-left: 9%;
         padding-right: 7%;
     }
@@ -560,21 +557,21 @@ textarea#topic_content{
         bottom: 0px;
         left: 0px;
         display: inline;
-        width: 100%;
-        height: 3em;
+        /* width: 100%; */
+        /* height: 3em; */
         border-radius: 0px;
         padding-left: 1em;
         padding-right: 1em; 
     }
     .sticky-sidebar a {
         display: inline;
-        text-size: 0.7em;
+        /* text-size: 0.7em; */
         padding-left: 5%;
         padding-right: 5%;
     }
     .sticky-sidebar span {
         display: inline;
-        text-size: 0.7em;
+        /* text-size: 0.7em; */
         padding-left: 7%;
         padding-right: 5%;
     }
@@ -609,7 +606,7 @@ a.topic-option-selected{
     margin-right: 1em;
     font-family: "Abel", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: bold;
-    margin-bottom: 0px;
+    /* margin-bottom: 0px; */
     background-color: rgb(180, 226, 251);
     border-radius: 10px;
     font-size: 0.9em;
@@ -623,7 +620,7 @@ a.topic-option-selected{
     margin-right: 0.5em;
     font-family: "Abel", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: bold;
-    margin-bottom: 0px;
+    /* margin-bottom: 0px; */
     background-color: rgb(180, 226, 251);
     border-radius: 10px;
     font-size: 0.75em;
@@ -637,7 +634,7 @@ a.topic-option-selected{
     margin-right: 0.5em;
     font-family: "Abel", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: bold;
-    margin-bottom: 0px;
+    /* margin-bottom: 0px; */
     background-color: rgb(180, 226, 251);
     border-radius: 30px;
     font-size: 1.75em;
