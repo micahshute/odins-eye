@@ -422,6 +422,7 @@ const attachResponseEventListeners = () => {
             const jsonReq = new JSONRequestManager(url, { method: "POST"});
             jsonReq.comm()
             .success(function(data){
+                console.log(data)
                 if(data.reactableType === "Post"){
                     let reactions = new PostReactions(data.reactableId)
                     reactions.update(data.data)

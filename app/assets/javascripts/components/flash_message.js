@@ -12,6 +12,7 @@ class FlashMessage{
     render(){
         const contentDiv = document.querySelector('#flash-message')
         contentDiv.innerHTML = this.html
+        $('html, body').animate({ scrollTop: 0 }, 'fast');
     }
     
 }

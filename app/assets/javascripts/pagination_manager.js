@@ -15,7 +15,10 @@ class PaginationManager{
         this.customNextDisabledTest = customNextDisabledTest
         this.customPrevDisabledTest = customPrevDisabledTest
         this.includeSpinner = includeSpinner
+
     }
+
+
 
     get inactiveBtn(){
         if(this.activeBtn === this.nextBtn){
@@ -48,6 +51,17 @@ class PaginationManager{
         }
     }
 
+    initialize(){
+        if((this.prevBtn && (parseInt(this.perPage) >= this.totalItems) || this.customPrevDisabledTest())){
+            ElementFunctions.addClass({element: this.prevBtn, klass: "disabled"})
+        }else{
+            ElementFunctions.removeClass({element: this.prevBtn, klass: 'disabled'})
+        }
+        if(this.nextBtn && (this.nextBtn.dataset.offset === "0" || this.customNextDisabledTest())){
+            ElementFunctions.addClass({element: this.nextBtn, klass: "disabled"})
+        }
+    }
+
 
     justClick(btn){
         if(btn === "next" || btn === this.nextBtn){
@@ -56,6 +70,31 @@ class PaginationManager{
             this.activeBtn = this.prevBtn
         }else{
             throw "Invalid button sent to PaginationManager"
+        }
+    }
+
+    async relaod(){
+        if(this.includeSpinner){
+            this.renderSpinner()
+        }
+        let offset
+        if(this.nextBtn.classList.contains('disabled')){
+            offset = 0
+        }else{
+            offset = this.nextBtn.dataset.offset + this.perPage
+        }
+        const pm = new this.urlParamsMan({
+            offset: offset,
+            per_page: this.perPage
+        })
+        const url = pm.getUrl(this.baseUrl)
+        console.log(this.baseUrl)
+        const req = new JSONRequestManager(url)
+        try{
+            const data = await req.afetch()
+            return data
+        }catch(e){
+            this.error(e)
         }
     }
 

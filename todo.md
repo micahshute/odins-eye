@@ -17,10 +17,11 @@
 - [ ] *****Migrate from Google+ Signin to Google Signin
 - [ ] Add notification for getting followed
 - [ ] Fix images so they are not distorted
-- [ ] Add javascript for signup validations
-  - [ ] Turn green for correct
-  - [ ] Turn red/show inaccuracies for bad input
+- [x] Add javascript for signup validations
+  - [x] Turn green for correct
+  - [x] Turn red/show inaccuracies for bad input
 - [x] Add javascript logic for instant change to reactions (for likes, dislikes, and genius). Add change before ajax return
 - [ ] Import new topic from file
 - [ ] Make report post an ajax call
+- [ ] Replace ``` with ~~~ in postSerializer
 - [ ] ADD SPINNER DURING SIGNUP/LOGIN OPS

@@ -73,7 +73,7 @@ class Post{
                 this.loggedIn = true
                 this.liked = reactions.data.like
                 this.disliked = reactions.data.dislike
-                this.geniused = reactions.data.geniused
+                this.geniused = reactions.data.genius
                 this.owned = parseInt(currentUser.data.attributes.id) === parseInt(this.author.id)
             }else{
                 this.loggedIn = false

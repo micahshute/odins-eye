@@ -17,24 +17,20 @@ function addReplyButtonEventListener(){
     })  
 }
 
-function submitPost(e){
+async function submitPost(e){
     const url = e.getAttribute('action');
     const method = e.getAttribute('method');
     const req = new JSONRequestManager(url, {method: method, form: e})
-    req.comm()
-    .success((data) => {
-        console.log(data)
-        data.data.attributes = {...data.data.attributes, owned: true, loggedIn: true, liked: false, disliked: false, geniused: false}
-        console.log(data)
+    
+    try{
+        const data = await req.afetch()
+        // data.data.attributes = {...data.data.attributes, owned: true, loggedIn: true, liked: false, disliked: false, geniused: false}
         const post = new Post(data)
-        console.log(post)
+        await post.fetchUserData()
         post.render()
+    }catch(e){
+        const flash = new FlashMessage('danger', e)
+        flash.render()
+    }
 
-    })
-    .error((err) => {
-        const flashMessage = new FlashMessage('danger', err)
-        const flashTemplate = HandlebarsTemplates['flash_message'](flashMessage)
-        const contentDiv = document.querySelector('#flash-message')
-        contentDiv.innerHTML = flashTemplate
-    })
 }

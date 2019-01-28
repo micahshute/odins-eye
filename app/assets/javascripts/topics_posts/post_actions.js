@@ -16,7 +16,7 @@ function isEditButton(el){
 
 
 function addPostActionEventListeners(){
-    document.addEventListener('click', function(e){
+    document.addEventListener('click', async function(e){
         const link = ElementFunctions.getParentLinkFromClick(e)
         if(isEditButton(link)){
             e.preventDefault()
@@ -28,8 +28,8 @@ function addPostActionEventListeners(){
             let url = link.getAttribute('href')
             let id = postContainer.id.split('-')[1]
             let req = new JSONRequestManager(url, { method: 'delete' })
-            req.comm()
-            .success(data => {
+            try{
+                let data = await req.afetch()
                 let row = ElementFunctions.getParentWithClass(postContainer, 'row')
                 row.remove()
                 document.querySelector(`#js-post-${id}-reply-container`).remove()
@@ -38,51 +38,38 @@ function addPostActionEventListeners(){
                 let topicContainer = document.querySelector('.js-topic-container')
                 let topicId = topicContainer.id.split("-")[2]
                 const url = `/topics/${topicId}/posts`
-                let postReq = new JSONRequestManager(url)
-                postReq.comm()
-                .success(data => {
-                    const postArr = data.data
-                    const postObjects = postArr.map(postData => new Post({data: postData, included: data.included})).reverse()
-                    //delete all posts
-                    const objectsToRemove = [...topicContainer.parentElement.children].slice(2)
-                    for(let objToRem of objectsToRemove){
-                        objToRem.remove()
-                    }
-                    for(let postObject of postObjects){
-                        postObject.displayAtBottom()
-                    }
-                })
-                .error(e => {
-                    const flashMessage = new FlashMessage('danger', e)
-                    const flashTemplate = HandlebarsTemplates['flash_message'](flashMessage)
-                    const contentDiv = document.querySelector('#flash-message')
-                    contentDiv.innerHTML = flashTemplate
-                })
-            })
-            .error(er => {
-                const flashMessage = new FlashMessage('danger', er)
-                const flashTemplate = HandlebarsTemplates['flash_message'](flashMessage)
-                const contentDiv = document.querySelector('#flash-message')
-                contentDiv.innerHTML = flashTemplate
-            })
+                const pm = new PaginationManager({baseUrl: url})
+                data = await pm.relaod()
+                const postArr = data.data
+                const postObjects = postArr.map(postData => new Post({data: postData, included: data.included}))
+                //delete all posts
+                
+                let html = ''
+                for(let postObject of postObjects){
+                    await postObject.fetchUserData()
+                    html += postObject.fullHtml
+                }
+                pm.dataContainer.innerHTML = html
+
+            }catch(e){
+                const flash = new FlashMessage('danger', e)
+                flash.render()
+            }
         }else if(isReportButton(link)){
             e.preventDefault()
-            let postContainer = ElementFunctions.getParentWithClass(link, 'post-container')
             const url = link.getAttribute('href')
             const req = new JSONRequestManager(url, { method: 'post'})
-            req.comm()
-            .success(data => {
+            try{
+
+                let data = await req.afetch()
                 const flashMessage = new FlashMessage('success', "Your report has been sent")
-                const flashTemplate = HandlebarsTemplates['flash_message'](flashMessage)
-                const contentDiv = document.querySelector('#flash-message')
-                contentDiv.innerHTML = flashTemplate
-            })
-            .error(err => {
-                const flashMessage = new FlashMessage('danger', 'Failed to send report')
-                const flashTemplate = HandlebarsTemplates['flash_message'](flashMessage)
-                const contentDiv = document.querySelector('#flash-message')
-                contentDiv.innerHTML = flashTemplate
-            })
+                flashMessage.render()
+
+            }catch(e){
+                const flash = new FlashMessage('danger', e)
+                flash.render()
+            }
+
         }
     })
 }

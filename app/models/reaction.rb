@@ -14,10 +14,10 @@ class Reaction < ApplicationRecord
       errors.add(:reaction_type, "cannot have incosistent reactions") if (self.user.likes?(self.reactable) or self.user.thinks_is_genius?(self.reactable))
       errors.add(:reaction_type, "cannot have duplicate reactions") if user.dislikes?(self.reactable)
     elsif (self.reaction_type.name == 'like') 
-      errors.add(:reaction_type, "cannot have incosistent reactions") if (self.user.dislikes?(self.reactable) or self.user.reported?(self.reactable))
+      errors.add(:reaction_type, "cannot have incosistent reactions") if (self.user.dislikes?(self.reactable))
       errors.add(:reaction_type, "cannot have duplicate reactions") if user.likes?(self.reactable)
     elsif self.reaction_type.name == 'genius'
-      errors.add(:reaction_type, "cannot have incosistent reactions") if (self.user.dislikes?(self.reactable) or self.user.reported?(self.reactable))
+      errors.add(:reaction_type, "cannot have incosistent reactions") if (self.user.dislikes?(self.reactable))
       errors.add(:reaction_type, "cannot have duplicate reactions") if user.thinks_is_genius?(self.reactable)
     elsif self.reaction_type.name == 'report'
       errors.add(:reaction_type, "You have already reported this post") if user.reported?(self.reactable)
