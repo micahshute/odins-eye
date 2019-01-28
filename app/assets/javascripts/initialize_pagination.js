@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', async function(){
+document.addEventListener('turbolinks:load', async function(){
     let url
     const topicPage = document.querySelector('.js-topic-container')
     const rootPage = document.querySelector('.spotlight-container')
