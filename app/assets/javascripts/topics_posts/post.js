@@ -14,8 +14,10 @@ class Post{
                 }
             }
 
+        }else{
+            userAttributes = data.included[0].attributes
         }
-        userAttributes = data.included[0].attributes
+        
         this.author = new User(userAttributes.id, userAttributes.name)
         this.selectedColor = 'aqua'
         this.unselectedColor = 'charcoal'
