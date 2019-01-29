@@ -7,10 +7,10 @@ class Post{
         let userAttributes
         if(data.included.length > 1){
             const userId = data.data.relationships.user.data.id
-            const attributes = data.included
-            for(let att of attributes){
-                if(att.attributes.id === userId){
-                    userAttributes = att.attributes
+            const users = data.included
+            for(let user of users){
+                if(parseInt(user.attributes.id) === parseInt(userId)){
+                    userAttributes = user.attributes
                 }
             }
 
