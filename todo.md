@@ -24,4 +24,5 @@
 - [ ] Import new topic from file
 - [ ] Make report post an ajax call
 - [ ] Replace ``` with ~~~ in postSerializer
-- [ ] ADD SPINNER DURING SIGNUP/LOGIN OPS
+- [ ] ADD SPINNER DURING SIGNUP/LOGIN OPS 
+- [ ] Paginate classrooms
