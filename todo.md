@@ -22,7 +22,7 @@
   - [x] Turn red/show inaccuracies for bad input
 - [x] Add javascript logic for instant change to reactions (for likes, dislikes, and genius). Add change before ajax return
 - [ ] Import new topic from file
-- [ ] Make report post an ajax call
+- [x] Make report post an ajax call
 - [ ] Replace ``` with ~~~ in postSerializer
 - [ ] ADD SPINNER DURING SIGNUP/LOGIN OPS 
 - [ ] Paginate classrooms
